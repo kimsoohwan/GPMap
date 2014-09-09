@@ -1,0 +1,6 @@
+<map id="GP::DerivativeTrainingData::Nd" name="GP::DerivativeTrainingData::Nd">
+<area shape="rect" id="node2" href="$classGP_1_1CovDerObs.html#ac77f76fef25d1dbc18821cca43d6ec4a" title="Self covariance matrix between the derivative training data, K(X, X) or its partial derivative..." alt="" coords="257,5,442,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovDerObs.html#affd5ce2518238aaf5fb8525d53c7c8e3" title="Cross covariance matrix between the training and test data, Ks(X, Z) " alt="" coords="253,70,445,111"/>
+<area shape="rect" id="node4" href="$classGP_1_1DerivativeTrainingData.html#afd6c8634eb4f552e5242b1b8f275b5d9" title="GP::DerivativeTrainingData\l\&lt; TestType \&gt;::NN" alt="" coords="262,135,437,177"/>
+<area shape="rect" id="node5" href="$classGP_1_1LikGaussDerObs.html#a65a8b948393e320fc9d446a81cafee76" title="GP::LikGaussDerObs::lik" alt="" coords="265,201,434,228"/>
+</map>

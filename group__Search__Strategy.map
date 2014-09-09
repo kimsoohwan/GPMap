@@ -1,0 +1,6 @@
+<map id="Search_Strategy" name="Search_Strategy">
+<area shape="rect" id="node1" href="$group__Trainer__.html" title="Trainer for hyperparameters. " alt="" coords="6,56,74,83"/>
+<area shape="rect" id="node2" href="$group__BO__BY__QA.html" title="Bound Optimization BY Quadratic Approximation. " alt="" coords="306,5,398,32"/>
+<area shape="rect" id="node3" href="$group__Newtons__Method.html" title="Newton&#39;s method for search strategies. " alt="" coords="291,56,413,83"/>
+<area shape="rect" id="node5" href="$group__Trust__Region.html" title="Trust region method for search strategies &#160;which is currently not implemented because it requires Hes..." alt="" coords="303,107,401,133"/>
+</map>

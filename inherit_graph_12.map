@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classGP_1_1CovSEiso.html" title="Squared exponential covariance function with isotropic distances &#160;All covariance classes should have ..." alt="" coords="6,12,173,39"/>
+<area shape="rect" id="node2" href="$classGP_1_1CovSEisoDerObsBase.html" title="A base class for CovSEisoDerObs which will be passed to CovDerObs as a template parameter. Thus, CovSEisoDerObs is a combination of CovDerObs and CovSEisoDerObsBase. " alt="" coords="221,5,400,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovDerObs.html" title="GP::CovDerObs\&lt; Scalar,\l CovSEisoDerObsBase \&gt;" alt="" coords="448,5,616,46"/>
+<area shape="rect" id="node4" href="$classGP_1_1CovSEisoDerObs.html" title="Squared exponential covariance function dealing with derivative observations &#160;It inherits from CovDer..." alt="" coords="664,5,813,46"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GP::TrainingData::pY" name="GP::TrainingData::pY">
+<area shape="rect" id="node2" href="$classGP_1_1InfExact.html#a83057a23bf7772bc423c5f3448b26ae8" title="GP::InfExact\&lt; TestType,\l MeanZero, CovSEiso, LikGauss\l \&gt;::y_m" alt="" coords="200,5,411,61"/>
+<area shape="rect" id="node4" href="$classGP_1_1TrainingData.html#a1ddf469baa943b2e91397f89177aa6bc" title="Resets the training data. " alt="" coords="212,86,399,127"/>
+<area shape="rect" id="node3" href="$classTestCaseInfExact.html#aca2864d5e5918a2a5d04e75c3e84de5e" title="Overloading the test fixture set up. " alt="" coords="459,20,627,47"/>
+</map>

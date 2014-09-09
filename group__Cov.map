@@ -1,0 +1,5 @@
+<map id="Cov" name="Cov">
+<area shape="rect" id="node1" href="$group__SEiso.html" title="Squared exponential covariance functions with isotropic distances &#160;&#160;&#45;. " alt="" coords="121,5,178,32"/>
+<area shape="rect" id="node2" href="$group__Materniso.html" title="Matern covariance function with isotropic distances, &#160;&#160;&#160;&#45;. " alt="" coords="110,56,189,83"/>
+<area shape="rect" id="node3" href="$group__CovComposite.html" title="Product of two covariance functions &#45;. " alt="" coords="97,107,202,133"/>
+</map>

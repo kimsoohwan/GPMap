@@ -1,0 +1,5 @@
+<map id="GP::CovMaterniso::Ks" name="GP::CovMaterniso::Ks">
+<area shape="rect" id="node2" href="$classGP_1_1CovMaterniso.html#ad9717e9d77771bdbba1c5de04fc211b7" title="Self covariance matrix between the training data, K(X, X) or its partial derivative. " alt="" coords="232,5,376,32"/>
+<area shape="rect" id="node4" href="$classGP_1_1TrainingData.html#a4e6f6a0b869d0165506d89bc00115d73" title="Gets the cross squared distances between the training and test inputs. " alt="" coords="206,56,402,83"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#ac95aa939abdd33ac04b07d4e2fe4d470" title="Gets the self squared distances between the training inputs. " alt="" coords="451,5,640,32"/>
+</map>

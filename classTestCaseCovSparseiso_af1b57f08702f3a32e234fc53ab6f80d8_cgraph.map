@@ -1,0 +1,5 @@
+<map id="TestCaseCovSparseiso::SetUp" name="TestCaseCovSparseiso::SetUp">
+<area shape="rect" id="node2" href="$classTestFunctionDataSetting.html#ac8ca54d154d1889e6dd4bf5b9d47b252" title="Set up the test fixture. " alt="" coords="211,23,376,65"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#a1ddf469baa943b2e91397f89177aa6bc" title="Resets the training data. " alt="" coords="424,5,571,32"/>
+<area shape="rect" id="node4" href="$classGP_1_1TestData.html#ad1bc48fe4cceb69e2c84f62a4cd3d680" title="Resets the test data. " alt="" coords="434,56,561,83"/>
+</map>

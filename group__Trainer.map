@@ -1,0 +1,4 @@
+<map id="Trainer" name="Trainer">
+<area shape="rect" id="node1" href="$group__StoppingStrategy.html" title="Stopping strategies for the hyperparameter trainer &#45;. " alt="" coords="115,5,237,32"/>
+<area shape="rect" id="node2" href="$group__SearchStrategy.html" title="Search strategies for the hyperparameter trainer &#45;. " alt="" coords="120,56,232,83"/>
+</map>

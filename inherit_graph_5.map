@@ -1,0 +1,6 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$classGP_1_1CovMaterniso.html" title="Matern covariance function with isotropic distances, &#160;&#160;All covariance classes should have public stat..." alt="" coords="6,12,194,39"/>
+<area shape="rect" id="node2" href="$classGP_1_1CovMaternisoDerObsBase.html" title="A base class for CovMaternisoDerObs which will be passed to CovDerObs as a template parameter..." alt="" coords="243,5,445,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovDerObs.html" title="GP::CovDerObs\&lt; Scalar,\l CovMaternisoDerObsBase \&gt;" alt="" coords="494,5,685,46"/>
+<area shape="rect" id="node4" href="$classGP_1_1CovMaternisoDerObs.html" title="Matern covariance function dealing with derivative observations &#160;It inherits from CovDerObs which tak..." alt="" coords="733,5,904,46"/>
+</map>

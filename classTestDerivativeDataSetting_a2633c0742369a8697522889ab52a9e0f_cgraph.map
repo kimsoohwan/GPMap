@@ -1,0 +1,6 @@
+<map id="TestDerivativeDataSetting::SetUp" name="TestDerivativeDataSetting::SetUp">
+<area shape="rect" id="node2" href="$classTestFunctionDataSetting.html#ac8ca54d154d1889e6dd4bf5b9d47b252" title="Set up the test fixture. " alt="" coords="243,23,408,65"/>
+<area shape="rect" id="node5" href="$classGP_1_1DerivativeTrainingData.html#a8c207c978276c429f712299064f5a10c" title="Resets the training inputs. " alt="" coords="225,89,426,116"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#a1ddf469baa943b2e91397f89177aa6bc" title="Resets the training data. " alt="" coords="475,5,621,32"/>
+<area shape="rect" id="node4" href="$classGP_1_1TestData.html#ad1bc48fe4cceb69e2c84f62a4cd3d680" title="Resets the test data. " alt="" coords="485,56,611,83"/>
+</map>

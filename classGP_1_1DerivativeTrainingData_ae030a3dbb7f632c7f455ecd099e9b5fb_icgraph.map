@@ -1,0 +1,10 @@
+<map id="GP::DerivativeTrainingData::D" name="GP::DerivativeTrainingData::D">
+<area shape="rect" id="node2" href="$classGP_1_1CovDerObs.html#ac77f76fef25d1dbc18821cca43d6ec4a" title="Self covariance matrix between the derivative training data, K(X, X) or its partial derivative..." alt="" coords="249,5,434,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovDerObs.html#affd5ce2518238aaf5fb8525d53c7c8e3" title="Cross covariance matrix between the training and test data, Ks(X, Z) " alt="" coords="245,70,437,111"/>
+<area shape="rect" id="node4" href="$classGP_1_1DerivativeTrainingData.html#afd6c8634eb4f552e5242b1b8f275b5d9" title="GP::DerivativeTrainingData\l\&lt; TestType \&gt;::NN" alt="" coords="254,135,429,177"/>
+<area shape="rect" id="node5" href="$classGP_1_1DerivativeTrainingData.html#ae1471733ad3dbcc401e200636452c64f" title="Gets the const pointer to the pre&#45;calculated self differences between the derivative training inputs..." alt="" coords="254,201,429,242"/>
+<area shape="rect" id="node6" href="$classGP_1_1DerivativeTrainingData.html#aa9eda00beb277f4ad25ad7c0f1bb524b" title="Gets the const pointer to the pre&#45;calculated cross differences between the derivative training inputs..." alt="" coords="254,266,429,307"/>
+<area shape="rect" id="node7" href="$classGP_1_1DerivativeTrainingData.html#aa37527b80717a48d6f8ceb57d92f147a" title="Gets the pointer to the cross squared distances between the derivative training inputs and test input..." alt="" coords="251,331,432,373"/>
+<area shape="rect" id="node8" href="$classGP_1_1DerivativeTrainingData.html#ab40168b66dfd7bf9929d9cf9bd4e7ea1" title="Gets the pointer to the cross differences between the derivative training inputs and test inputs..." alt="" coords="254,397,429,438"/>
+<area shape="rect" id="node9" href="$classGP_1_1LikGaussDerObs.html#a65a8b948393e320fc9d446a81cafee76" title="GP::LikGaussDerObs::lik" alt="" coords="257,463,426,489"/>
+</map>

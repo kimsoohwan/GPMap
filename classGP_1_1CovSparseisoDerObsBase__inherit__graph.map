@@ -1,0 +1,5 @@
+<map id="GP::CovSparseisoDerObsBase&lt; Scalar &gt;" name="GP::CovSparseisoDerObsBase&lt; Scalar &gt;">
+<area shape="rect" id="node3" href="$classGP_1_1CovDerObs.html" title="{CovDerObs\&lt; Scalar,\l CovSparseisoDerObsBase \&gt;\n||+ K()\l+ Ks()\l}" alt="" coords="11,376,201,483"/>
+<area shape="rect" id="node2" href="$classGP_1_1CovSparseiso.html" title="Sparse covariance function with isotropic distances &#160;All covariance classes should have public static..." alt="" coords="12,6,201,127"/>
+<area shape="rect" id="node4" href="$classGP_1_1CovSparseisoDerObs.html" title="Sparse covariance function dealing with derivative observations &#160;It inherits from CovDerObs which tak..." alt="" coords="21,531,192,623"/>
+</map>

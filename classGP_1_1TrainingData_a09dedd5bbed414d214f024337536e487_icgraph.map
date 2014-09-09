@@ -1,0 +1,6 @@
+<map id="GP::TrainingData::D" name="GP::TrainingData::D">
+<area shape="rect" id="node2" href="$classGP_1_1DerivativeTrainingData.html#ae030a3dbb7f632c7f455ecd099e9b5fb" title="Gets the number of dimensions, D. " alt="" coords="198,5,373,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#a35d361cc7e19a9422853b63dd3ec557d" title="Gets the const matrix const pointer to the pre&#45;calculated self differences between the training input..." alt="" coords="192,70,379,111"/>
+<area shape="rect" id="node4" href="$classGP_1_1TrainingData.html#a4e6f6a0b869d0165506d89bc00115d73" title="Gets the matrix pointer to the cross squared distances between the training inputs and test inputs..." alt="" coords="192,135,379,177"/>
+<area shape="rect" id="node5" href="$classGP_1_1TrainingData.html#a4d7ed6816277e3e2f726a0b981331993" title="Gets the matrix pointer to the cross differences between the training inputs and test inputs..." alt="" coords="192,201,379,242"/>
+</map>

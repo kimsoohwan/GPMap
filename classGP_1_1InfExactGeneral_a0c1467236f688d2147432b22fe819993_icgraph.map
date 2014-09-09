@@ -1,0 +1,4 @@
+<map id="GP::InfExactGeneral::alpha" name="GP::InfExactGeneral::alpha">
+<area shape="rect" id="node2" href="$classGP_1_1InfExactGeneral.html#af124333bf7a6b9911def39cc8aca424a" title="Predict the mean and [co]variance. " alt="" coords="195,5,429,75"/>
+<area shape="rect" id="node3" href="$classGP_1_1InfExactGeneral.html#aabeca12c7e9fd6ba604687f6cf6f0549" title="GP::InfExactGeneral\l\&lt; TestType, MeanZeroDerObs,\l CovSEisoDerObs, LikGaussDerObs\l \&gt;::negativeLogMarginalLikelihood" alt="" coords="195,99,429,170"/>
+</map>

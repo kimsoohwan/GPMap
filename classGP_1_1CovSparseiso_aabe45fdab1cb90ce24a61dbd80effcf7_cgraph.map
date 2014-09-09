@@ -1,0 +1,7 @@
+<map id="GP::CovSparseiso::Kss" name="GP::CovSparseiso::Kss">
+<area shape="rect" id="node2" href="$classGP_1_1TestData.html#aed3a8cf3d9f1fd7edf8b32ad812f19db" title="Gets the number of test data, M. " alt="" coords="233,5,353,32"/>
+<area shape="rect" id="node3" href="$classGP_1_1PairwiseOp.html#a837523813c6b7bccaa4e9e7336741ddc" title="Pairwise squared distances between N training inputs. " alt="" coords="213,56,373,83"/>
+<area shape="rect" id="node4" href="$classGP_1_1TestData.html#a5d55ea7524fcbd70a06dd057740369dc" title="Gets the const pointer to the training inputs. " alt="" coords="228,107,359,133"/>
+<area shape="rect" id="node5" href="$classGP_1_1CovSparseiso.html#ad56e18eb0cfb4b46463a3d0b13ee0fd5" title="Self covariance matrix between the training data, K(X, X) or its partial derivative. " alt="" coords="221,157,366,184"/>
+<area shape="rect" id="node6" href="$classGP_1_1TrainingData.html#a836d72944fe7558492341c6173cef0bb" title="Gets the self absolute distances between the training inputs. " alt="" coords="422,157,618,184"/>
+</map>

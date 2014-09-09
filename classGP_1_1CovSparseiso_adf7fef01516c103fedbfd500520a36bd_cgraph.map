@@ -1,0 +1,5 @@
+<map id="GP::CovSparseiso::Ks" name="GP::CovSparseiso::Ks">
+<area shape="rect" id="node2" href="$classGP_1_1CovSparseiso.html#ad56e18eb0cfb4b46463a3d0b13ee0fd5" title="Self covariance matrix between the training data, K(X, X) or its partial derivative. " alt="" coords="234,5,379,32"/>
+<area shape="rect" id="node4" href="$classGP_1_1TrainingData.html#afe1ff6fd1136404079f62cb02ae78a2d" title="Gets the cross absolute distances between the training and test inputs. " alt="" coords="205,56,408,83"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#a836d72944fe7558492341c6173cef0bb" title="Gets the self absolute distances between the training inputs. " alt="" coords="457,5,653,32"/>
+</map>

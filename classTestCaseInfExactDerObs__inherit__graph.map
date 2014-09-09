@@ -1,0 +1,6 @@
+<map id="TestCaseInfExactDerObs" name="TestCaseInfExactDerObs">
+<area shape="rect" id="node2" href="$classTestDerivativeDataSetting.html" title="A data setting test fixture. Initialize the training data, test positions, and hyperparameters which ..." alt="" coords="6,403,193,525"/>
+<area shape="rect" id="node3" href="$classTestFunctionDataSetting.html" title="A data setting test fixture. Initialize the training data, test positions, and hyperparameters which ..." alt="" coords="5,131,195,355"/>
+<area shape="rect" id="node5" href="$classGP_1_1InfExactDerObs.html" title="{GP::InfExactDerObs\l\&lt; TestType, MeanZeroDerObs,\l CovSEisoDerObs, LikGaussDerObs \&gt;\n||}" alt="" coords="219,411,464,517"/>
+<area shape="rect" id="node6" href="$classGP_1_1InfExactGeneral.html" title="{GP::InfExactGeneral\l\&lt; TestType, MeanZeroDerObs,\l CovSEisoDerObs, LikGaussDerObs \&gt;\n||+ predict()\l+ negativeLogMarginalLikelihood()\l# predict()\l# choleskyFactor()\l# y_m()\l# alpha()\l# q()\l# dnlZWRTLikHyp()\l# dnlZWRTLikHyp2()\l}" alt="" coords="219,131,464,355"/>
+</map>

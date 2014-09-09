@@ -1,0 +1,4 @@
+<map id="TestCaseInfExact" name="TestCaseInfExact">
+<area shape="rect" id="node2" href="$classTestFunctionDataSetting.html" title="A data setting test fixture. Initialize the training data, test positions, and hyperparameters which ..." alt="" coords="5,160,195,384"/>
+<area shape="rect" id="node4" href="$classGP_1_1InfExact.html" title="{GP::InfExact\&lt; TestType,\l MeanZero, CovSEiso, LikGauss \&gt;\n||+ predict()\l+ negativeLogMarginalLikelihood()\l+ negativeLogMarginalLikelihood2()\l# predict()\l# invSqrtD()\l# choleskyFactor()\l# choleskyFactor()\l# y_m()\l# alpha()\l# alpha()\l# q()\l# q()\l# dnlZWRTLikHyp()\l# dnlZWRTLikHyp()\l}" alt="" coords="219,131,443,413"/>
+</map>

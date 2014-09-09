@@ -1,0 +1,5 @@
+<map id="GP::CovSEisoDerObs&lt; Scalar &gt;" name="GP::CovSEisoDerObs&lt; Scalar &gt;">
+<area shape="rect" id="node2" href="$classGP_1_1CovDerObs.html" title="{GP::CovDerObs\&lt; Scalar,\l CovSEisoDerObsBase \&gt;\n||+ K()\l+ Ks()\l}" alt="" coords="11,376,179,483"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovSEisoDerObsBase.html" title="A base class for CovSEisoDerObs which will be passed to CovDerObs as a template parameter. Thus, CovSEisoDerObs is a combination of CovDerObs and CovSEisoDerObsBase. " alt="" coords="5,177,184,327"/>
+<area shape="rect" id="node4" href="$classGP_1_1CovSEiso.html" title="Squared exponential covariance function with isotropic distances &#160;All covariance classes should have ..." alt="" coords="11,6,177,127"/>
+</map>

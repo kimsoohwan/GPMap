@@ -1,0 +1,6 @@
+<map id="GP::CovMaterniso::Kss" name="GP::CovMaterniso::Kss">
+<area shape="rect" id="node2" href="$classGP_1_1TestData.html#aed3a8cf3d9f1fd7edf8b32ad812f19db" title="Gets the number of test data, M. " alt="" coords="225,5,345,32"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovMaterniso.html#ad9717e9d77771bdbba1c5de04fc211b7" title="Self covariance matrix between the training data, K(X, X) or its partial derivative. " alt="" coords="213,56,357,83"/>
+<area shape="rect" id="node5" href="$classGP_1_1TestData.html#a5d55ea7524fcbd70a06dd057740369dc" title="Gets the const pointer to the training inputs. " alt="" coords="220,107,351,133"/>
+<area shape="rect" id="node4" href="$classGP_1_1TrainingData.html#ac95aa939abdd33ac04b07d4e2fe4d470" title="Gets the self squared distances between the training inputs. " alt="" coords="405,56,595,83"/>
+</map>

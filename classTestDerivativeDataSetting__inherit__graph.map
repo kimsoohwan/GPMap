@@ -1,0 +1,7 @@
+<map id="TestDerivativeDataSetting" name="TestDerivativeDataSetting">
+<area shape="rect" id="node4" href="$classTestCaseCovMaternisoDerObs.html" title="Test fixture for testing CovMaternisoDerObs class. " alt="" coords="5,684,203,761"/>
+<area shape="rect" id="node5" href="$classTestCaseCovSEisoDerObs.html" title="Test fixture for testing CovSEisoDerObs class. " alt="" coords="227,684,404,761"/>
+<area shape="rect" id="node6" href="$classTestCaseCovSparseisoDerObs.html" title="Test fixture for testing CovSparseisoDerObs class. " alt="" coords="429,684,629,761"/>
+<area shape="rect" id="node7" href="$classTestCaseInfExactDerObs.html" title="Test fixture for testing CovSEiso class. " alt="" coords="653,574,843,871"/>
+<area shape="rect" id="node2" href="$classTestFunctionDataSetting.html" title="A data setting test fixture. Initialize the training data, test positions, and hyperparameters which ..." alt="" coords="328,131,517,355"/>
+</map>

@@ -1,0 +1,4 @@
+<map id="GP::PairwiseOp::delta" name="GP::PairwiseOp::delta">
+<area shape="rect" id="node2" href="$classGP_1_1DerivativeTrainingData.html#ab40168b66dfd7bf9929d9cf9bd4e7ea1" title="Gets the pointer to the cross differences between the derivative training inputs and test inputs..." alt="" coords="211,5,386,46"/>
+<area shape="rect" id="node3" href="$classGP_1_1TrainingData.html#a4d7ed6816277e3e2f726a0b981331993" title="Gets the matrix pointer to the cross differences between the training inputs and test inputs..." alt="" coords="205,70,392,111"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="GP::CovMaternisoDerObs&lt; Scalar &gt;" name="GP::CovMaternisoDerObs&lt; Scalar &gt;">
+<area shape="rect" id="node2" href="$classGP_1_1CovDerObs.html" title="{GP::CovDerObs\&lt; Scalar,\l CovMaternisoDerObsBase \&gt;\n||+ K()\l+ Ks()\l}" alt="" coords="10,376,200,483"/>
+<area shape="rect" id="node3" href="$classGP_1_1CovMaternisoDerObsBase.html" title="A base class for CovMaternisoDerObs which will be passed to CovDerObs as a template parameter..." alt="" coords="5,177,205,327"/>
+<area shape="rect" id="node4" href="$classGP_1_1CovMaterniso.html" title="Matern covariance function with isotropic distances, &#160;&#160;All covariance classes should have public stat..." alt="" coords="11,6,199,127"/>
+</map>
