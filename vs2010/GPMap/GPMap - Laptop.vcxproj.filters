@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\main\bunny\main_bunny_gpmap.cpp">
+      <Filter>main\bunny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main\bunny\main_bunny_octomap.cpp">
+      <Filter>main\bunny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\test\octree\test_octree_gpmap.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main\bunny\main_bunny_surface.cpp">
+      <Filter>main\bunny</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\bcm\bcm.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\bcm\bcm_serializable.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\common\common.hpp">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\data\training_data.hpp">
+      <Filter>src\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\data\test_data.hpp">
+      <Filter>src\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\features\remove_NAN.hpp">
+      <Filter>src\features</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\features\surface_normal.hpp">
+      <Filter>src\features</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\filter\filters.hpp">
+      <Filter>src\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\io\io.hpp">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octomap\octomap.hpp">
+      <Filter>src\octomap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_container.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_gpmap.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_viewer.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\plsc\plsc.hpp">
+      <Filter>src\plsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\serialization\eigen_dense_base_addons.hpp">
+      <Filter>src\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\serialization\eigen_serialization.hpp">
+      <Filter>src\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\data_types.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\filesystem.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\timer.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\visualization\cloud_viewer.hpp">
+      <Filter>src\visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\iso_surface\iso_surface.hpp">
+      <Filter>src\iso_surface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\bcm\gaussian.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\color_map.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\random.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\macro_gpmap.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\data_partitioning.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="main">
+      <UniqueIdentifier>{76e0bca1-9bb5-40f7-9bd7-53966f7378c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\bunny">
+      <UniqueIdentifier>{9f4e7780-8ab7-4416-b18e-68ce82056d93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{e0a1ca53-f9c4-4c75-b5c9-7572d6c87224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\bcm">
+      <UniqueIdentifier>{2bbd4a13-ae57-4d07-94b9-9345559106d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{b7c0e2b2-cf2d-4b7c-9750-8faa9742307f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\data">
+      <UniqueIdentifier>{36e0a2d4-263f-4c7b-b8c3-0aaef421dbd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\features">
+      <UniqueIdentifier>{49b133f2-576f-440e-9a83-b593ed7ba10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filter">
+      <UniqueIdentifier>{0554ee75-3a6e-450e-ac14-a65ddbe7a9f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io">
+      <UniqueIdentifier>{f3c15a62-84ef-49e7-88df-3b665e8f5666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\visualization">
+      <UniqueIdentifier>{fe9ab83c-10a5-4544-873b-689bbd49db99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{8412f08f-6a1c-4b38-9898-d9e45bb296f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\octree">
+      <UniqueIdentifier>{8d3df2dc-c62f-4022-abbe-cc00d9ca233d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\octomap">
+      <UniqueIdentifier>{4f704d9f-e78b-40a7-8633-51d81ab59d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\plsc">
+      <UniqueIdentifier>{e47a7b29-0570-436b-aa96-3c27d3292cff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\serialization">
+      <UniqueIdentifier>{dff847b7-9c01-45d1-b5a4-fb85694ecea6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{bd7c66a0-3e19-4cee-bef8-ce09a8d8bce0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\iso_surface">
+      <UniqueIdentifier>{4fab5750-3228-4fdc-a202-15f6620c9407}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

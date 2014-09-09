@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\test\test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\test\bcm\test_bcm.hpp">
+      <Filter>test\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\bcm\test_bcm_serializable.hpp">
+      <Filter>test\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\data\test_test_data.hpp">
+      <Filter>test\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\serialization\test_eigen_serialization.hpp">
+      <Filter>test\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\plsc\test_plsc.hpp">
+      <Filter>test\plsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\test\octree\test_data_partitioning.hpp">
+      <Filter>test\octree</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{7ffec153-9da0-4604-b2b4-156972a656b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\serialization">
+      <UniqueIdentifier>{f0e5c29f-e0b6-4f8c-a8b5-c22e97fb64d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\data">
+      <UniqueIdentifier>{dffc3440-471d-4805-a520-04242ed6d280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\bcm">
+      <UniqueIdentifier>{2b9148e7-8ad2-4fcc-99ea-31a3a162b817}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\plsc">
+      <UniqueIdentifier>{78fe696e-7231-4e9b-a447-7d430bfc1a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\octree">
+      <UniqueIdentifier>{ec1d0703-d5a4-4625-be25-38227a66dd3a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

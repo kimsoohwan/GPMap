@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{b03998a4-8394-409f-8cb5-90c5e0973aed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\bcm">
+      <UniqueIdentifier>{7b505d8c-4249-4344-93ba-e9505fd11727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{86c49b1f-1490-498d-b183-7e631fef2564}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\data">
+      <UniqueIdentifier>{c0cb9180-03a5-40a0-9ea6-3a3ee0953ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\features">
+      <UniqueIdentifier>{68af50d5-306a-4e67-a683-afc9dec685a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\io">
+      <UniqueIdentifier>{56143e13-4309-452c-995d-efb95e89ca52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\filter">
+      <UniqueIdentifier>{b03e69d6-bc2a-4926-8f86-cf3c95d4c7fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\octree">
+      <UniqueIdentifier>{bcf54337-0951-4b36-868f-95e0aa58a9c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\plsc">
+      <UniqueIdentifier>{b7d6365e-5ac5-4a7b-9611-b5efa6daa08f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\util">
+      <UniqueIdentifier>{59f3a57f-47ab-4959-bc99-9642a11add36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\visualization">
+      <UniqueIdentifier>{82cfb4ab-8010-404b-86f7-7e8535f2496b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{3e3d79f5-b48d-4772-aa48-93ac3bbafeee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\serialization">
+      <UniqueIdentifier>{94cb2317-0d7a-44dd-88a0-e261f97febb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\octomap">
+      <UniqueIdentifier>{733de4aa-d01f-4239-bd2c-6b638088fa5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{64f91cc7-93d9-4b13-ae4c-7e14875ea744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\bunny">
+      <UniqueIdentifier>{1d2aaa08-20c7-46b6-8503-29e88d9b729a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\io\io.hpp">
+      <Filter>src\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\filter\filters.hpp">
+      <Filter>src\filter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_viewer.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\features\remove_NAN.hpp">
+      <Filter>src\features</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\features\surface_normal.hpp">
+      <Filter>src\features</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\data\test_data.hpp">
+      <Filter>src\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\common\common.hpp">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\data\training_data.hpp">
+      <Filter>src\data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_container.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\data_types.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\util.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\bcm\bcm.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\plsc\plsc.hpp">
+      <Filter>src\plsc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octree\octree_gpmap.hpp">
+      <Filter>src\octree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\visualization\cloud_viewer.hpp">
+      <Filter>src\visualization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\octomap\octomap.hpp">
+      <Filter>src\octomap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\serialization\eigen_dense_base_addons.hpp">
+      <Filter>src\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\serialization\eigen_serialization.hpp">
+      <Filter>src\serialization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\filesystem.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\timer.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\util\log.hpp">
+      <Filter>src\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\bcm\bcm_serializable.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\test\octree\test_octree_gpmap.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main\bunny\main_bunny_octomap.cpp">
+      <Filter>main\bunny</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\main\bunny\main_bunny_gpmap.cpp">
+      <Filter>main\bunny</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
