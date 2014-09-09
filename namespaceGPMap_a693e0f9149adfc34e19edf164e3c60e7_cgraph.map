@@ -1,0 +1,9 @@
+<map id="GPMap::train_hyperparameters_and_build_gpmaps" name="GPMap::train_hyperparameters_and_build_gpmaps">
+<area shape="rect" id="node2" href="$namespaceGPMap.html#a4fc180fefb42e528df1bc91f74e64a87" title="Train hyperparameters with All&#45;in&#45;One [Function/Derivative/All] Observations. " alt="" coords="256,5,459,46"/>
+<area shape="rect" id="node4" href="$namespaceGPMap.html#a0946720fae058cb7ae6575928ec433f7" title="Build GPMaps with Sampled All&#45;in&#45;One [Function/Derivative/All] Observations. " alt="" coords="280,71,435,127"/>
+<area shape="rect" id="node6" href="$namespaceGPMap.html#a58dbfc4ca4cad01b28c99caa94f91228" title="Build GPMaps with Sequential [Function/Derivative/All] Observations. " alt="" coords="259,151,456,193"/>
+<area shape="rect" id="node8" href="$namespaceGPMap.html#a3d5c3138d1155927b57c9c35882f254d" title="Build GPMaps with All&#45;in&#45;One [Function/Derivative/All] Observations. " alt="" coords="259,217,455,258"/>
+<area shape="rect" id="node3" href="$namespaceGPMap.html#a718c522f1d05fa9dfdb5f1b7a7f3a284" title="Train hyperparameters with all&#45;in&#45;one observations. " alt="" coords="519,12,681,39"/>
+<area shape="rect" id="node5" href="$namespaceGPMap.html#a0c8cfb68f46705c42731948d8d3f5bdd" title="Building a GPMap with all&#45;in&#45;one observations. " alt="" coords="524,85,676,112"/>
+<area shape="rect" id="node7" href="$namespaceGPMap.html#aae0ed527d6889303ed2161b3b914e1ec" title="Building a GPMap with all&#45;in&#45;one observations with possible incremental update. " alt="" coords="507,191,693,217"/>
+</map>

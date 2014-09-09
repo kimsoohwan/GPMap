@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['testdata',['testData',['../classTestFunctionDataSetting.html#a68aecca90aded5ca86d57c075ecb5637',1,'TestFunctionDataSetting::testData()'],['../classTestFunctionDataSetting2.html#a12e7c060065b28aa617b7fc589606e54',1,'TestFunctionDataSetting2::testData()']]],
-  ['trainingdata',['trainingData',['../classTestFunctionDataSetting.html#a1f750fec0013f992e319e275b4bea9e1',1,'TestFunctionDataSetting::trainingData()'],['../classTestFunctionDataSetting2.html#ae3cff8e768844630c5ef6561e778cbbe',1,'TestFunctionDataSetting2::trainingData()']]]
+  ['val',['val',['../classGPMap_1_1Vector3D.html#acdab93aabd6f8d2ff60671683f4859fd',1,'GPMap::Vector3D']]],
+  ['var',['var',['../structGPMap_1_1GaussianDistribution1D.html#aedc4ffcb4f8d314b96a74cd054ff3c2f',1,'GPMap::GaussianDistribution1D']]],
+  ['viz',['viz',['../classGPMap_1_1OctreeViewer.html#abcf080f650068245c76537fc0ff3afd3',1,'GPMap::OctreeViewer']]]
 ];

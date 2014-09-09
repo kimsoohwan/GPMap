@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pairwiseop',['PairwiseOp',['../classGP_1_1PairwiseOp.html',1,'GP']]]
+  ['vector3d',['Vector3D',['../classGPMap_1_1Vector3D.html',1,'GPMap']]]
 ];

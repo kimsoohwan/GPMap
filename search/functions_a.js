@@ -1,9 +1,11 @@
 var searchData=
 [
-  ['n',['N',['../classGP_1_1TrainingData.html#ae5da6a507565e88f9f1a2ae52bf633da',1,'GP::TrainingData']]],
-  ['nd',['Nd',['../classGP_1_1DerivativeTrainingData.html#afae683f573ef3caee5fba20dddd21df1',1,'GP::DerivativeTrainingData']]],
-  ['negativelogmarginallikelihood',['negativeLogMarginalLikelihood',['../classGP_1_1InfExact.html#a88251bf9bad233b60dc7c12dc9c448c3',1,'GP::InfExact::negativeLogMarginalLikelihood()'],['../classGP_1_1InfExactGeneral.html#aabeca12c7e9fd6ba604687f6cf6f0549',1,'GP::InfExactGeneral::negativeLogMarginalLikelihood()']]],
-  ['negativelogmarginallikelihood2',['negativeLogMarginalLikelihood2',['../classGP_1_1InfExact.html#a22bbf9c03eba028d5f4cb370a23d56cd',1,'GP::InfExact']]],
-  ['nlz',['NlZ',['../classGP_1_1NlZ.html#a77c99dede642bd8d25c848ec0f065068',1,'GP::NlZ']]],
-  ['nn',['NN',['../classGP_1_1DerivativeTrainingData.html#afd6c8634eb4f552e5242b1b8f275b5d9',1,'GP::DerivativeTrainingData::NN()'],['../classGP_1_1TrainingData.html#a16775b05f78ef915974dc893555dc8ec',1,'GP::TrainingData::NN()']]]
+  ['main',['main',['../main__bunny__data__preprocessing_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_data_preprocessing.cpp'],['../main__bunny__data__viewer_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_data_viewer.cpp'],['../main__bunny__gpamp__surface_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_gpamp_surface.cpp'],['../main__bunny__gpmap_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_gpmap.cpp'],['../main__bunny__gpmap__octree_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_gpmap_octree.cpp'],['../main__bunny__octomap_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main(int argc, char **argv):&#160;main_bunny_octomap.cpp']]],
+  ['marchingcubes',['marchingcubes',['../classGPMap_1_1IsoSurfaceExtraction.html#adce5d664ccb76478348e8295b3d3f7c8',1,'GPMap::IsoSurfaceExtraction']]],
+  ['marchingtetrahedron',['marchingTetrahedron',['../classGPMap_1_1IsoSurfaceExtraction.html#a0b0e2effee0d28e12d21e3e20ec57d5a',1,'GPMap::IsoSurfaceExtraction']]],
+  ['max_5fdisplayed_5fcubes',['MAX_DISPLAYED_CUBES',['../namespaceGPMap.html#a4fcf02bf1225939a6d22d941472495b7',1,'GPMap']]],
+  ['maxpointxyz',['maxPointXYZ',['../namespaceGPMap.html#aa97f0e42037be6129e21281397563ea2',1,'GPMap']]],
+  ['mem2str',['mem2str',['../classGPMap_1_1BCM__Serializable.html#a2668e61b859923d07d07122c07b5f8e6',1,'GPMap::BCM_Serializable']]],
+  ['meshgrid',['meshGrid',['../namespaceGPMap.html#aebdfdef65894e4dc695ebd636ab4a622',1,'GPMap']]],
+  ['minpointxyz',['minPointXYZ',['../namespaceGPMap.html#a0c71f1e0aef9d1174faa41de8bd439aa',1,'GPMap']]]
 ];

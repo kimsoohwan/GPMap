@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hyp',['Hyp',['../classGP_1_1CovMaterniso.html#ab33aa569c1c1105f15f90a613f7a337f',1,'GP::CovMaterniso::Hyp()'],['../classGP_1_1CovSEiso.html#aa382503e5ada1cd6bb92b2f9a707a828',1,'GP::CovSEiso::Hyp()'],['../classGP_1_1CovSparseiso.html#ab7c72ce546d8265fd09248bd9aabc834',1,'GP::CovSparseiso::Hyp()'],['../classGP_1_1NlZ.html#aadbb3f5466f7195f3d732681bfb89847',1,'GP::NlZ::Hyp()'],['../classGP_1_1DnlZ.html#a93d21acf83b182c2fbc8574e3ef5a7db',1,'GP::DnlZ::Hyp()'],['../classGP_1_1InfExact.html#a03abf577d3fa71538b8ae47762c0103e',1,'GP::InfExact::Hyp()'],['../classGP_1_1InfExactGeneral.html#a1c528a2eda41a26de55cfc26f357cea5',1,'GP::InfExactGeneral::Hyp()'],['../classGP_1_1LikGauss.html#a9d33a5256a819fd83eb4bf6ee259d408',1,'GP::LikGauss::Hyp()'],['../classGP_1_1LikGaussDerObs.html#a2898cbe53a261b875c57e97b56083966',1,'GP::LikGaussDerObs::Hyp()'],['../classGP_1_1MeanZero.html#a48ea9334e1b9db9163c5b4578005f620',1,'GP::MeanZero::Hyp()']]]
+  ['indices',['Indices',['../namespaceGPMap.html#ae7b5e2d7f982b2a621b064d451a6fe6c',1,'GPMap']]],
+  ['indicesconstptr',['IndicesConstPtr',['../namespaceGPMap.html#ac65401a87080dc217680761d9499e50d',1,'GPMap']]],
+  ['indicesptr',['IndicesPtr',['../namespaceGPMap.html#a224dc31318cfc837c4e63e1c4fcdc277',1,'GPMap']]]
 ];

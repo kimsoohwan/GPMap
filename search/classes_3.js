@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['epsilon',['Epsilon',['../structGP_1_1Epsilon.html',1,'GP']]],
-  ['exception',['Exception',['../classGP_1_1Exception.html',1,'GP']]]
+  ['gaussian',['Gaussian',['../classGaussian.html',1,'']]],
+  ['gaussiandistribution',['GaussianDistribution',['../classGPMap_1_1GaussianDistribution.html',1,'GPMap']]],
+  ['gaussiandistribution1d',['GaussianDistribution1D',['../structGPMap_1_1GaussianDistribution1D.html',1,'GPMap']]]
 ];

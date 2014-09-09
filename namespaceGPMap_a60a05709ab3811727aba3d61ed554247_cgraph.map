@@ -1,0 +1,4 @@
+<map id="GPMap::getMinMaxPointXYZ" name="GPMap::getMinMaxPointXYZ">
+<area shape="rect" id="node2" href="$namespaceGPMap.html#a0c71f1e0aef9d1174faa41de8bd439aa" title="Find the minimum of two pcl::PointXYZ. " alt="" coords="247,5,395,32"/>
+<area shape="rect" id="node3" href="$namespaceGPMap.html#aa97f0e42037be6129e21281397563ea2" title="Find the maximum of two pcl::PointXYZ. " alt="" coords="245,56,397,83"/>
+</map>

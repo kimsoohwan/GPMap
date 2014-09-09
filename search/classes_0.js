@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['bfgs',['BFGS',['../classGP_1_1BFGS.html',1,'GP']]],
-  ['bobyqa',['BOBYQA',['../classGP_1_1BOBYQA.html',1,'GP']]]
+  ['bcm',['BCM',['../classGPMap_1_1BCM.html',1,'GPMap']]],
+  ['bcm_5fserializable',['BCM_Serializable',['../classGPMap_1_1BCM__Serializable.html',1,'GPMap']]],
+  ['bymovingleastsquares',['ByMovingLeastSquares',['../classGPMap_1_1ByMovingLeastSquares.html',1,'GPMap']]],
+  ['bynearestneighbors',['ByNearestNeighbors',['../classGPMap_1_1ByNearestNeighbors.html',1,'GPMap']]]
 ];

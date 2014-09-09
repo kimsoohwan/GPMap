@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['_7eexception',['~Exception',['../classGP_1_1Exception.html#a5abb2cd7db4bbea18302b3534919b239',1,'GP::Exception']]],
-  ['_7elogfile',['~LogFile',['../classGP_1_1LogFile.html#afb3d384f57f88fc8af51cd6f3f4107d5',1,'GP::LogFile']]]
+  ['wall_5fclock_5ftime',['wall_clock_time',['../classGPMap_1_1CPU__Times.html#a8cb75cffdf0c8a9fc11974afcd2b5888',1,'GPMap::CPU_Times']]]
 ];

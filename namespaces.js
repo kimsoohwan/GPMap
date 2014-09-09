@@ -1,4 +1,5 @@
 var namespaces =
 [
-    [ "GP", "namespaceGP.html", null ]
+    [ "GPMap", "namespaceGPMap.html", null ],
+    [ "pcl", "namespacepcl.html", null ]
 ];

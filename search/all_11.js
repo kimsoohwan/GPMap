@@ -1,13 +1,16 @@
 var searchData=
 [
-  ['searchstrategy',['SearchStrategy',['../group__SearchStrategy.html',1,'']]],
-  ['seiso',['SEiso',['../group__SEiso.html',1,'']]],
-  ['set',['set',['../classGP_1_1DerivativeTrainingData.html#a8c207c978276c429f712299064f5a10c',1,'GP::DerivativeTrainingData::set()'],['../classGP_1_1TestData.html#ad1bc48fe4cceb69e2c84f62a4cd3d680',1,'GP::TestData::set()'],['../classGP_1_1TrainingData.html#a1ddf469baa943b2e91397f89177aa6bc',1,'GP::TrainingData::set()']]],
-  ['setup',['SetUp',['../classTestCaseCovMaterniso.html#a1c3934875f4f07c826dd30099b53dafe',1,'TestCaseCovMaterniso::SetUp()'],['../classTestCaseCovMaternisoDerObs.html#aea0e50a246f1357cb182fe75b71fb31a',1,'TestCaseCovMaternisoDerObs::SetUp()'],['../classTestCaseCovSEMaterniso.html#a4ced64866571a7969b1a9538c8eb8535',1,'TestCaseCovSEMaterniso::SetUp()'],['../classTestCaseCovSEiso.html#aa8b909dec8a9ad231570580851ed76a4',1,'TestCaseCovSEiso::SetUp()'],['../classTestCaseCovSEisoDerObs.html#a6a9d4a5182bbc0e2b053a8b2b134e8a4',1,'TestCaseCovSEisoDerObs::SetUp()'],['../classTestCaseCovSparseiso.html#af1b57f08702f3a32e234fc53ab6f80d8',1,'TestCaseCovSparseiso::SetUp()'],['../classTestCaseCovSparseisoDerObs.html#ae06bc42ed26a050686ed0063096ea26b',1,'TestCaseCovSparseisoDerObs::SetUp()'],['../classTestCaseGP.html#a6e96534308b0e2596ae1f864484eec66',1,'TestCaseGP::SetUp()'],['../classTestCaseGPDerObs.html#a6735db74ecc97e85329f337d94b24520',1,'TestCaseGPDerObs::SetUp()'],['../classTestCaseInfExact.html#aca2864d5e5918a2a5d04e75c3e84de5e',1,'TestCaseInfExact::SetUp()'],['../classTestCaseInfExactDerObs.html#a57f2a016d5848bef0b6dccdf9d7adf42',1,'TestCaseInfExactDerObs::SetUp()'],['../classTestDerivativeDataSetting.html#a2633c0742369a8697522889ab52a9e0f',1,'TestDerivativeDataSetting::SetUp()'],['../classTestDerivativeDataSetting2.html#ab2f3345483c9ae1aee801a4c42c696c3',1,'TestDerivativeDataSetting2::SetUp()'],['../classTestFunctionDataSetting.html#ac8ca54d154d1889e6dd4bf5b9d47b252',1,'TestFunctionDataSetting::SetUp()'],['../classTestFunctionDataSetting2.html#a263abac3e27074ca1a884b3bbd63b8b8',1,'TestFunctionDataSetting2::SetUp()']]],
-  ['sigma_5ff',['sigma_f',['../classTestFunctionDataSetting.html#a2551daf8cd8f0a8bdd1bd15b815d1f82',1,'TestFunctionDataSetting::sigma_f()'],['../classTestFunctionDataSetting2.html#a18e4e5f6f19c4dcc00382954b14d2112',1,'TestFunctionDataSetting2::sigma_f()']]],
-  ['sigma_5fn',['sigma_n',['../classTestCaseCholeskyFactorSolver.html#a0e27af137e412da18db94633ed090192',1,'TestCaseCholeskyFactorSolver::sigma_n()'],['../classTestFunctionDataSetting.html#a5bbdbffdd3b18ebacf80a9bda9b0887f',1,'TestFunctionDataSetting::sigma_n()'],['../classTestFunctionDataSetting2.html#a92743ea3551703451481b77ce90221f3',1,'TestFunctionDataSetting2::sigma_n()']]],
-  ['sigma_5fnd',['sigma_nd',['../classTestCaseGPDerObs.html#a262176eb523f9737ed7ae4e19f7ff84e',1,'TestCaseGPDerObs::sigma_nd()'],['../classTestCaseInfExactDerObs.html#a329c76330dc840743a68d8444af0a91e',1,'TestCaseInfExactDerObs::sigma_nd()']]],
-  ['size',['size',['../classGP_1_1Hyp.html#ad83e6216398475582bf49ff73bc08716',1,'GP::Hyp']]],
-  ['sqdist',['sqDist',['../classGP_1_1PairwiseOp.html#a837523813c6b7bccaa4e9e7336741ddc',1,'GP::PairwiseOp::sqDist(const MatrixConstPtr pX)'],['../classGP_1_1PairwiseOp.html#a92ec55d42b1a51a0dd34ba3d67d80d07',1,'GP::PairwiseOp::sqDist(const MatrixConstPtr pX, const MatrixConstPtr pXs)']]],
-  ['stoppingstrategy',['StoppingStrategy',['../group__StoppingStrategy.html',1,'']]]
+  ['test_5fdata_2ehpp',['test_data.hpp',['../test__data_8hpp.html',1,'']]],
+  ['three',['Three',['../classThree.html',1,'']]],
+  ['timer_2ehpp',['timer.hpp',['../timer_8hpp.html',1,'']]],
+  ['todo_20list',['Todo List',['../todo.html',1,'']]],
+  ['totalnumofpointsdangledinvoxels',['totalNumOfPointsDangledInVoxels',['../classGPMap_1_1OctreeGPMap.html#a65e7affee2602d6ca4da26ee9706bb34',1,'GPMap::OctreeGPMap']]],
+  ['train',['train',['../classGPMap_1_1OctreeGPMap.html#a9698174711045ff609022f78bb8ff18b',1,'GPMap::OctreeGPMap']]],
+  ['train_5fhyperparameters_5fand_5fbuild_5fgpmaps',['train_hyperparameters_and_build_gpmaps',['../namespaceGPMap.html#a693e0f9149adfc34e19edf164e3c60e7',1,'GPMap']]],
+  ['train_5fhyperparameters_5fwith_5fall_5fin_5fone_5fobservations',['train_hyperparameters_with_all_in_one_observations',['../namespaceGPMap.html#a4fc180fefb42e528df1bc91f74e64a87',1,'GPMap']]],
+  ['trainbyminimizingnegevalaccu',['trainByMinimizingNegEvalAccu',['../classGPMap_1_1OctoMap.html#a4a0a3b11b6a8b420ddfc0376543be8b8',1,'GPMap::OctoMap']]],
+  ['trainbyminimizingsumneglogpredprob',['trainByMinimizingSumNegLogPredProb',['../classGPMap_1_1OctoMap.html#ac5b665e517c973de0b3de37fab0f124b',1,'GPMap::OctoMap']]],
+  ['training_5fdata_2ehpp',['training_data.hpp',['../training__data_8hpp.html',1,'']]],
+  ['type_5fdefine_5fmatrix',['TYPE_DEFINE_MATRIX',['../namespaceGPMap.html#a8484e1ee35572f05bd6238c7d8dfc0f0',1,'GPMap']]],
+  ['type_5fdefine_5fvector',['TYPE_DEFINE_VECTOR',['../namespaceGPMap.html#ae4aa1369dba64a1e41ffe098c7420a27',1,'GPMap']]]
 ];

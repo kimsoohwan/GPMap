@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>OpenGP: Todo List</title>
+<title>GPMap: Todo List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -35,7 +35,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">OpenGP
+   <div id="projectname">GPMap
    &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
@@ -52,7 +52,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -94,7 +93,7 @@ $(document).ready(function(){initNavTree('todo.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -109,32 +108,17 @@ $(document).ready(function(){initNavTree('todo.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="classGP_1_1CovDerObs.html#a5f2f45fb86e1d05a31b2e6952d1fc316">GP::CovDerObs&lt; Scalar, CovBase &gt;::Ks</a>  (const typename CovBase&lt; Scalar &gt;::Hyp &amp;logHyp, const DerivativeTrainingData&lt; Scalar &gt; &amp;derivativeTrainingData, const TestData&lt; Scalar &gt; &amp;testData)</dt>
-<dd>DerivativeTestData to predict surface normals<br />
- Then it returns K: NN x MM, where NN = N + Nd*D and MM = M + Md*D.<br />
- In that case, Kss should be overloaded for DerivativeTestData.  </dd>
-<dt><a class="anchor" id="_todo000002"></a>Class <a class="el" href="classGP_1_1DerivativeTrainingData.html">GP::DerivativeTrainingData&lt; Scalar &gt;</a>  </dt>
-<dd>Instead of having m_pXd, how about a mask for the derivative inputs among the functional inputs<ul>
-<li><dl class="section author"><dt>Author</dt><dd>Soohwan Kim </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>01/04/2014  </dd></dl>
-</li>
-</ul>
-</dd>
-<dt><a class="anchor" id="_todo000003"></a>Class <a class="el" href="classGP_1_1TestData.html">GP::TestData&lt; Scalar &gt;</a>  </dt>
-<dd>DerivativeTestData to predict surface normals  </dd>
-<dt><a class="anchor" id="_todo000005"></a>Member <a class="el" href="classGP_1_1TrainingData.html#afe1ff6fd1136404079f62cb02ae78a2d">GP::TrainingData&lt; Scalar &gt;::pAbsDistXXs</a>  (const TestData&lt; Scalar &gt; &amp;testData) const </dt>
-<dd>Include this matrix as a member variable like m_pDistXX  </dd>
-<dt><a class="anchor" id="_todo000006"></a>Member <a class="el" href="classGP_1_1TrainingData.html#a4d7ed6816277e3e2f726a0b981331993">GP::TrainingData&lt; Scalar &gt;::pDeltaXXs</a>  (const TestData&lt; Scalar &gt; &amp;testData, const int coord) const </dt>
-<dd>Include this matrix as a member variable like m_pDeltaXXList  </dd>
-<dt><a class="anchor" id="_todo000004"></a>Member <a class="el" href="classGP_1_1TrainingData.html#a4e6f6a0b869d0165506d89bc00115d73">GP::TrainingData&lt; Scalar &gt;::pSqDistXXs</a>  (const TestData&lt; Scalar &gt; &amp;testData) const </dt>
-<dd>Include this matrix as a member variable like m_pSqDistXX </dd>
+<dt><a class="anchor" id="_todo000002"></a>Member <a class="el" href="classGPMap_1_1ColorMap.html#aad7472abcb95ffd1f089b9171d928cdf">GPMap::ColorMap::index</a>  (const float value)</dt>
+<dd>Linear vs. Hyperbolic  </dd>
+<dt><a class="anchor" id="_todo000001"></a>Member <a class="el" href="classGPMap_1_1OctreeGPMap.html#a0f2dd76e9be20abb828d82d8cd1d51c6">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;::operator()</a>  (const GP::DlibVector &amp;logDlib) const </dt>
+<dd>Do not cover all of the leaf nodes, but select some(10,100) of them randomly </dd>
 </dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 9 2014 21:59:55 for OpenGP by
+    <li class="footer">Generated on Wed Sep 10 2014 02:09:01 for GPMap by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

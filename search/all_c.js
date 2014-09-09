@@ -1,14 +1,17 @@
 var searchData=
 [
-  ['n',['N',['../classGP_1_1CovMaterniso.html#a29dee76ef6a6fc699a3a4d64f793a92c',1,'GP::CovMaterniso::N()'],['../classGP_1_1CovProd.html#ad732f2ccac0d8e07ac0e9c401db4b904',1,'GP::CovProd::N()'],['../classGP_1_1CovSEiso.html#a19a7870c1df14157d6b9dfdacaac26b7',1,'GP::CovSEiso::N()'],['../classGP_1_1CovSparseiso.html#aa3b02d79542d4bb4324758388b071bec',1,'GP::CovSparseiso::N()'],['../classTestCaseInfExact.html#a2590f1e295121c8de11cc47300796d3e',1,'TestCaseInfExact::N()'],['../classGP_1_1TrainingData.html#ae5da6a507565e88f9f1a2ae52bf633da',1,'GP::TrainingData::N()']]],
-  ['nd',['Nd',['../classGP_1_1DerivativeTrainingData.html#afae683f573ef3caee5fba20dddd21df1',1,'GP::DerivativeTrainingData']]],
-  ['negative',['Negative',['../classNegative.html',1,'']]],
-  ['negativelogmarginallikelihood',['negativeLogMarginalLikelihood',['../classGP_1_1InfExact.html#a88251bf9bad233b60dc7c12dc9c448c3',1,'GP::InfExact::negativeLogMarginalLikelihood()'],['../classGP_1_1InfExactGeneral.html#aabeca12c7e9fd6ba604687f6cf6f0549',1,'GP::InfExactGeneral::negativeLogMarginalLikelihood()']]],
-  ['negativelogmarginallikelihood2',['negativeLogMarginalLikelihood2',['../classGP_1_1InfExact.html#a22bbf9c03eba028d5f4cb370a23d56cd',1,'GP::InfExact']]],
-  ['newtonsmethod',['NewtonsMethod',['../group__NewtonsMethod.html',1,'']]],
-  ['nlz',['NlZ',['../classGP_1_1NlZ.html#a77c99dede642bd8d25c848ec0f065068',1,'GP::NlZ']]],
-  ['nlz',['NlZ',['../classGP_1_1NlZ.html',1,'GP']]],
-  ['nlz_5fdnlz_2ehpp',['NlZ_DnlZ.hpp',['../NlZ__DnlZ_8hpp.html',1,'']]],
-  ['nn',['NN',['../classTestCaseInfExactDerObs.html#aff89533b74477510a48f57c594fc45a5',1,'TestCaseInfExactDerObs::NN()'],['../classGP_1_1DerivativeTrainingData.html#afd6c8634eb4f552e5242b1b8f275b5d9',1,'GP::DerivativeTrainingData::NN()'],['../classGP_1_1TrainingData.html#a16775b05f78ef915974dc893555dc8ec',1,'GP::TrainingData::NN()']]],
-  ['nostopping',['NoStopping',['../classGP_1_1NoStopping.html',1,'GP']]]
+  ['negativelogmarginallikelihood',['negativeLogMarginalLikelihood',['../classGPMap_1_1OctreeGPMap.html#ad49a36cf7c19519aa1c4fc08be6d4834',1,'GPMap::OctreeGPMap']]],
+  ['no_5fcolor',['NO_COLOR',['../classGPMap_1_1NO__COLOR.html',1,'GPMap']]],
+  ['norm',['norm',['../namespaceGPMap.html#a89caf0452421cd8dc0f4485484db6b99',1,'GPMap']]],
+  ['normalizenormalvector',['normalizeNormalVector',['../namespaceGPMap.html#a814d379b9b1a9c266868238dfb5ad806',1,'GPMap']]],
+  ['normalizenormalvectorcloud',['normalizeNormalVectorCloud',['../namespaceGPMap.html#aad367ce0b328d126c177f59008d6ff0d',1,'GPMap']]],
+  ['normalrefinement',['normalRefinement',['../namespaceGPMap.html#a545c46275a59f9fae1574bc68a808b8a',1,'GPMap']]],
+  ['normcdf',['normcdf',['../namespaceGPMap.html#a87f6ee1dd8a196383b1a977777d486ee',1,'GPMap']]],
+  ['ns2ms',['ns2ms',['../classGPMap_1_1CPU__Times.html#a8806128525a32b675a32f92784814c8b',1,'GPMap::CPU_Times']]],
+  ['ns2sec',['ns2sec',['../classGPMap_1_1CPU__Times.html#a37dd69912b9189013d3fb3b6e8adb628',1,'GPMap::CPU_Times']]],
+  ['num_5fcells_5fper_5faxis_5f',['NUM_CELLS_PER_AXIS_',['../classGPMap_1_1OctreeGPMap.html#a41a179cd9dc826042e50df18759aada3',1,'GPMap::OctreeGPMap']]],
+  ['num_5fcells_5fper_5fblock_5f',['NUM_CELLS_PER_BLOCK_',['../classGPMap_1_1OctreeGPMap.html#a993bbed4708d4351cc6cf24f59d293c2',1,'GPMap::OctreeGPMap']]],
+  ['num_5fcolor_5ftypes',['NUM_COLOR_TYPES',['../namespaceGPMap.html#a73df0ae8a6ad76625be95ff93d8f5d82a09b3e96f7385d9a5e5c539841beb595e',1,'GPMap']]],
+  ['num_5fcolors',['NUM_COLORS',['../namespaceGPMap.html#a098d2b4398b155907abfda296d7c4d42',1,'GPMap']]],
+  ['numfinitepoints',['numFinitePoints',['../namespaceGPMap.html#ab49085b0f003781112e1931ae967ebb0',1,'GPMap']]]
 ];

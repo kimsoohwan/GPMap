@@ -1,10 +1,13 @@
 var searchData=
 [
-  ['d',['D',['../classGP_1_1DerivativeTrainingData.html#ae030a3dbb7f632c7f455ecd099e9b5fb',1,'GP::DerivativeTrainingData::D()'],['../classGP_1_1TestData.html#ae2a0c20e600663d20d0431ff171e41d3',1,'GP::TestData::D()'],['../classGP_1_1TrainingData.html#a09dedd5bbed414d214f024337536e487',1,'GP::TrainingData::D()']]],
-  ['delta',['delta',['../classGP_1_1PairwiseOp.html#a97dea0ef08c71981e32dea2166bfad22',1,'GP::PairwiseOp::delta(const MatrixConstPtr pX, const int coord)'],['../classGP_1_1PairwiseOp.html#af4cfbd2d20b8c030c9c080d5f7f510d7',1,'GP::PairwiseOp::delta(const MatrixConstPtr pX, const MatrixConstPtr pXs, const int coord)']]],
-  ['derivativetrainingdata',['DerivativeTrainingData',['../classGP_1_1DerivativeTrainingData.html#a05bb92ebd25722efb16d0114834589ab',1,'GP::DerivativeTrainingData']]],
-  ['dlib2hyp',['Dlib2Hyp',['../namespaceGP.html#a3d57bdc81daab9521df4f79a6f821cde',1,'GP']]],
-  ['dnlz',['DnlZ',['../classGP_1_1DnlZ.html#a24a0818adda9889f887d7a8442c55793',1,'GP::DnlZ']]],
-  ['dnlzwrtlikhyp',['dnlZWRTLikHyp',['../classGP_1_1InfExact.html#a3f41fd4c5eaf3116b15e544ad7145b74',1,'GP::InfExact::dnlZWRTLikHyp(const typename Hyp::Lik &amp;logHyp, TrainingData&lt; Scalar &gt; &amp;trainingData, const MatrixConstPtr pQ)'],['../classGP_1_1InfExact.html#acada4e03e1cfb863a712bdf0352ea314',1,'GP::InfExact::dnlZWRTLikHyp(const typename Hyp::Lik &amp;logHyp, const MatrixConstPtr pQ)'],['../classGP_1_1InfExactGeneral.html#a80d74c791aeb08de5da3f97a9968bc56',1,'GP::InfExactGeneral::dnlZWRTLikHyp()']]],
-  ['dnlzwrtlikhyp2',['dnlZWRTLikHyp2',['../classGP_1_1InfExactGeneral.html#a49cec020cc5e29ec0977030346219260',1,'GP::InfExactGeneral']]]
+  ['clear',['clear',['../classGPMap_1_1CPU__Times.html#af029c65368b88f0235e36796185d5263',1,'GPMap::CPU_Times']]],
+  ['clearview',['clearView',['../classGPMap_1_1OctreeViewer.html#a10c39053d6de696d9fcb79bc71e821d5',1,'GPMap::OctreeViewer']]],
+  ['colormap',['ColorMap',['../classGPMap_1_1ColorMap.html#a2451366e3503b36762fdd485f3456177',1,'GPMap::ColorMap::ColorMap()'],['../classGPMap_1_1ColorMap.html#a1d575d5d28882b6fb94cb55a9fd0c22d',1,'GPMap::ColorMap::ColorMap(const float min, const float max)']]],
+  ['combinepointcloud',['combinePointCloud',['../namespaceGPMap.html#a1ff10213895fa8dcd09bf65a24dcb759',1,'GPMap']]],
+  ['compare',['compare',['../namespaceGPMap.html#aaa2e838157bfac2876d68a9d840c7b5b',1,'GPMap']]],
+  ['cpu_5ftimer',['CPU_Timer',['../classGPMap_1_1CPU__Timer.html#a6177752d1b56340def689f416b1e96f7',1,'GPMap::CPU_Timer']]],
+  ['cpu_5ftimes',['CPU_Times',['../classGPMap_1_1CPU__Times.html#a1e8cb89bbeab24d02597a4f1e8fdf0ee',1,'GPMap::CPU_Times::CPU_Times()'],['../classGPMap_1_1CPU__Times.html#af6214425373a4620fb60541a0bbfac1e',1,'GPMap::CPU_Times::CPU_Times(const CPU_Times &amp;other)']]],
+  ['create_5fdirectory',['create_directory',['../namespaceGPMap.html#a8246e8587cfc433b1f73b29aaba2df86',1,'GPMap']]],
+  ['createemptyneigboringblocks',['createEmptyNeigboringBlocks',['../classGPMap_1_1OctreeGPMap.html#af0f971755129a2d2e9a84dac7a055a1a',1,'GPMap::OctreeGPMap']]],
+  ['cropbox',['cropBox',['../namespaceGPMap.html#add3864381f75ea03292391d726fefc65',1,'GPMap']]]
 ];

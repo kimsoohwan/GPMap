@@ -1,0 +1,6 @@
+<map id="GPMap::OctreeGPMap::saveAsOctomap" name="GPMap::OctreeGPMap::saveAsOctomap">
+<area shape="rect" id="node2" href="$classGPMap_1_1OctreeGPMap.html#a99c4644ab3e6c7c3ac0f9c1bf140cbe0" title="Get the min points of the voxel corresponding the octree key. " alt="" coords="235,5,392,46"/>
+<area shape="rect" id="node3" href="$namespaceGPMap.html#a993256cf215eb9763c1e125a81029a6c" title="GPMap::xyz2row" alt="" coords="252,71,375,97"/>
+<area shape="rect" id="node4" href="$classGPMap_1_1OctoMap.html#abe060b30c4ac7957e1912277172e2c44" title="Update a node of the octomap. " alt="" coords="211,121,415,148"/>
+<area shape="rect" id="node5" href="$classGPMap_1_1OctoMap.html#a0c550ac85c0d1a4121794e557a8a2eae" title="Save the octomap as a binary file. " alt="" coords="233,172,394,199"/>
+</map>

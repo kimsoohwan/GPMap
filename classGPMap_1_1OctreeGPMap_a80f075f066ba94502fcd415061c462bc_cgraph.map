@@ -1,0 +1,8 @@
+<map id="GPMap::OctreeGPMap::predict" name="GPMap::OctreeGPMap::predict">
+<area shape="rect" id="node2" href="$classGPMap_1_1CPU__Times.html#af029c65368b88f0235e36796185d5263" title="GPMap::CPU_Times::clear" alt="" coords="220,5,399,32"/>
+<area shape="rect" id="node3" href="$namespaceGPMap.html#ab35ac09182831019efde9241a79abbd1" title="GPMap::random_data\l_partition" alt="" coords="235,57,384,98"/>
+<area shape="rect" id="node4" href="$namespaceGPMap.html#af48e0aaa39edc6d2a1a677927d21e94f" title="GPMap::random_sampling" alt="" coords="221,123,397,149"/>
+<area shape="rect" id="node5" href="$namespaceGPMap.html#a4e51272e68b6cd578f23908f10d78ff4" title="Generate training data from a surface normal cloud. " alt="" coords="211,173,407,200"/>
+<area shape="rect" id="node7" href="$classGPMap_1_1CPU__Timer.html#a08233c0753c06387e4d1e545dcebfdb0" title="GPMap::CPU_Timer::elapsed" alt="" coords="213,224,406,251"/>
+<area shape="rect" id="node6" href="$namespaceGPMap.html#ab49085b0f003781112e1931ae967ebb0" title="Count the number of finite points. " alt="" coords="456,173,624,200"/>
+</map>

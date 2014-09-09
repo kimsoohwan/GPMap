@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['what',['what',['../classGP_1_1Exception.html#aae6992c07b2bc5b7753eb2861a47f0bb',1,'GP::Exception']]]
+  ['x',['x',['../classGPMap_1_1Vector3D.html#a74d65e38ca3d477db8a0857466250476',1,'GPMap::Vector3D']]],
+  ['xyz2row',['xyz2row',['../namespaceGPMap.html#a993256cf215eb9763c1e125a81029a6c',1,'GPMap']]]
 ];

@@ -1,0 +1,4 @@
+<map id="GPMap::OctreeGPMap::genVoxelBounds" name="GPMap::OctreeGPMap::genVoxelBounds">
+<area shape="rect" id="node2" href="$classGPMap_1_1OctreeGPMap.html#a99c4644ab3e6c7c3ac0f9c1bf140cbe0" title="Get the min points of the voxel corresponding the octree key. " alt="" coords="211,5,368,46"/>
+<area shape="rect" id="node3" href="$classGPMap_1_1OctreeGPMap.html#a237da5fed95cdc4442d7f464bdf0304c" title="Get the max points of the voxel corresponding the octree key. " alt="" coords="211,70,368,111"/>
+</map>

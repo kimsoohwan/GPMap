@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['choleskyfactor',['choleskyFactor',['../classGP_1_1InfExact.html#ab73ffa1abbb97c0f8318af9a9486e495',1,'GP::InfExact::choleskyFactor(const typename Hyp::Cov &amp;logHyp, TrainingData&lt; Scalar &gt; &amp;trainingData, const VectorConstPtr pInvSqrtD, const bool fDoNotThrowException=false)'],['../classGP_1_1InfExact.html#a9c5aae2e10f336f94c692bab316516ff',1,'GP::InfExact::choleskyFactor(const typename Hyp::Cov &amp;covLogHyp, const typename Hyp::Lik &amp;likLogHyp, TrainingData&lt; Scalar &gt; &amp;trainingData, const bool fDoNotThrowException=false)'],['../classGP_1_1InfExactGeneral.html#abe322ad558ca8ac73860994e106f9d6e',1,'GP::InfExactGeneral::choleskyFactor()']]],
-  ['close',['close',['../classGP_1_1LogFile.html#a8fb845f58680e983cfebf312206c89f1',1,'GP::LogFile']]],
-  ['compare',['COMPARE',['../classTEST__MACRO.html#a30a45fa7c6788a2362e8cf497d3c1805',1,'TEST_MACRO::COMPARE(const TestType &amp;v1, const TestType &amp;v2, const char *line, int line_number, const TestType eps=Eigen::NumTraits&lt; TestType &gt;::dummy_precision())'],['../classTEST__MACRO.html#a56915a3356b16acc1299847e197c442a',1,'TEST_MACRO::COMPARE(const Vector &amp;v1, const Vector &amp;v2, const char *line, int line_number, const TestType eps=Eigen::NumTraits&lt; TestType &gt;::dummy_precision())'],['../classTEST__MACRO.html#a787c42ba0b1d119b8e6f6e45739c53ca',1,'TEST_MACRO::COMPARE(const Matrix &amp;m1, const Matrix &amp;m2, const char *line, int line_number, const TestType eps=Eigen::NumTraits&lt; TestType &gt;::dummy_precision())']]],
-  ['compute',['compute',['../classGP_1_1LLT__MKL.html#aeb454783ac29dd3e10aa9e196ef31a23',1,'GP::LLT_MKL']]],
-  ['copy',['copy',['../classGP_1_1CovProd.html#adee3ae223b4be83899bda5460e458539',1,'GP::CovProd']]]
+  ['bcm_5fserializable',['BCM_Serializable',['../classGPMap_1_1BCM__Serializable.html#a1da3db1d10e47cf12dfd06f1d78fb701',1,'GPMap::BCM_Serializable']]],
+  ['build_5fgpmaps_5fwith_5fall_5fin_5fone_5fobservations',['build_gpmaps_with_all_in_one_observations',['../namespaceGPMap.html#a3d5c3138d1155927b57c9c35882f254d',1,'GPMap']]],
+  ['build_5fgpmaps_5fwith_5fsampled_5fall_5fin_5fone_5fobservations',['build_gpmaps_with_sampled_all_in_one_observations',['../namespaceGPMap.html#a0946720fae058cb7ae6575928ec433f7',1,'GPMap']]],
+  ['build_5fgpmaps_5fwith_5fsequential_5fobservations',['build_gpmaps_with_sequential_observations',['../namespaceGPMap.html#a58dbfc4ca4cad01b28c99caa94f91228',1,'GPMap']]]
 ];

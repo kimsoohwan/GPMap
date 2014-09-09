@@ -1,27 +1,8 @@
 var annotated =
 [
-    [ "GP", "namespaceGP.html", "namespaceGP" ],
-    [ "Derivatives", "classDerivatives.html", null ],
-    [ "MeanGP", "classMeanGP.html", null ],
-    [ "Negative", "classNegative.html", null ],
-    [ "TEST_MACRO", "classTEST__MACRO.html", "classTEST__MACRO" ],
-    [ "TestCaseCholeskyFactorSolver", "classTestCaseCholeskyFactorSolver.html", "classTestCaseCholeskyFactorSolver" ],
-    [ "TestCaseCovMaterniso", "classTestCaseCovMaterniso.html", "classTestCaseCovMaterniso" ],
-    [ "TestCaseCovMaternisoDerObs", "classTestCaseCovMaternisoDerObs.html", "classTestCaseCovMaternisoDerObs" ],
-    [ "TestCaseCovSEiso", "classTestCaseCovSEiso.html", "classTestCaseCovSEiso" ],
-    [ "TestCaseCovSEisoDerObs", "classTestCaseCovSEisoDerObs.html", "classTestCaseCovSEisoDerObs" ],
-    [ "TestCaseCovSEMaterniso", "classTestCaseCovSEMaterniso.html", "classTestCaseCovSEMaterniso" ],
-    [ "TestCaseCovSparseiso", "classTestCaseCovSparseiso.html", "classTestCaseCovSparseiso" ],
-    [ "TestCaseCovSparseisoDerObs", "classTestCaseCovSparseisoDerObs.html", "classTestCaseCovSparseisoDerObs" ],
-    [ "TestCaseGP", "classTestCaseGP.html", "classTestCaseGP" ],
-    [ "TestCaseGPDerObs", "classTestCaseGPDerObs.html", "classTestCaseGPDerObs" ],
-    [ "TestCaseInfExact", "classTestCaseInfExact.html", "classTestCaseInfExact" ],
-    [ "TestCaseInfExactDerObs", "classTestCaseInfExactDerObs.html", "classTestCaseInfExactDerObs" ],
-    [ "TestCasePairwiseOp", "classTestCasePairwiseOp.html", null ],
-    [ "TestDerivativeDataSetting", "classTestDerivativeDataSetting.html", "classTestDerivativeDataSetting" ],
-    [ "TestDerivativeDataSetting2", "classTestDerivativeDataSetting2.html", "classTestDerivativeDataSetting2" ],
-    [ "TestFunctionDataSetting", "classTestFunctionDataSetting.html", "classTestFunctionDataSetting" ],
-    [ "TestFunctionDataSetting2", "classTestFunctionDataSetting2.html", "classTestFunctionDataSetting2" ],
-    [ "Trainer", "classTrainer.html", null ],
-    [ "Trainer", "classTrainer.html", null ]
+    [ "GPMap", "namespaceGPMap.html", "namespaceGPMap" ],
+    [ "Compare", "classCompare.html", null ],
+    [ "D", "classD.html", null ],
+    [ "Gaussian", "classGaussian.html", null ],
+    [ "Three", "classThree.html", null ]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gp',['GP',['../namespaceGP.html',1,'']]]
+  ['gpmap',['GPMap',['../namespaceGPMap.html',1,'']]]
 ];

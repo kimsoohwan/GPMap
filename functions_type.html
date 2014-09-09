@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>OpenGP: Class Members - Typedefs</title>
+<title>GPMap: Class Members - Typedefs</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -35,7 +35,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">OpenGP
+   <div id="projectname">GPMap
    &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
@@ -52,7 +52,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -88,19 +87,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
       <li class="current"><a href="functions_type.html"><span>Typedefs</span></a></li>
-    </ul>
-  </div>
-  <div id="navrow4" class="tabs3">
-    <ul class="tablist">
-      <li><a href="#index_c"><span>c</span></a></li>
-      <li><a href="#index_g"><span>g</span></a></li>
-      <li><a href="#index_h"><span>h</span></a></li>
-      <li><a href="#index_i"><span>i</span></a></li>
-      <li><a href="#index_l"><span>l</span></a></li>
-      <li><a href="#index_m"><span>m</span></a></li>
-      <li><a href="#index_r"><span>r</span></a></li>
-      <li><a href="#index_t"><span>t</span></a></li>
-      <li class="current"><a href="#index_v"><span>v</span></a></li>
+      <li><a href="functions_enum.html"><span>Enumerations</span></a></li>
+      <li><a href="functions_eval.html"><span>Enumerator</span></a></li>
+      <li><a href="functions_rela.html"><span>Related&#160;Functions</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -123,7 +112,7 @@ $(document).ready(function(){initNavTree('functions_type.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -133,180 +122,31 @@ $(document).ready(function(){initNavTree('functions_type.html','');});
 </div>
 
 <div class="contents">
-&#160;
-
-<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
-<li>CholeskyFactor
-: <a class="el" href="classGP_1_1InfExact.html#aaa0b7f3cdd0a9015dfe3e6a219a25df5">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#ae4f8915d5e3fc2e510abfd2e9175fa38">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
+&#160;<ul>
+<li>ColorMode
+: <a class="el" href="classGPMap_1_1IsoSurfaceExtraction.html#aab88728dba561265604080a6da289f94">GPMap::IsoSurfaceExtraction</a>
 </li>
-<li>CholeskyFactorConstPtr
-: <a class="el" href="classGP_1_1InfExact.html#abc5515c565cc7c002e4712fd5239e63c">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a7b7b1fc6106545bee61f769da36de76e">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-</li>
-<li>CholeskyFactorPtr
-: <a class="el" href="classGP_1_1InfExact.html#a44e0716ec32894f8a3eddf4e65bdf833">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#aa635804fecdad18c954ae3ae2a09d598">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-</li>
-<li>Cov
-: <a class="el" href="classGP_1_1Hyp.html#a80fb5f72516d6b2139da91e924a734d6">GP::Hyp&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-</li>
-<li>Cov1
-: <a class="el" href="classGP_1_1CovProd.html#a4ed2fb3d0bfdd91ef38b35865c34a593">GP::CovProd&lt; Scalar, _Cov1, _Cov2 &gt;</a>
-</li>
-<li>Cov2
-: <a class="el" href="classGP_1_1CovProd.html#a6ca21880fec7341fc9b875a5684dfea0">GP::CovProd&lt; Scalar, _Cov1, _Cov2 &gt;</a>
-</li>
-<li>CovParent
-: <a class="el" href="classGP_1_1CovMaternisoDerObsBase.html#a6b85baee7943e3cbd764a7b4f51dfc57">GP::CovMaternisoDerObsBase&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSEisoDerObsBase.html#adb4855f43050d8608df202b7a4dae0db">GP::CovSEisoDerObsBase&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSparseisoDerObsBase.html#a43b8f87dfcfac94110f80c086fae4e4a">GP::CovSparseisoDerObsBase&lt; Scalar &gt;</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
 <li>GPType
-: <a class="el" href="classTestCaseGP.html#a8f4f3e920ca900b4cc458868feb8543a">TestCaseGP</a>
-, <a class="el" href="classTestCaseGPDerObs.html#a10bb1fc773241d3821e69acc69f477ec">TestCaseGPDerObs</a>
+: <a class="el" href="classGPMap_1_1OctreeGPMap.html#ad9611d06830c54560f4dde8d0b00ccf7">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>Hyp
-: <a class="el" href="classGP_1_1CovMaterniso.html#ab33aa569c1c1105f15f90a613f7a337f">GP::CovMaterniso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSEiso.html#aa382503e5ada1cd6bb92b2f9a707a828">GP::CovSEiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSparseiso.html#ab7c72ce546d8265fd09248bd9aabc834">GP::CovSparseiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1DnlZ.html#a93d21acf83b182c2fbc8574e3ef5a7db">GP::DnlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#a03abf577d3fa71538b8ae47762c0103e">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a1c528a2eda41a26de55cfc26f357cea5">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1LikGauss.html#a9d33a5256a819fd83eb4bf6ee259d408">GP::LikGauss&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1LikGaussDerObs.html#a2898cbe53a261b875c57e97b56083966">GP::LikGaussDerObs&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1MeanZero.html#a48ea9334e1b9db9163c5b4578005f620">GP::MeanZero&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1NlZ.html#aadbb3f5466f7195f3d732681bfb89847">GP::NlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
+: <a class="el" href="classGPMap_1_1OctreeGPMap.html#afee65754e8bc8bc90d969a02204c3f02">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
-<li>InfExactDerObsType
-: <a class="el" href="classTestCaseInfExactDerObs.html#aa486b8654851c77d802c0c4f74de0c55">TestCaseInfExactDerObs</a>
+<li>MyOctomapT
+: <a class="el" href="classGPMap_1_1OctoMap.html#ad428beb9d3ab56b3841ef6ee2bc7cf4b">GPMap::OctoMap&lt; ColorT &gt;</a>
 </li>
-<li>InfExactType
-: <a class="el" href="classTestCaseInfExact.html#aa1663da51bffc712fb8747fab1aa99b7">TestCaseInfExact</a>
+<li>OctomapT
+: <a class="el" href="structGPMap_1_1OctomapType_3_01COLOR_01_4.html#a866a86bae16c179cfaf09734c7e07829">GPMap::OctomapType&lt; COLOR &gt;</a>
+, <a class="el" href="structGPMap_1_1OctomapType_3_01NO__COLOR_01_4.html#a09af22c664faa5a01f5db61d7443fefd">GPMap::OctomapType&lt; NO_COLOR &gt;</a>
 </li>
-<li>InfType
-: <a class="el" href="classGP_1_1DnlZ.html#ad2327fab176dec055214160d7a06cd88">GP::DnlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1NlZ.html#acae10539ae4c25c7507ba385b127bd64">GP::NlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
+<li>OctreeGPMapType
+: <a class="el" href="classGPMap_1_1OctreeGPMap.html#a536ae797d8239d9589c91559f96c661d">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
-<li>Lik
-: <a class="el" href="classGP_1_1Hyp.html#ada4391a646a8a44c4228b539b58fa86a">GP::Hyp&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
+<li>Parent
+: <a class="el" href="classGPMap_1_1OctreeGPMap.html#a41be2b7853b27e9e186fad6a67c4c513">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>Matrix
-: <a class="el" href="classGP_1_1CovDerObs.html#a8921e6254d778a5d3cb4077152d6cce9">GP::CovDerObs&lt; Scalar, CovBase &gt;</a>
-, <a class="el" href="classGP_1_1CovMaterniso.html#a71239d0bee27bd5a8a4b93b464ffa247">GP::CovMaterniso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSEiso.html#a84fea8723f7ca09ea266ea476a17ee55">GP::CovSEiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSparseiso.html#afa7e8155cb2c68ea97ce57a36a6d39e0">GP::CovSparseiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#a904a58ed6a67ef07bc900b880ef524a1">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#ac469757a67ced717d00dc2f5118e8243">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1PairwiseOp.html#af2ba542bff57aa2af4dc9c71b4408e7d">GP::PairwiseOp&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a20a2b53a0634b63caef511f388933c60">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#a6000fe3670adc59a07d9cf8223c4db6b">GP::TrainingData&lt; Scalar &gt;</a>
-</li>
-<li>MatrixConstPtr
-: <a class="el" href="classGP_1_1CovDerObs.html#a1d940b370e4e97e0cdf3749ee28b00fb">GP::CovDerObs&lt; Scalar, CovBase &gt;</a>
-, <a class="el" href="classGP_1_1CovMaterniso.html#a95f89830c9cfb68dd9c2ee1b2341e21d">GP::CovMaterniso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSEiso.html#a051bf59378592f0db62cabe979e38322">GP::CovSEiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSparseiso.html#a9fa384b7de9f23d437258765cac6901b">GP::CovSparseiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#ace74e70f168c152f4e1464e5aa17bde4">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#aef498fd8bfab56d53c5c3731b5f821b9">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1PairwiseOp.html#a1e940e7b10b9c7db6443c17d0ff82f3c">GP::PairwiseOp&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a6f5ff53c35817b1758ffdf4acbf175a1">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#ae6ec8ddf3a54c81ada840d01bb942b85">GP::TrainingData&lt; Scalar &gt;</a>
-</li>
-<li>MatrixPtr
-: <a class="el" href="classGP_1_1CovDerObs.html#aa9cebf14b1b6be7985975beb97f1bf73">GP::CovDerObs&lt; Scalar, CovBase &gt;</a>
-, <a class="el" href="classGP_1_1CovMaterniso.html#ab704bfe5279e08010aec52e34abe0bd8">GP::CovMaterniso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSEiso.html#a58266819649fe095f13db12da9d8af9d">GP::CovSEiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1CovSparseiso.html#addf5ecf695a4efd3676c95fdfb1eae0c">GP::CovSparseiso&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#a9672d2355dc7b1e4226361852bf26b95">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a3941a36ac1e33ab8ac3d415fa6e3230a">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1PairwiseOp.html#a5b64ee3a2d98107ccdd641fbc3ee7cbe">GP::PairwiseOp&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a598f98215399c2f139c408c5ebabae22">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#ab5cea185f8d9eeb0a79809372443f0ed">GP::TrainingData&lt; Scalar &gt;</a>
-</li>
-<li>Mean
-: <a class="el" href="classGP_1_1Hyp.html#afdd452c1f7883bcdb7c8a7e9f18808fa">GP::Hyp&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
-<li>RowVector
-: <a class="el" href="classGP_1_1PairwiseOp.html#a76d2c5f1dd3196147ac7a60c81f35dae">GP::PairwiseOp&lt; Scalar &gt;</a>
-</li>
-<li>RowVectorConstPtr
-: <a class="el" href="classGP_1_1PairwiseOp.html#a1d27d797ec2ca6d0e8b83e9fbbd7c683">GP::PairwiseOp&lt; Scalar &gt;</a>
-</li>
-<li>RowVectorPtr
-: <a class="el" href="classGP_1_1PairwiseOp.html#aed722dd144cc8ccfea13904c3547e588">GP::PairwiseOp&lt; Scalar &gt;</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
-<li>Type
-: <a class="el" href="classGP_1_1BFGS.html#ac8e0b5a5431e2e8a644084a9b41e8f51">GP::BFGS</a>
-, <a class="el" href="classGP_1_1CG.html#a89444f1f1af46126c8f309fceec33147">GP::CG</a>
-, <a class="el" href="classGP_1_1DeltaFunc.html#a448d4e1c816b607bdc00f1b84f1b3402">GP::DeltaFunc</a>
-, <a class="el" href="classGP_1_1GradientNorm.html#a1d8871374c8375a69e98d04d25a126ad">GP::GradientNorm</a>
-, <a class="el" href="classGP_1_1LBFGS.html#a6c4cb3a00a0dda648b42f418855faf7b">GP::LBFGS</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
-<li>Vector
-: <a class="el" href="classGP_1_1DnlZ.html#a32d5ec6986cb26f1d52f68666ac4e8f7">GP::DnlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#ace9ebb5094a9bccac79705869806efcc">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a8c423cff4b45cc574c38a5b00e31289a">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1LikGauss.html#a479d7213438f1522e811cebdb739e8d0">GP::LikGauss&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1LikGaussDerObs.html#a32233bd597a334aed0c35054b27f50c5">GP::LikGaussDerObs&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1MeanZero.html#afcd86124b2ca85ac9b07a377363a4ea2">GP::MeanZero&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1NlZ.html#ab01203383d17b1e9f8db14a7e197371a">GP::NlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a9f7acc52b3d48a91a0538e896b663b38">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#af2d30070a2d7cf5b6edf0c7c38fa08e7">GP::TrainingData&lt; Scalar &gt;</a>
-</li>
-<li>VectorConstPtr
-: <a class="el" href="classGP_1_1DnlZ.html#a89c5eb705a8c420257e6196a8ee776df">GP::DnlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#ab6aee4bdfc8d86622d445245f8f116b7">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a2d9741c195745caeb1f3c55887db9c9e">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1LikGauss.html#abcb735c0f95354d352c9e42037986246">GP::LikGauss&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1LikGaussDerObs.html#a20e5d24885be423befad17a5699218a5">GP::LikGaussDerObs&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1MeanZero.html#a6af93777d9c2dcac9db5e7ccb3d1f4d4">GP::MeanZero&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1NlZ.html#a73fc71bfd2783f72c42193dede4d8809">GP::NlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a4965d206b885b75f2b6865e8382ea881">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#a2f834a61b4354e4fa3bcb74669d7d7b6">GP::TrainingData&lt; Scalar &gt;</a>
-</li>
-<li>VectorPtr
-: <a class="el" href="classGP_1_1DnlZ.html#a1b5b41a281ec158ff34265845bbedeaf">GP::DnlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1InfExact.html#af207a2049e2b84012e46e314c708dba7">GP::InfExact&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1InfExactGeneral.html#a79bcdd00ed88076051f6f504c4b83f8f">GP::InfExactGeneral&lt; Scalar, MeanFunc, CovFunc, LikFunc &gt;</a>
-, <a class="el" href="classGP_1_1LikGauss.html#a3431d26935921904453288cf93a9feee">GP::LikGauss&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1LikGaussDerObs.html#aa8e5ed33dabe173d4025d82c97bc7d54">GP::LikGaussDerObs&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1MeanZero.html#adef66142671889ce6ee316419e429266">GP::MeanZero&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1NlZ.html#a7c7c90152248737517570e6ed5cbeb06">GP::NlZ&lt; Scalar, MeanFunc, CovFunc, LikFunc, InfMethod, GeneralTrainingData &gt;</a>
-, <a class="el" href="classGP_1_1TestData.html#a169323f42a22fee090389e1fc6454849">GP::TestData&lt; Scalar &gt;</a>
-, <a class="el" href="classGP_1_1TrainingData.html#a0924f4c1a25b6a1ee13b96931738a661">GP::TrainingData&lt; Scalar &gt;</a>
+<li>Scalar
+: <a class="el" href="classGPMap_1_1OctreeGPMap.html#a2253a97c251084cd037f873e24378f54">GPMap::OctreeGPMap&lt; MeanFunc, CovFunc, LikFunc, InfMethod, LeafT, BranchT, OctreeT &gt;</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -314,7 +154,7 @@ $(document).ready(function(){initNavTree('functions_type.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Tue Sep 9 2014 22:00:04 for OpenGP by
+    <li class="footer">Generated on Wed Sep 10 2014 02:09:07 for GPMap by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

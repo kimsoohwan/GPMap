@@ -1,14 +1,16 @@
 var NAVTREE =
 [
-  [ "OpenGP", "index.html", [
+  [ "GPMap", "index.html", [
     [ "Todo List", "todo.html", null ],
-    [ "Modules", "modules.html", "modules" ],
     [ "Namespaces", null, [
       [ "Namespace List", "namespaces.html", "namespaces" ],
       [ "Namespace Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
-        [ "Typedefs", "namespacemembers_type.html", null ]
+        [ "Variables", "namespacemembers_vars.html", null ],
+        [ "Typedefs", "namespacemembers_type.html", null ],
+        [ "Enumerations", "namespacemembers_enum.html", null ],
+        [ "Enumerator", "namespacemembers_eval.html", null ]
       ] ]
     ] ],
     [ "Classes", null, [
@@ -19,7 +21,10 @@ var NAVTREE =
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
         [ "Variables", "functions_vars.html", null ],
-        [ "Typedefs", "functions_type.html", null ]
+        [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Enumerator", "functions_eval.html", null ],
+        [ "Related Functions", "functions_rela.html", null ]
       ] ]
     ] ],
     [ "Files", null, [
@@ -27,7 +32,7 @@ var NAVTREE =
       [ "File Members", "globals.html", [
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
+        [ "Variables", "globals_vars.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
     ] ]
@@ -36,9 +41,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"CovDerObs_8hpp.html",
-"classGP_1_1DnlZ.html#a89c5eb705a8c420257e6196a8ee776df",
-"classTestCaseInfExact.html#ac28bc0bf78dba50115346f00c9c1215b"
+"annotated.html",
+"cloud__viewer_8hpp.html#a46652eade442a8b906f32feb88391573",
+"test__data_8hpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

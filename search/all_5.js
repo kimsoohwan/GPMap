@@ -1,14 +1,12 @@
 var searchData=
 [
-  ['eigen2dlib',['Eigen2Dlib',['../classGP_1_1DnlZ.html#a222bc5cf759dff79b09cd73f0393e99a',1,'GP::DnlZ']]],
-  ['eigen_5fno_5fdebug',['EIGEN_NO_DEBUG',['../macros_8h.html#a844958ed8129c1ab4a975683f62900db',1,'macros.h']]],
-  ['eigen_5fuse_5fmkl_5fall',['EIGEN_USE_MKL_ALL',['../test_8cpp.html#a5bd13fea2d52009d82048504cb75e7c1',1,'test.cpp']]],
-  ['ell',['ell',['../classTestFunctionDataSetting.html#a976f555da4b2870e5ed766f5a5a41d7a',1,'TestFunctionDataSetting::ell()'],['../classTestFunctionDataSetting2.html#afdebf2bfbb5deab00fe5cd6d286b50ec',1,'TestFunctionDataSetting2::ell()']]],
-  ['eps_5fsearch',['EPS_SEARCH',['../classTestCaseGP.html#a68d27f7f56d47e3e2f86d9a8bc51dfa5',1,'TestCaseGP::EPS_SEARCH()'],['../classTestCaseGPDerObs.html#a8528b746f7e1fa6a69bb583539f59fae',1,'TestCaseGPDerObs::EPS_SEARCH()']]],
-  ['eps_5fsolver',['EPS_SOLVER',['../classTestCaseCholeskyFactorSolver.html#a16ec85e85c692876e79f58aabed623a3',1,'TestCaseCholeskyFactorSolver::EPS_SOLVER()'],['../classTestCaseInfExact.html#a59df305670064a16acc480d97f4343cd',1,'TestCaseInfExact::EPS_SOLVER()'],['../classTestCaseInfExactDerObs.html#aded588f703c514d86dc4472ae21d894a',1,'TestCaseInfExactDerObs::EPS_SOLVER()']]],
-  ['eps_5fsolver_5fsolver',['EPS_SOLVER_SOLVER',['../classTestCaseInfExact.html#ac28bc0bf78dba50115346f00c9c1215b',1,'TestCaseInfExact::EPS_SOLVER_SOLVER()'],['../classTestCaseInfExactDerObs.html#a412ecbcd3c2647fb09f7bdc638b4d6e6',1,'TestCaseInfExactDerObs::EPS_SOLVER_SOLVER()']]],
-  ['epsilon',['Epsilon',['../structGP_1_1Epsilon.html',1,'GP']]],
-  ['exception',['Exception',['../classGP_1_1Exception.html#a7bf3fb6ccde6a33f7804f716cce85b52',1,'GP::Exception']]],
-  ['exception',['Exception',['../classGP_1_1Exception.html',1,'GP']]],
-  ['exception_2ehpp',['Exception.hpp',['../Exception_8hpp.html',1,'']]]
+  ['fgetoffset',['fGetOffset',['../classGPMap_1_1IsoSurfaceExtraction.html#a7ea4be94d0c67186eb2a668563d45fd1',1,'GPMap::IsoSurfaceExtraction']]],
+  ['filesystem_2ehpp',['filesystem.hpp',['../filesystem_8hpp.html',1,'']]],
+  ['filters_2ehpp',['filters.hpp',['../filters_8hpp.html',1,'']]],
+  ['find_5ffile_5fin_5fsubdirectories',['find_file_in_subdirectories',['../namespaceGPMap.html#a73b03110ab34013e6d83cfb7a58f8698',1,'GPMap']]],
+  ['flag_5fduplicate_5fpoints_5f',['FLAG_DUPLICATE_POINTS_',['../classGPMap_1_1OctreeGPMap.html#a423af2a223cb65b8c033e021313755da',1,'GPMap::OctreeGPMap']]],
+  ['flag_5findependent_5ftest_5fpositions_5f',['FLAG_INDEPENDENT_TEST_POSITIONS_',['../classGPMap_1_1OctreeGPMap.html#a3cc2fc45697ae1026d5104eb16badd48',1,'GPMap::OctreeGPMap']]],
+  ['flag_5framdomly_5fsample_5fpoints_5f',['FLAG_RAMDOMLY_SAMPLE_POINTS_',['../classGPMap_1_1OctreeGPMap.html#ab73dabbcfb204543e54a7c28c3def1a9',1,'GPMap::OctreeGPMap']]],
+  ['flag_5fsimple_5fupdate_5f',['FLAG_SIMPLE_UPDATE_',['../classGPMap_1_1OctoMap.html#a2f32b371d6e0198ef1dc0ae9f9b50f30',1,'GPMap::OctoMap']]],
+  ['flipsurfacenormals',['flipSurfaceNormals',['../namespaceGPMap.html#a586f38e9d70227d3ae1e8cfab7485517',1,'GPMap']]]
 ];

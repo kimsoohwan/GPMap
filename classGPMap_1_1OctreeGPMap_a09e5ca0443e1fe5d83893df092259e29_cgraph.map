@@ -1,0 +1,18 @@
+<map id="GPMap::OctreeGPMap::update" name="GPMap::OctreeGPMap::update">
+<area shape="rect" id="node2" href="$classGPMap_1_1CPU__Times.html#af029c65368b88f0235e36796185d5263" title="GPMap::CPU_Times::clear" alt="" coords="473,5,652,32"/>
+<area shape="rect" id="node3" href="$classGPMap_1_1BCM.html#a2b30aeb41db0b900ee5a60e53b6547dc" title="Set the prior inverse covariance matrix. " alt="" coords="235,173,391,200"/>
+<area shape="rect" id="node4" href="$classGPMap_1_1CPU__Timer.html#a08233c0753c06387e4d1e545dcebfdb0" title="GPMap::CPU_Timer::elapsed" alt="" coords="466,56,659,83"/>
+<area shape="rect" id="node5" href="$classGPMap_1_1CPU__Times.html#a8cb75cffdf0c8a9fc11974afcd2b5888" title="Boost timer wall&#45;clock time. " alt="" coords="227,225,400,266"/>
+<area shape="rect" id="node7" href="$classGPMap_1_1OctreeGPMap.html#a99c4644ab3e6c7c3ac0f9c1bf140cbe0" title="Get the min points of the voxel corresponding the octree key. " alt="" coords="235,290,392,331"/>
+<area shape="rect" id="node8" href="$classGPMap_1_1OctreeGPMap.html#a80f075f066ba94502fcd415061c462bc" title="GPMap::OctreeGPMap\l::predict" alt="" coords="235,107,392,149"/>
+<area shape="rect" id="node13" href="$classGPMap_1_1OctreeGPMap.html#af0f971755129a2d2e9a84dac7a055a1a" title="Create empty neighboring blocks for each occupied block if necessary. " alt="" coords="211,355,416,397"/>
+<area shape="rect" id="node16" href="$classGPMap_1_1OctreeGPMap.html#aac15f74082bc8d724087873c43571df2" title="Get the point indices in the leaf node corresponding the octree key. " alt="" coords="235,421,392,462"/>
+<area shape="rect" id="node17" href="$classGPMap_1_1BCM.html#a80018404b967c8252517877ee8881c77" title="Reset the prior inverse covariance matrix. " alt="" coords="230,487,397,513"/>
+<area shape="rect" id="node6" href="$classGPMap_1_1CPU__Times.html#a37dd69912b9189013d3fb3b6e8adb628" title="GPMap::CPU_Times::ns2sec" alt="" coords="466,275,659,301"/>
+<area shape="rect" id="node9" href="$namespaceGPMap.html#ab35ac09182831019efde9241a79abbd1" title="GPMap::random_data\l_partition" alt="" coords="488,107,637,149"/>
+<area shape="rect" id="node10" href="$namespaceGPMap.html#af48e0aaa39edc6d2a1a677927d21e94f" title="GPMap::random_sampling" alt="" coords="475,173,651,200"/>
+<area shape="rect" id="node11" href="$namespaceGPMap.html#a4e51272e68b6cd578f23908f10d78ff4" title="Generate training data from a surface normal cloud. " alt="" coords="465,224,661,251"/>
+<area shape="rect" id="node12" href="$namespaceGPMap.html#ab49085b0f003781112e1931ae967ebb0" title="Count the number of finite points. " alt="" coords="724,224,892,251"/>
+<area shape="rect" id="node14" href="$classGPMap_1_1OctreeGPMap.html#a5c785eb4dc4005f7be7ca26f4ff1acde" title="Get occupied block center points. " alt="" coords="472,355,653,397"/>
+<area shape="rect" id="node15" href="$classGPMap_1_1OctreeGPMap.html#aeb8d90e777edce3b8a111f70e1a7665a" title="Get the center point of the voxel corresponding the octree key. " alt="" coords="710,348,906,404"/>
+</map>

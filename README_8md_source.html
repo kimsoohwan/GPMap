@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.7"/>
-<title>OpenGP: README.md Source File</title>
+<title>GPMap: README.md Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -35,7 +35,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">OpenGP
+   <div id="projectname">GPMap
    &#160;<span id="projectnumber">1.0</span>
    </div>
   </td>
@@ -52,7 +52,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
-      <li><a href="modules.html"><span>Modules</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
@@ -100,7 +99,7 @@ $(document).ready(function(){initNavTree('README_8md.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Groups</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Typedefs</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(9)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(10)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(11)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -114,22 +113,36 @@ $(document).ready(function(){initNavTree('README_8md.html','');});
 <div class="title">README.md</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="README_8md.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;GP</div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;==</div>
+<a href="README_8md.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;GPMap</div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;=====</div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;Gaussian Processes in C++</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<a class="code" href="classGaussian.html">Gaussian</a> process occupancy mapping and reconstruction in C++</div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;Required Libraries</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;- Boost <span class="keywordflow">for</span> shared pointers</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;- Eigen <span class="keywordflow">for</span> linear algebra</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;- Intel MKL <span class="keywordflow">for</span> fast linear algebra (optional)</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">## References</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;* Soohwan Kim and Jonghyuk Kim, <span class="stringliteral">&quot;GPmap: A Unified Framework for Robotic Mapping Based on Sparse Gaussian Processes,&quot;</span> Proceedings of International Conference on Field and Service Robots, 2013. ([link](https:<span class="comment">//www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CCUQFjAA&amp;url=http%3A%2F%2Fwww.araa.asn.au%2Ffsr%2Ffsr2013%2Fpapers%2Fpap141s2.pdf&amp;ei=pFHTU7ntNIL3oATDjYC4Dw&amp;usg=AFQjCNFWj4u1IusbwkZX4YDm4xh9Pja6WA&amp;sig2=ubwuFaqs39g4xWJFyFXD5A&amp;bvm=bv.71778758,d.cGU))</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">## Dependencies</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;* [GPMap](https:<span class="comment">//github.com/kimsoohwan/GPMap)</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    * [Boost 1.50.0](http:<span class="comment">//www.boost.org/) for file systems</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    * [Google Test 1.7.0](https:<span class="comment">//code.google.com/p/googletest/) for unit test (optional)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    * [OpenGP](https:<span class="comment">//github.com/kimsoohwan/OpenGP)</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        * [Eigen 3.2.0](http:<span class="comment">//eigen.tuxfamily.org/) for linear algebra</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        * [Boost 1.50.0](http:<span class="comment">//www.boost.org/) for shared pointers</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;        * [Dlib 18.3](http:<span class="comment">//dlib.net/) for hyperparameter training</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        * [Google Test 1.7.0](https:<span class="comment">//code.google.com/p/googletest/) for unit test (optional)</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    * [PCL 1.6.0](http:<span class="comment">//pointclouds.org/)</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        * [Boost 1.50.0](http:<span class="comment">//www.boost.org/) for shared pointers and threads</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        * [Eigen 3.0.5](http:<span class="comment">//eigen.tuxfamily.org/)</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        * [FLANN 1.7.1](http:<span class="comment">//www.cs.ubc.ca/research/flann/)</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        * [VTK 5.8.0](http:<span class="comment">//www.vtk.org/)</span></div>
+<div class="ttc" id="classGaussian_html"><div class="ttname"><a href="classGaussian.html">Gaussian</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="README_8md.html">README.md</a></li>
-    <li class="footer">Generated on Tue Sep 9 2014 21:59:52 for OpenGP by
+    <li class="footer">Generated on Wed Sep 10 2014 02:09:00 for GPMap by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

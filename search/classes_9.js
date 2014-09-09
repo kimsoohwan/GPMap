@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['negative',['Negative',['../classNegative.html',1,'']]],
-  ['nlz',['NlZ',['../classGP_1_1NlZ.html',1,'GP']]],
-  ['nostopping',['NoStopping',['../classGP_1_1NoStopping.html',1,'GP']]]
+  ['uniquenonzerointeger',['UniqueNonZeroInteger',['../classGPMap_1_1UniqueNonZeroInteger.html',1,'GPMap']]]
 ];

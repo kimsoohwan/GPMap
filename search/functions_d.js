@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['q',['q',['../classGP_1_1InfExact.html#afcc5be17e8c876741de85bde7b576e12',1,'GP::InfExact::q(const VectorConstPtr pInvSqrtD, const CholeskyFactorConstPtr pL, const VectorConstPtr pAlpha)'],['../classGP_1_1InfExact.html#a19351e2b718ca70e4772d0532435d5d2',1,'GP::InfExact::q(const typename Hyp::Lik &amp;logHyp, const CholeskyFactorConstPtr pL, const VectorConstPtr pAlpha)'],['../classGP_1_1InfExactGeneral.html#a96fba78bc0d3d3a2c03d1ee227da7540',1,'GP::InfExactGeneral::q()']]]
+  ['p',['p',['../namespaceGPMap.html#a1ab0b5d71b6ceff874500abe3641430b',1,'GPMap']]],
+  ['pcd2pc',['pcd2pc',['../namespaceGPMap.html#aa17aca5ce882e6b2fe2faf956b4a7a7c',1,'GPMap']]],
+  ['predict',['predict',['../classGPMap_1_1OctreeGPMap.html#a80f075f066ba94502fcd415061c462bc',1,'GPMap::OctreeGPMap']]]
 ];

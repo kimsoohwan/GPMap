@@ -1,7 +1,23 @@
 var searchData=
 [
-  ['readme_2emd',['README.md',['../README_8md.html',1,'']]],
-  ['rowvector',['RowVector',['../classGP_1_1PairwiseOp.html#a76d2c5f1dd3196147ac7a60c81f35dae',1,'GP::PairwiseOp']]],
-  ['rowvectorconstptr',['RowVectorConstPtr',['../classGP_1_1PairwiseOp.html#a1d27d797ec2ca6d0e8b83e9fbbd7c683',1,'GP::PairwiseOp']]],
-  ['rowvectorptr',['RowVectorPtr',['../classGP_1_1PairwiseOp.html#aed722dd144cc8ccfea13904c3547e588',1,'GP::PairwiseOp']]]
+  ['save',['save',['../classGPMap_1_1BCM__Serializable.html#a4e50949180971a673675a05b09b039b0',1,'GPMap::BCM_Serializable::save()'],['../classGPMap_1_1OctoMap.html#a0c550ac85c0d1a4121794e557a8a2eae',1,'GPMap::OctoMap::save()'],['../eigen__dense__base__addons_8hpp.html#ab948859788aa671e575e410654e07f16',1,'save():&#160;eigen_dense_base_addons.hpp']]],
+  ['saveasoctomap',['saveAsOctomap',['../classGPMap_1_1OctreeGPMap.html#a50151f4513864fc6bf3fef3c609406e1',1,'GPMap::OctreeGPMap::saveAsOctomap(const std::string &amp;strFilenameWithoutExtension, const float occupancyThreshold, const bool fRemoveIsolatedCells)'],['../classGPMap_1_1OctreeGPMap.html#a1e8f0a4b4fcb5801248922f101469a63',1,'GPMap::OctreeGPMap::saveAsOctomap(const std::string &amp;strFilenameWithoutExtension, const float minMeanThreshold, const float maxVarThreshold)']]],
+  ['saveasply',['saveAsPLY',['../classGPMap_1_1IsoSurfaceExtraction.html#a2de9cdb7b4a9bc39fc1351ef5a363cfe',1,'GPMap::IsoSurfaceExtraction']]],
+  ['saveaspointcloud',['saveAsPointCloud',['../classGPMap_1_1OctreeGPMap.html#a6ad5d6a33afec7b85488c0efe1901c98',1,'GPMap::OctreeGPMap']]],
+  ['savepointcloud',['savePointCloud',['../namespaceGPMap.html#ae8fe5ba55d6cbffe1fda659502ab5233',1,'GPMap::savePointCloud(const typename pcl::PointCloud&lt; PointT &gt;::ConstPtr &amp;pPointCloud, const std::string &amp;strFilePath, const bool fBinary=true)'],['../namespaceGPMap.html#afc0c315392cdae1c8ef46d07282eb70a',1,'GPMap::savePointCloud(const typename pcl::PointCloud&lt; PointT &gt;::ConstPtr &amp;pPointCloud, const std::string &amp;strFileName, const std::string &amp;strPrefix, const std::string &amp;strSuffix, const bool fBinary=true)'],['../namespaceGPMap.html#a53006410e7237b3f167a98d03bda168b',1,'GPMap::savePointCloud(const std::vector&lt; typename pcl::PointCloud&lt; PointT &gt;::Ptr &gt; &amp;pPointClouds, const StringList &amp;strFileNames, const std::string &amp;strPrefix=std::string(), const std::string &amp;strSuffix=std::string(), const bool fBinary=true)']]],
+  ['scalar',['Scalar',['../classGPMap_1_1OctreeGPMap.html#a2253a97c251084cd037f873e24378f54',1,'GPMap::OctreeGPMap']]],
+  ['search_5ffiles',['search_files',['../namespaceGPMap.html#a7ba36032bc8335658aedd5f843df2df9',1,'GPMap']]],
+  ['serialize',['serialize',['../eigen__dense__base__addons_8hpp.html#a73f655537400e50ccab50a489d763f7f',1,'serialize():&#160;eigen_dense_base_addons.hpp'],['../namespaceGPMap.html#a41be69454504b9cb062cba006f6e88c0',1,'GPMap::serialize()']]],
+  ['set',['set',['../classGPMap_1_1ColorMap.html#a4ee05f651e4b5b51b4e89dceb0eb90ff',1,'GPMap::ColorMap']]],
+  ['setdata',['setData',['../classGPMap_1_1OctreePointCloudDensityContainer.html#a73ed5099c9db702130300febf925b599',1,'GPMap::OctreePointCloudDensityContainer::setData()'],['../classGPMap_1_1OctreeGPMapContainer.html#a57b1e483de3efa20df9b3d087f6e46ab',1,'GPMap::OctreeGPMapContainer::setData()']]],
+  ['setinputcloud',['setInputCloud',['../classGPMap_1_1OctreeGPMap.html#a7edb5e29a2fe28aad2e133fe76d427ba',1,'GPMap::OctreeGPMap']]],
+  ['setprior',['setPrior',['../classGPMap_1_1BCM.html#a2b30aeb41db0b900ee5a60e53b6547dc',1,'GPMap::BCM']]],
+  ['setvertexcolors',['setVertexColors',['../classGPMap_1_1IsoSurfaceExtraction.html#a01c4c9d36b58a4831a0f6f7c4b742c02',1,'GPMap::IsoSurfaceExtraction']]],
+  ['show',['show',['../namespaceGPMap.html#a99dbb8c4eb786a4210744b3cd01aecfc',1,'GPMap::show(const std::string &amp;strWindowName, const typename pcl::PointCloud&lt; PointT &gt;::ConstPtr &amp;pPointCloud, const double scale=0.1, const float downSampleLeafSize=0.f, const bool fBlackBackground=true, const bool fDrawAxis=true, const bool fDrawBoundingbox=true)'],['../namespaceGPMap.html#a46652eade442a8b906f32feb88391573',1,'GPMap::show(const std::string &amp;strWindowName, const std::vector&lt; typename pcl::PointCloud&lt; PointT &gt;::Ptr &gt; &amp;pPointClouds, const double scale=0.1, const float downSampleLeafSize=0.f, const bool fBlackBackground=true, const bool fDrawAxis=true, const bool fDrawBoundingbox=true, const bool fDrawPreviousPointCloud=true)']]],
+  ['size',['size',['../classGPMap_1_1IsoSurfaceExtraction.html#ad4374a2ca3ecf15e992aff01f38a9b92',1,'GPMap::IsoSurfaceExtraction']]],
+  ['smoothandnormalestimation',['smoothAndNormalEstimation',['../namespaceGPMap.html#a00587fd0640c48436d4e14ae368da244',1,'GPMap']]],
+  ['sqrt2',['sqrt2',['../namespaceGPMap.html#a925f22380b1d8d58c55d383c12588137',1,'GPMap']]],
+  ['statisticaloutlierremoval',['statisticalOutlierRemoval',['../namespaceGPMap.html#a879bb4a5366024d06d644d4437c12c7e',1,'GPMap']]],
+  ['stringlist',['StringList',['../namespaceGPMap.html#a740077df11718dd3d7ba9f5c81719d1b',1,'GPMap']]],
+  ['surface_5fnormal_2ehpp',['surface_normal.hpp',['../surface__normal_8hpp.html',1,'']]]
 ];
