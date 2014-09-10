@@ -120,9 +120,12 @@ void generateTrainingData(const PointNormalCloudConstPtr		&pPointNormalCloud,
 			(*pXd)(i, 0)			= pointNormal.x;
 			(*pXd)(i, 1)			= pointNormal.y;
 			(*pXd)(i, 2)			= pointNormal.z;
-			(*pYYd)(2*Nf+Nd + i)			= pointNormal.normal_x;
-			(*pYYd)(2*Nf+Nd + Nd+i)		= pointNormal.normal_y;
-			(*pYYd)(2*Nf+Nd + 2*Nd+i)	= pointNormal.normal_z;
+			//(*pYYd)(2*Nf+Nd + i)			= pointNormal.normal_x;
+			//(*pYYd)(2*Nf+Nd + Nd+i)		= pointNormal.normal_y;
+			//(*pYYd)(2*Nf+Nd + 2*Nd+i)	= pointNormal.normal_z;
+			(*pYYd)(2*Nf+Nd + i)			= -pointNormal.normal_x;
+			(*pYYd)(2*Nf+Nd + Nd+i)		= -pointNormal.normal_y;
+			(*pYYd)(2*Nf+Nd + 2*Nd+i)	= -pointNormal.normal_z;
 		}
 
 		// next index

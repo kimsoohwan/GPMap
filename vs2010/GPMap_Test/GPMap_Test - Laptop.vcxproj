@@ -65,7 +65,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\PCL 1.6.0\include\pcl-1.6;E:\Documents\eigen-3.2.2;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Boost\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\include;E:\Documents\GitHub\GPMap\include;E:\Documents\GitHub\GPMap\test;E:\Documents\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\PCL 1.6.0\include\pcl-1.6;E:\Documents\eigen-3.2.2;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Boost\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\master\include;E:\Documents\GitHub\GPMap\master\include;E:\Documents\GitHub\GPMap\master\test;E:\Documents\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -83,7 +83,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>C:\Program Files (x86)\PCL 1.6.0\include\pcl-1.6;E:\Documents\eigen-3.2.2;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Boost\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\include;E:\Documents\GitHub\GPMap\include;E:\Documents\GitHub\GPMap\test;E:\Documents\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\PCL 1.6.0\include\pcl-1.6;E:\Documents\eigen-3.2.2;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Boost\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files (x86)\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\master\include;E:\Documents\GitHub\GPMap\master\include;E:\Documents\GitHub\GPMap\master\test;E:\Documents\gtest-1.7.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>

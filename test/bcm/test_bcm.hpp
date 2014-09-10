@@ -8,6 +8,7 @@
 #include "bcm/bcm.hpp"
 using namespace GPMap;
 
+/** @cond HIDDEN_SYMBOLS */
 class TestBCMData
 {
 public:
@@ -183,5 +184,5 @@ TEST_F(TestBCM, VarTest)
 	EXPECT_TRUE(pCov->isApprox(*pVarFinal));
 	EXPECT_TRUE(pMean->isApprox(*pMeanByVarFinal));
 }
-
+/** @endcond */
 #endif

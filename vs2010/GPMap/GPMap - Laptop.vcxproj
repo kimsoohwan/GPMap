@@ -54,7 +54,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\PCL 1.6.0\include\pcl-1.6;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Boost\include;E:\Documents\eigen-3.2.0;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\include;E:\Documents\GitHub\GPMap\include;E:\Documents\octomap-1.6.6\octomap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\PCL 1.6.0\include\pcl-1.6;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Boost\include;E:\Documents\eigen-3.2.0;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\master\include;E:\Documents\GitHub\GPMap\master\include;E:\Documents\octomap-1.6.6\octomap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
@@ -70,7 +70,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\PCL 1.6.0\include\pcl-1.6;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Boost\include;E:\Documents\eigen-3.2.0;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\include;E:\Documents\GitHub\GPMap\include;E:\Documents\octomap-1.6.6\octomap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\PCL 1.6.0\include\pcl-1.6;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Boost\include;E:\Documents\eigen-3.2.0;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\FLANN\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\Qhull\include;C:\Program Files %28x86%29\PCL 1.6.0\3rdParty\VTK\include\vtk-5.8;E:\Documents\dlib-18.3;E:\Documents\GitHub\OpenGP\master\include;E:\Documents\GitHub\GPMap\master\include;E:\Documents\octomap-1.6.6\octomap\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>

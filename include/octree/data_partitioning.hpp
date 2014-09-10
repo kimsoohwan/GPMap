@@ -142,6 +142,7 @@ bool random_data_partition(const std::vector<int>				&indices,
 	return true;
 }
 
+/** @todo Copy indices and then select M randomly by using random_unique */
 bool random_sampling(const std::vector<int>				&indices,
 							const int								M, // maximum limit of the number of points in a leaf node of an octree
 							std::vector<int>						&randomSampleIndices,
@@ -189,7 +190,7 @@ randomSampling(const typename pcl::PointCloud<PointT>::ConstPtr	&pCloud,
 	pSampledCloud->points.resize(M);
 
 	// copy
-	for (size_t i = 0; i < M; ++i)
+	for(int i = 0; i < M; ++i)
 	{
 		pSampledCloud->points[i] = pCloud->points[randomSampleIndices[i]];
 	}
