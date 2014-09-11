@@ -395,46 +395,64 @@ public:
 		for(int i = 0; i < logHyp.lik.size(); i++)  { logFile  << exp(logHyp.lik(i))  << (i < logHyp.lik.size()-1 ? ", " : ""); }
 		logFile << "): ";
 
-		// for each leaf node
-		pcl::octree::OctreeKey key;
-		size_t totalNumPoints(0);
-		size_t blockCount(0);
-		//CPU_Timer timer;
-#ifdef CONST_LEAF_NODE_ITERATOR_
-		LeafNodeIterator iter(*this);
-		while(*++iter)
-#else
-		for(PointXYZVList::const_iterator iter = m_nonEmptyBlockCenterPointXYZList.begin();
-			 (iter != m_nonEmptyBlockCenterPointXYZList.cend()) && (blockCount < m_numRandomBlocks);
-			 iter++, blockCount++)
-#endif
-		{				
-			// leaf node corresponding the octree key
-#ifdef CONST_LEAF_NODE_ITERATOR_
-			const LeafNode* pLeafNode = static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
-#else
-			// key
-			genOctreeKeyforPointXYZ(*iter, key);
-			const LeafNode* pLeafNode = findLeaf(key);
-#endif
-			// get indices
-			const Indices &indexList = pLeafNode->getDataTVector(); // do not collect!!! use just in the node!!!
-			totalNumPoints += indexList.size();
-
-			// if there is two small number of points in the node, ignore it
-			if(indexList.size() < MIN_NUM_POINTS_TO_PREDICT_) continue;
-
-			// negative log marginal likelihood
+		if(FLAG_USE_ALL_TRAINING_DATA_)
+		{
+			Indices allIndices(input_->size());
+			std::generate(allIndices.begin(), allIndices.end(), UniqueNonZeroInteger());
 			try
 			{
-				sumNlZ += negativeLogMarginalLikelihood(logHyp, indexList);
+				sumNlZ = negativeLogMarginalLikelihood(logHyp, allIndices);
 			}
 			// if Kn is non positivie definite, nlZ = Inf
 			catch(GP::Exception &e) 
 			{
 				logFile << e.what() << " = ";
 				sumNlZ = std::numeric_limits<Scalar>::infinity();
-				break;
+			}
+		}
+		else
+		{
+			// for each leaf node
+			pcl::octree::OctreeKey key;
+			size_t totalNumPoints(0);
+			size_t blockCount(0);
+			//CPU_Timer timer;
+#ifdef CONST_LEAF_NODE_ITERATOR_
+			LeafNodeIterator iter(*this);
+			while(*++iter)
+#else
+			for(PointXYZVList::const_iterator iter = m_nonEmptyBlockCenterPointXYZList.begin();
+				 (iter != m_nonEmptyBlockCenterPointXYZList.cend()) && (blockCount < m_numRandomBlocks);
+				 iter++, blockCount++)
+#endif
+			{				
+				// leaf node corresponding the octree key
+#ifdef CONST_LEAF_NODE_ITERATOR_
+				const LeafNode* pLeafNode = static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
+#else
+				// key
+				genOctreeKeyforPointXYZ(*iter, key);
+				const LeafNode* pLeafNode = findLeaf(key);
+#endif
+				// get indices
+				const Indices &indexList = pLeafNode->getDataTVector(); // do not collect!!! use just in the node!!!
+				totalNumPoints += indexList.size();
+
+				// if there is two small number of points in the node, ignore it
+				if(indexList.size() < MIN_NUM_POINTS_TO_PREDICT_) continue;
+
+				// negative log marginal likelihood
+				try
+				{
+					sumNlZ += negativeLogMarginalLikelihood(logHyp, indexList);
+				}
+				// if Kn is non positivie definite, nlZ = Inf
+				catch(GP::Exception &e) 
+				{
+					logFile << e.what() << " = ";
+					sumNlZ = std::numeric_limits<Scalar>::infinity();
+					break;
+				}
 			}
 		}
 

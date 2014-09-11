@@ -37,8 +37,8 @@ int main(int argc, char** argv)
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_1",
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_2",
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_3",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_glocal(all)_iBCM",
 															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_local(all)_iBCM",
+															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_glocal(all)_iBCM",
 															};
 	StringList strGPMapFileNames(strGPMapFileNames_, strGPMapFileNames_ + NUM_GPMAPS); 
 

@@ -287,14 +287,21 @@ int main(int argc, char** argv)
 			const std::string strObsFileNameSuffix	= ss.str();
 
 			// CovRQiso
-			//float ell		= 0.016659f;		std::cout << "ell = ";		std::cin >> ell;
-			//float alpha		= 7.55446f;			std::cout << "alpha = ";	std::cin >> alpha;
-			//float sigma_f	= 0.0117284f;		std::cout << "sigma_f = "; std::cin >> sigma_f;
-			//float sigma_n	= 0.00186632f;		std::cout << "sigma_n = "; std::cin >> sigma_n;		
-			const float ell		= 4.11029f;
-			const float alpha		= 1.22971f;
-			const float sigma_f	= 0.981831f;
-			const float sigma_n	= 0.00289925f;	
+			float ell		= 0.016659f;		//std::cout << "ell = ";		std::cin >> ell;
+			float alpha		= 7.55446f;			//std::cout << "alpha = ";	std::cin >> alpha;
+			float sigma_f	= 0.0117284f;		//std::cout << "sigma_f = "; std::cin >> sigma_f;
+			float sigma_n	= 0.00186632f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
+
+			//const float ell		= 4.11029f;
+			//const float alpha		= 1.22971f;
+			//const float sigma_f	= 0.981831f;
+			//const float sigma_n	= 0.00289925f;	
+
+			// downsample = 0.02, nlZ = -1729.77
+			//const float ell		= 4.72242f;
+			//const float alpha		= 1.24014f;
+			//const float sigma_f	= 0.282454f;
+			//const float sigma_n	= 0.00289635f;	
 
 			typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovRQisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
 			LocalHyp logLocalHyp;

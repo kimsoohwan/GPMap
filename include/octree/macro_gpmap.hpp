@@ -33,15 +33,15 @@ template<template<typename> class MeanFunc,
 						 template<typename> class,
 						 template<typename> class,
 						 template<typename> class> class InfMethod>
-void gpmap_training(const double		BLOCK_SIZE, 
-						  const size_t		NUM_CELLS_PER_AXIS,
-						  const size_t		MIN_NUM_POINTS_TO_PREDICT,
-						  const size_t		MAX_NUM_POINTS_TO_PREDICT,
-						  typename GP::GaussianProcess<float, MeanFunc, CovFunc, LikFunc, InfMethod>::Hyp	&logHyp,				// hyperparameters
-						  const pcl::PointCloud<pcl::PointNormal>::ConstPtr	&pAllPointNormalCloud,	// observations
-						  const float														gap,							// gap
-						  const int															maxIter,						// number of iterations for training before update, 100
-						  const int															numRandomBlocks)			// number of randomly selected blocks (<=0 for all), 100
+GP::DlibScalar gpmap_training(const double		BLOCK_SIZE, 
+										const size_t		NUM_CELLS_PER_AXIS,
+										const size_t		MIN_NUM_POINTS_TO_PREDICT,
+										const size_t		MAX_NUM_POINTS_TO_PREDICT,
+										typename GP::GaussianProcess<float, MeanFunc, CovFunc, LikFunc, InfMethod>::Hyp	&logHyp,				// hyperparameters
+										const pcl::PointCloud<pcl::PointNormal>::ConstPtr		&pAllPointNormalCloud,	// observations
+										const float															gap,							// gap
+										const int															maxIter,						// number of iterations for training before update, 100
+										const int															numRandomBlocks)			// number of randomly selected blocks (<=0 for all), 100
 {
 	// log file
 	LogFile logFile;
@@ -93,6 +93,8 @@ void gpmap_training(const double		BLOCK_SIZE,
 	for(int i = 0; i < logHyp.mean.size(); i++)		logFile << "- mean[" << i << "] = " << expf(logHyp.mean(i)) << std::endl;
 	for(int i = 0; i < logHyp.cov.size();  i++)		logFile << "- cov["  << i << "] = " << expf(logHyp.cov(i))  << std::endl;
 	for(int i = 0; i < logHyp.lik.size();  i++)		logFile << "- lik["  << i << "] = " << expf(logHyp.lik(i))  << std::endl;
+
+	return nlZ;
 }
 
 /** @brief	Building a GPMap with all-in-one observations
@@ -366,6 +368,7 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("All-in-one Observations For Training", pAllInOneObs, 0.005);
 
 	// training
+	GP::DlibScalar nlZ = std::numeric_limits<GP::DlibScalar>::max();
 	while(true)
 	{
 		// continue?
@@ -387,9 +390,9 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 		{
 			logFile  << "\tMax iterations? (0 for no training): ";
 			std::cin >> maxIter;
+			if(maxIter <= 0) break;
 		}
 		logFile  << maxIter << std::endl;;
-		if(maxIter <= 0) break;
 
 		// number of random blocks
 		size_t numRandomBlocks;
@@ -405,6 +408,7 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 		logFile  << numRandomBlocks << std::endl;;
 
 		// hyperparameters
+		typename GP::GaussianProcess<float, MeanFunc, CovFunc, LikFunc, InfMethod>::Hyp tempLogHyp = logHyp;
 		bool fUsePredefinedHyperparameters;
 		if(RUN_ALL_WITH_TRAINING_ONCE)
 		{
@@ -419,36 +423,48 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 		if(!fUsePredefinedHyperparameters)
 		{
 			float hyp;
-			for(int i = 0; i < logHyp.mean.size(); i++) { std::cout << "\t\thyp.mean(" << i << ") = "; std::cin >> hyp; logHyp.mean(i) = log(hyp); }
-			for(int i = 0; i < logHyp.cov.size();  i++) { std::cout << "\t\thyp.cov(" << i << ") = ";  std::cin >> hyp; logHyp.cov(i)  = log(hyp); }
-			for(int i = 0; i < logHyp.lik.size();  i++) { std::cout << "\t\thyp.lik(" << i << ") = ";  std::cin >> hyp; logHyp.lik(i)  = log(hyp); }
+			for(int i = 0; i < tempLogHyp.mean.size(); i++) { std::cout << "\t\thyp.mean(" << i << ") = "; std::cin >> hyp; tempLogHyp.mean(i) = log(hyp); }
+			for(int i = 0; i < tempLogHyp.cov.size();  i++) { std::cout << "\t\thyp.cov(" << i << ") = ";  std::cin >> hyp; tempLogHyp.cov(i)  = log(hyp); }
+			for(int i = 0; i < tempLogHyp.lik.size();  i++) { std::cout << "\t\thyp.lik(" << i << ") = ";  std::cin >> hyp; tempLogHyp.lik(i)  = log(hyp); }
 		}
 
 		// log hyperparameters before training
 		logFile << "Hyperparameters before training" << std::endl;
-		for(int i = 0; i < logHyp.mean.size(); i++) { logFile  << "\thyp.mean(" << i << ") = " << exp(logHyp.mean(i)) << std::endl; }
-		for(int i = 0; i < logHyp.cov.size(); i++)  { logFile  << "\thyp.cov("  << i << ") = " << exp(logHyp.cov(i))  << std::endl; }
-		for(int i = 0; i < logHyp.lik.size(); i++)  { logFile  << "\thyp.lik("  << i << ") = " << exp(logHyp.lik(i))  << std::endl; }
+		for(int i = 0; i < tempLogHyp.mean.size(); i++) { logFile  << "\thyp.mean(" << i << ") = " << exp(tempLogHyp.mean(i)) << std::endl; }
+		for(int i = 0; i < tempLogHyp.cov.size(); i++)  { logFile  << "\thyp.cov("  << i << ") = " << exp(tempLogHyp.cov(i))  << std::endl; }
+		for(int i = 0; i < tempLogHyp.lik.size(); i++)  { logFile  << "\thyp.lik("  << i << ") = " << exp(tempLogHyp.lik(i))  << std::endl; }
 
 		// training
-		gpmap_training<MeanFunc, 
-							CovFunc, 
-							LikFunc, 
-							InfMethod>(BLOCK_SIZE,						// block size
-										  NUM_CELLS_PER_AXIS,			// number of cells per each axie
-										  MIN_NUM_POINTS_TO_PREDICT,	// min number of points to predict
-										  MAX_NUM_POINTS_TO_PREDICT,	// max number of points to predict
-										  logHyp,							// hyperparameters
-										  pAllInOneObs,					// observations
-										  gap,								// gap
-										  maxIter,							// number of iterations for training before update
-										  numRandomBlocks);				// number of randomly selected blocks
+		GP::DlibScalar nlZ_temp = gpmap_training<MeanFunc,
+															  CovFunc, 
+															  LikFunc, 
+															  InfMethod>(BLOCK_SIZE,						// block size
+																			 NUM_CELLS_PER_AXIS,			// number of cells per each axie
+																			 MIN_NUM_POINTS_TO_PREDICT,	// min number of points to predict
+																			 MAX_NUM_POINTS_TO_PREDICT,	// max number of points to predict
+																			 tempLogHyp,						// hyperparameters
+																			 pAllInOneObs,					// observations
+																			 gap,								// gap
+																			 maxIter,							// number of iterations for training before update
+																			 numRandomBlocks);				// number of randomly selected blocks
 
 		// log hyperparameters after training
 		logFile << "Hyperparameters after training" << std::endl;
-		for(int i = 0; i < logHyp.mean.size(); i++) { logFile  << "\thyp.mean(" << i << ") = " << exp(logHyp.mean(i)) << std::endl; }
-		for(int i = 0; i < logHyp.cov.size(); i++)  { logFile  << "\thyp.cov("  << i << ") = " << exp(logHyp.cov(i))  << std::endl; }
-		for(int i = 0; i < logHyp.lik.size(); i++)  { logFile  << "\thyp.lik("  << i << ") = " << exp(logHyp.lik(i))  << std::endl; }
+		for(int i = 0; i < tempLogHyp.mean.size(); i++) { logFile  << "\thyp.mean(" << i << ") = " << exp(tempLogHyp.mean(i)) << std::endl; }
+		for(int i = 0; i < tempLogHyp.cov.size(); i++)  { logFile  << "\thyp.cov("  << i << ") = " << exp(tempLogHyp.cov(i))  << std::endl; }
+		for(int i = 0; i < tempLogHyp.lik.size(); i++)  { logFile  << "\thyp.lik("  << i << ") = " << exp(tempLogHyp.lik(i))  << std::endl; }
+
+		// save better hyperparameters
+		if(nlZ_temp < nlZ)
+		{
+			nlZ = nlZ_temp;
+			logHyp = tempLogHyp;
+		}
+		logFile << "Best hyperparameters, so far" << std::endl;
+		logFile << "nlZ = " << nlZ << std::endl;
+		for(int i = 0; i < logHyp.mean.size(); i++)		logFile << "- mean[" << i << "] = " << expf(logHyp.mean(i)) << std::endl;
+		for(int i = 0; i < logHyp.cov.size();  i++)		logFile << "- cov["  << i << "] = " << expf(logHyp.cov(i))  << std::endl;
+		for(int i = 0; i < logHyp.lik.size();  i++)		logFile << "- lik["  << i << "] = " << expf(logHyp.lik(i))  << std::endl;
 
 		// next
 		if(RUN_ALL_WITH_TRAINING_ONCE) break;
@@ -855,6 +871,7 @@ void train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP(const double				B
 	//globalTrainingData.set(pX, pYYd);
 
 	// training and set
+	GP::DlibScalar nlZ = std::numeric_limits<GP::DlibScalar>::max();
 	while(true)
 	{
 		// continue?
@@ -863,6 +880,7 @@ void train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP(const double				B
 		{
 			std::cout << "Would you like to train the global hyperparameters? (0/1) ";
 			std::cin >> fTrainGlobalHyp;
+			if(!fTrainGlobalHyp) break;
 		}
 
 		// max iterations
@@ -875,9 +893,11 @@ void train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP(const double				B
 		{
 			std::cout << "\tMax iterations? (0 for no training): ";
 			std::cin >> maxIter;
+			if(maxIter <= 0) break;
 		}
 
 		// hyperparameters
+		typename GP::MeanGlobalGP<float>::GlobalHyp tempLogGlobalHyp = logGlobalHyp;
 		bool fUsePredefinedHyperparameters;
 		if(RUN_ALL_WITH_TRAINING_ONCE)
 		{
@@ -891,15 +911,44 @@ void train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP(const double				B
 		if(!fUsePredefinedHyperparameters)
 		{
 			float hyp;
-			for(int i = 0; i < logLocalHyp.mean.size(); i++) { std::cout << "\t\thyp.mean(" << i << ") = "; std::cin >> hyp; logLocalHyp.mean(i) = log(hyp); }
-			for(int i = 0; i < logLocalHyp.cov.size();  i++) { std::cout << "\t\thyp.cov(" << i << ") = ";  std::cin >> hyp; logLocalHyp.cov(i)  = log(hyp); }
-			for(int i = 0; i < logLocalHyp.lik.size();  i++) { std::cout << "\t\thyp.lik(" << i << ") = ";  std::cin >> hyp; logLocalHyp.lik(i)  = log(hyp); }
+			for(int i = 0; i < tempLogGlobalHyp.mean.size(); i++) { std::cout << "\t\thyp.mean(" << i << ") = "; std::cin >> hyp; tempLogGlobalHyp.mean(i) = log(hyp); }
+			for(int i = 0; i < tempLogGlobalHyp.cov.size();  i++) { std::cout << "\t\thyp.cov(" << i << ") = ";  std::cin >> hyp; tempLogGlobalHyp.cov(i)  = log(hyp); }
+			for(int i = 0; i < tempLogGlobalHyp.lik.size();  i++) { std::cout << "\t\thyp.lik(" << i << ") = ";  std::cin >> hyp; tempLogGlobalHyp.lik(i)  = log(hyp); }
 		}
 
-		// set
-		GP::MeanGlobalGP<float>::set(logGlobalHyp, globalTrainingData, fTrainGlobalHyp, maxIter);
+		// log hyperparameters before training
+		logFile << "Global hyperparameters before training" << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.mean.size(); i++)		logFile << "- mean[" << i << "] = " << expf(tempLogGlobalHyp.mean(i)) << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.cov.size();  i++)		logFile << "- cov["  << i << "] = " << expf(tempLogGlobalHyp.cov(i))  << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.lik.size();  i++)		logFile << "- lik["  << i << "] = " << expf(tempLogGlobalHyp.lik(i))  << std::endl;
+
+		// training
+		typedef GP::GaussianProcess<float, GP::MeanZeroDerObs, GP::CovRQisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs> GPType;
+		GP::DlibScalar nlZ_temp = GPType::train<GP::BOBYQA, GP::NoStopping>(tempLogGlobalHyp, globalTrainingData, maxIter);
+
+		logFile << "Global hyperparameters after training" << std::endl;
+		logFile << "nlZ = " << nlZ_temp << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.mean.size(); i++)		logFile << "- mean[" << i << "] = " << expf(tempLogGlobalHyp.mean(i)) << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.cov.size();  i++)		logFile << "- cov["  << i << "] = " << expf(tempLogGlobalHyp.cov(i))  << std::endl;
+		for(int i = 0; i < tempLogGlobalHyp.lik.size();  i++)		logFile << "- lik["  << i << "] = " << expf(tempLogGlobalHyp.lik(i))  << std::endl;
+
+		// save better hyperparameters
+		if(nlZ_temp < nlZ)
+		{
+			nlZ = nlZ_temp;
+			logGlobalHyp = tempLogGlobalHyp;
+		}
+		logFile << "Best global hyperparameters, so far" << std::endl;
+		logFile << "nlZ = " << nlZ << std::endl;
+		for(int i = 0; i < logGlobalHyp.mean.size(); i++)		logFile << "- mean[" << i << "] = " << expf(logGlobalHyp.mean(i)) << std::endl;
+		for(int i = 0; i < logGlobalHyp.cov.size();  i++)		logFile << "- cov["  << i << "] = " << expf(logGlobalHyp.cov(i))  << std::endl;
+		for(int i = 0; i < logGlobalHyp.lik.size();  i++)		logFile << "- lik["  << i << "] = " << expf(logGlobalHyp.lik(i))  << std::endl;
+		
 		if(!fTrainGlobalHyp || maxIter <= 0) break;
 	}
+
+	// set
+	GP::MeanGlobalGP<float>::set(logGlobalHyp, globalTrainingData);
 
 	// do the same thing
 	train_hyperparameters_and_build_gpmaps<GP::MeanGlobalGP, CovFunc, LikFunc, InfMethod>(BLOCK_SIZE,							// block size
