@@ -75,7 +75,8 @@ inline void loadPointCloud(typename pcl::PointCloud<PointT>::Ptr		&pPointCloud,
 {
 	// log file
 	LogFile logFile;
-	logFile << "Loading " << strFileName << " ... ";
+	//logFile << "Loading " << strFileName << " ... ";
+	logFile << "Loading " << strPrefix + strFileName + strSuffix << " ... ";
 
 	// load
 	logFile << loadPointCloud<PointT>(pPointCloud, strPrefix + strFileName + strSuffix) << " points." << std::endl;

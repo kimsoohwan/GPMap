@@ -41,11 +41,15 @@ int main(int argc, char** argv)
 
 	// [0] setting - parameters for estimating surface normals
 	const bool FLAG_SERACH_BY_RADIUS = false; // SearchNearestK or SearchRadius
-	const float searchRadius = 0.01;
+	const float SEARCH_RADIUS = 0.01;
+
+	// [0] setting - removal center and radius
+	const pcl::PointXYZ REMOVAL_CENTER(0.045, -0.015, 0.082);
+	const float REMOVAL_RADIUS = 0.035;
 
 	// show?
 	bool fShow;
-	std::cout << "Do you wish to see the results? (0/1)"; 
+	std::cout << "Do you wish to see the results? (0/1) "; 
 	std::cin >> fShow;
 
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -73,16 +77,24 @@ int main(int argc, char** argv)
 
 	// [1-2] Hit Points - All
 	PointXYZCloudPtr pAllHitPointCloud(new PointXYZCloud());
+	PointXYZCloudPtr pAllHitPointRemovedCloud;
 	if(fRunOriginalObservations)
 	{
+		// accumlate points
 		for(size_t i = 0; i < hitPointCloudPtrList.size(); i++)	(*pAllHitPointCloud) += (*(hitPointCloudPtrList[i]));
 		savePointCloud<pcl::PointXYZ>(pAllHitPointCloud, strFileNameAll, strIntermediateFolder, ".pcd");
 		if(fShow) show<pcl::PointXYZ>("All Hit Points", pAllHitPointCloud);
+
+		// remove some points
+		pAllHitPointRemovedCloud = rangeRemoval<pcl::PointXYZ>(pAllHitPointCloud, REMOVAL_CENTER, REMOVAL_RADIUS);
+		savePointCloud<pcl::PointXYZ>(pAllHitPointRemovedCloud, strFileNameAll, strIntermediateFolder, "_removed.pcd");
+		if(fShow) show<pcl::PointXYZ>("All Hit Points Removed", pAllHitPointRemovedCloud);
 	}
 	else
 	{
 		// it will be used for random/down sampling later
 		loadPointCloud<pcl::PointXYZ>(pAllHitPointCloud, strFileNameAll, strIntermediateFolder, ".pcd");
+		loadPointCloud<pcl::PointXYZ>(pAllHitPointRemovedCloud, strFileNameAll, strIntermediateFolder, "_removed.pcd");
 	}
 
 	// [2] Sensor Positions
@@ -106,10 +118,16 @@ int main(int argc, char** argv)
 		//loadPointCloud<pcl::PointNormal>(pAllFuncObs, strFileNameAll, strIntermediateFolder, "_func_obs.pcd");
 		if(fShow) show<pcl::PointNormal>("All Unit Ray Back Vectors", pAllFuncObs, 0.005);
 
+		// remove some points
+		PointNormalCloudPtr pAllFuncObsRemoved = rangeRemoval<pcl::PointNormal>(pAllFuncObs, REMOVAL_CENTER, REMOVAL_RADIUS);
+		savePointCloud<pcl::PointNormal>(pAllFuncObsRemoved, strFileNameAll, strIntermediateFolder, "_func_obs_removed.pcd");
+		//loadPointCloud<pcl::PointNormal>(pAllFuncObsRemoved, strFileNameAll, strIntermediateFolder, "_func_obs_removed.pcd");
+		if(fShow) show<pcl::PointNormal>("All Unit Ray Back Vectors Removed", pAllFuncObsRemoved, 0.005);
+
 		// [4-1] Derivative Observations (Virtual Hit Points + Surface Normal Vectors) - Sequential
 		PointNormalCloudPtrList derObsCloudPtrList;
-		//estimateSurfaceNormals<ByNearestNeighbors>(hitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, searchRadius, derObsCloudPtrList);
-		estimateSurfaceNormals<ByMovingLeastSquares>(hitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, searchRadius, derObsCloudPtrList);
+		//estimateSurfaceNormals<ByNearestNeighbors>(hitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, SEARCH_RADIUS, derObsCloudPtrList);
+		estimateSurfaceNormals<ByMovingLeastSquares>(hitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, SEARCH_RADIUS, derObsCloudPtrList);
 		savePointCloud<pcl::PointNormal>(derObsCloudPtrList, strObsFileNames, strIntermediateFolder, "_der_obs.pcd");
 		//loadPointCloud<pcl::PointNormal>(derObsCloudPtrList, strObsFileNames, strIntermediateFolder, "_der_obs.pcd");
 		if(fShow) show<pcl::PointNormal>("Sequential Surface Normals", derObsCloudPtrList, 0.005);
@@ -120,6 +138,13 @@ int main(int argc, char** argv)
 		savePointCloud<pcl::PointNormal>(pAllDerObs, strFileNameAll, strIntermediateFolder, "_der_obs.pcd");
 		//loadPointCloud<pcl::PointNormal>(pAllDerObs, strFileNameAll, strIntermediateFolder, "_der_obs.pcd");
 		if(fShow) show<pcl::PointNormal>("All Surface Normals", pAllDerObs, 0.005);
+
+		// remove some points
+		PointNormalCloudPtr pAllDerObsRemoved = rangeRemoval<pcl::PointNormal>(pAllDerObs, REMOVAL_CENTER, REMOVAL_RADIUS);
+		savePointCloud<pcl::PointNormal>(pAllDerObsRemoved, strFileNameAll, strIntermediateFolder, "_der_obs_removed.pcd");
+		//loadPointCloud<pcl::PointNormal>(pAllDerObsRemoved, strFileNameAll, strIntermediateFolder, "_der_obs_removed.pcd");
+		if(fShow) show<pcl::PointNormal>("All Surface Normals Removed", pAllDerObsRemoved, 0.005);
+
 	}
 
 	//////////////////////////////////////////////////////////////////////////////////////////
@@ -127,7 +152,7 @@ int main(int argc, char** argv)
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	bool fOctreeDownSampling;
-	std::cout << "Random sampling(0) or octree-based down sampling(1)?";
+	std::cout << "Random sampling(0) or octree-based down sampling(1)? ";
 	std::cin >> fOctreeDownSampling;
 
 	// sub-folder for samples
@@ -150,11 +175,12 @@ int main(int argc, char** argv)
 		std::cout << "Random sampling ratio: ";
 		std::cin >> param;	// 0.5, 0.3, 0.2, 0.1
 
-		// sub folder
+		// sub-folder
 		std::stringstream ss;
 		ss << strIntermediateFolder << "random_sampling_" << param << "/";
 		strIntermediateSampleFolder = ss.str();
 	}
+	create_directory(strIntermediateSampleFolder);
 
 	// [1-1] Hit Points - Sequential - Down Sampling
 	PointXYZCloudPtrList sampledHitPointCloudPtrList;
@@ -162,7 +188,7 @@ int main(int argc, char** argv)
 	else							randomSampling<pcl::PointXYZ>(hitPointCloudPtrList, param, sampledHitPointCloudPtrList);
 	savePointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strIntermediateSampleFolder, ".pcd");
 	//loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strIntermediateSampleFolder, ".pcd");
-	if(fShow) show<pcl::PointXYZ>("Sequential Down Sampled Hit Points", sampledHitPointCloudPtrList);
+	if(fShow) show<pcl::PointXYZ>("Sequential Sampled Hit Points", sampledHitPointCloudPtrList);
 
 	// sampling rate
 	std::cout << "Hit Points - Sequential - Down Sampling" << std::endl;
@@ -186,36 +212,79 @@ int main(int argc, char** argv)
 	for(size_t i = 0; i < sampledHitPointCloudPtrList.size(); i++)	(*pAllSampledHitPointCloud) += (*(sampledHitPointCloudPtrList[i]));
 	savePointCloud<pcl::PointXYZ>(pAllSampledHitPointCloud, strFileNameAll, strIntermediateSampleFolder, ".pcd");
 	//loadPointCloud<pcl::PointXYZ>(pAllSampledHitPointCloud, strFileNameAll, strIntermediateSampleFolder, ".pcd");
-	if(fShow) show<pcl::PointXYZ>("All Down Sampled Hit Points", pAllSampledHitPointCloud);
+	if(fShow) show<pcl::PointXYZ>("All Sampled Hit Points", pAllSampledHitPointCloud);
+
+	// remove some points
+	PointXYZCloudPtr pAllSampledHitPointRemovedCloud = rangeRemoval<pcl::PointXYZ>(pAllSampledHitPointCloud, REMOVAL_CENTER, REMOVAL_RADIUS);
+	savePointCloud<pcl::PointXYZ>(pAllSampledHitPointRemovedCloud, strFileNameAll, strIntermediateSampleFolder, "_removed.pcd");
+	if(fShow) show<pcl::PointXYZ>("All Sampled Hit Points Removed", pAllSampledHitPointRemovedCloud);
 
 	// [3-1] Function Observations (Hit Points + Unit Ray Back Vectors) - Sequential - Down Sampling
 	PointNormalCloudPtrList sampledFuncObsCloudPtrList;
 	unitRayBackVectors(sampledHitPointCloudPtrList, sensorPositionList, sampledFuncObsCloudPtrList);
 	savePointCloud<pcl::PointNormal>(sampledFuncObsCloudPtrList, strObsFileNames, strIntermediateSampleFolder, "_func_obs.pcd");
 	//loadPointCloud<pcl::PointNormal>(sampledFuncObsCloudPtrList, strObsFileNames, strIntermediateSampleFolder, "_func_obs.pcd");
-	if(fShow) show<pcl::PointNormal>("Sequential Down Sampled Unit Ray Back Vectors", sampledFuncObsCloudPtrList, 0.005);
+	if(fShow) show<pcl::PointNormal>("Sequential Sampled Unit Ray Back Vectors", sampledFuncObsCloudPtrList, 0.005);
 
 	// [3-2] Function Observations (Hit Points + Unit Ray Back Vectors) - All - Down Sampling
 	PointNormalCloudPtr pAllSampledFuncObs(new PointNormalCloud());
 	for(size_t i = 0; i < sampledFuncObsCloudPtrList.size(); i++)	*pAllSampledFuncObs += *sampledFuncObsCloudPtrList[i];
 	savePointCloud<pcl::PointNormal>(pAllSampledFuncObs, strFileNameAll, strIntermediateSampleFolder, "_func_obs.pcd");
 	//loadPointCloud<pcl::PointNormal>(pAllSampledFuncObs, strFileNameAll, strIntermediateSampleFolder, "_func_obs.pcd");
-	if(fShow) show<pcl::PointNormal>("All Down Sampled Unit Ray Back Vectors", pAllSampledFuncObs, 0.005);
+	if(fShow) show<pcl::PointNormal>("All Sampled Unit Ray Back Vectors", pAllSampledFuncObs, 0.005);
+
+	// remove some points
+	PointNormalCloudPtr pAllSampledFuncObsRemoved = rangeRemoval<pcl::PointNormal>(pAllSampledFuncObs, REMOVAL_CENTER, REMOVAL_RADIUS);
+	savePointCloud<pcl::PointNormal>(pAllSampledFuncObsRemoved, strFileNameAll, strIntermediateSampleFolder, "_func_obs_removed.pcd");
+	//loadPointCloud<pcl::PointNormal>(pAllSampledFuncObsRemoved, strFileNameAll, strIntermediateSampleFolder, "_func_obs_removed.pcd");
+	if(fShow) show<pcl::PointNormal>("All Sampled Unit Ray Back Vectors Removed", pAllSampledFuncObsRemoved, 0.005);
+
+	// downsampling
+	std::cout << "Down sampling leaf size: ";
+	std::cin >> param; // 0.001(50%), 0.002(20%), 0.003(10%)
+	std::stringstream ss;
+	ss << "_func_obs_removed_downsampled_" << param << ".pcd";
+	PointNormalCloudPtr pAllSampledFuncObsRemovedDownSampled = downSampling<pcl::PointNormal>(pAllSampledFuncObsRemoved, param);
+	std::cout << "Sampling rate: " << pAllSampledFuncObsRemovedDownSampled->points.size() << " / "
+											 << pAllSampledFuncObsRemoved->points.size() << " = " 
+											 << 100.f * static_cast<float>(pAllSampledFuncObsRemovedDownSampled->points.size())/static_cast<float>(pAllSampledFuncObsRemoved->points.size()) << "%" << std::endl;
+	savePointCloud<pcl::PointNormal>(pAllSampledFuncObsRemovedDownSampled, strFileNameAll, strIntermediateSampleFolder, ss.str());
+	//loadPointCloud<pcl::PointNormal>(pAllSampledFuncObsRemovedDownSampled, strFileNameAll, strIntermediateSampleFolder, ss.str());
+	//if(fShow) show<pcl::PointNormal>("All Sampled Unit Ray Back Vectors Removed Downsampled", pAllSampledFuncObsRemovedDownSampled, 0.005);
+	show<pcl::PointNormal>("All Sampled Unit Ray Back Vectors Removed Downsampled", pAllSampledFuncObsRemovedDownSampled, 0.005);
 
 	// [4-1] Derivative Observations (Virtual Hit Points + Surface Normal Vectors) - Sequential - Down Sampling
 	PointNormalCloudPtrList sampledDerObsCloudPtrList;
-	//estimateSurfaceNormals<ByNearestNeighbors>(sampledHitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, searchRadius, sampledDerObsCloudPtrList);
-	estimateSurfaceNormals<ByMovingLeastSquares>(sampledHitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, searchRadius, sampledDerObsCloudPtrList);
+	//estimateSurfaceNormals<ByNearestNeighbors>(sampledHitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, SEARCH_RADIUS, sampledDerObsCloudPtrList);
+	estimateSurfaceNormals<ByMovingLeastSquares>(sampledHitPointCloudPtrList, sensorPositionList, FLAG_SERACH_BY_RADIUS, SEARCH_RADIUS, sampledDerObsCloudPtrList);
 	savePointCloud<pcl::PointNormal>(sampledDerObsCloudPtrList, strObsFileNames, strIntermediateSampleFolder, "_der_obs.pcd");
 	//loadPointCloud<pcl::PointNormal>(sampledDerObsCloudPtrList, strObsFileNames, strIntermediateSampleFolder, "_der_obs.pcd");
-	if(fShow) show<pcl::PointNormal>("Sequential Down Sampled Surface Normals", sampledDerObsCloudPtrList, 0.005);
+	if(fShow) show<pcl::PointNormal>("Sequential Sampled Surface Normals", sampledDerObsCloudPtrList, 0.005);
 
 	// [4-2] Derivative Observations (Virtual Hit Points + Surface Normal Vectors) - All - Down Sampling
 	PointNormalCloudPtr pAllSampledDerObs(new PointNormalCloud());
 	for(size_t i = 0; i < sampledDerObsCloudPtrList.size(); i++)	(*pAllSampledDerObs) += (*(sampledDerObsCloudPtrList[i]));
 	savePointCloud<pcl::PointNormal>(pAllSampledDerObs, strFileNameAll, strIntermediateSampleFolder, "_der_obs.pcd");
 	//loadPointCloud<pcl::PointNormal>(pAllSampledDerObs, strFileNameAll, strIntermediateSampleFolder, "_der_obs.pcd");
-	if(fShow) show<pcl::PointNormal>("All Down Sampled Surface Normals", pAllSampledDerObs, 0.005);
+	if(fShow) show<pcl::PointNormal>("All Sampled Surface Normals", pAllSampledDerObs, 0.005);
+
+	// remove some points
+	PointNormalCloudPtr pAllSampledDerObsRemoved = rangeRemoval<pcl::PointNormal>(pAllSampledDerObs, REMOVAL_CENTER, REMOVAL_RADIUS);
+	savePointCloud<pcl::PointNormal>(pAllSampledDerObsRemoved, strFileNameAll, strIntermediateSampleFolder, "_der_obs_removed.pcd");
+	//loadPointCloud<pcl::PointNormal>(pAllSampledDerObsRemoved, strFileNameAll, strIntermediateSampleFolder, "_der_obs_removed.pcd");
+	if(fShow) show<pcl::PointNormal>("All Sampled Surface Normals Removed", pAllSampledDerObsRemoved, 0.005);
+
+	// downsampling
+	std::stringstream ss2;
+	ss2 << "_dev_obs_removed_downsampled_" << param << ".pcd";
+	PointNormalCloudPtr pAllSampledDerObsRemovedDownSampled = downSampling<pcl::PointNormal>(pAllSampledDerObsRemoved, param);
+	std::cout << "Sampling rate: " << pAllSampledDerObsRemovedDownSampled->points.size() << " / "
+											 << pAllSampledDerObsRemoved->points.size() << " = " 
+											 << 100.f * static_cast<float>(pAllSampledDerObsRemovedDownSampled->points.size())/static_cast<float>(pAllSampledDerObsRemoved->points.size()) << "%" << std::endl;
+	savePointCloud<pcl::PointNormal>(pAllSampledDerObsRemovedDownSampled, strFileNameAll, strIntermediateSampleFolder, ss2.str());
+	//loadPointCloud<pcl::PointNormal>(pAllSampledDerObsRemovedDownSampled, strFileNameAll, strIntermediateSampleFolder, ss2.str());
+	//if(fShow) show<pcl::PointNormal>("All Sampled Surface Normals Removed Downsampled", pAllSampledDerObsRemovedDownSampled, 0.005);
+	show<pcl::PointNormal>("All Sampled Surface Normals Removed Downsampled", pAllSampledDerObsRemovedDownSampled, 0.005);
 
 	// [5] All (Func + Der) Observations
 	//PointNormalCloudPtrList allObsCloudPtrList;

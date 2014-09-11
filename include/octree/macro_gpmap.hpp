@@ -18,6 +18,7 @@ using GP::LogFile;
 #include "bcm/bcm.hpp"							// BCM
 #include "bcm/bcm_serializable.hpp"			// BCM_Serializable
 #include "bcm/gaussian.hpp"					// GaussianDistribution
+#include "visualization/cloud_viewer.hpp"	// show
 
 const int RUN_ALL_WITH_TRAINING_ONCE = false;
 //const int RUN_ALL_WITH_TRAINING_ONCE = true;
@@ -362,6 +363,7 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 	// loading all-in-one data
 	PointNormalCloudPtr pAllInOneObs(new PointNormalCloud());
 	loadPointCloud<pcl::PointNormal>(pAllInOneObs, strAllInOneObsFileName, strAllInOneObsFileNamePrefix, strAllInOneObsFileNameSuffix);
+	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("All-in-one Observations For Training", pAllInOneObs, 0.005);
 
 	// training
 	while(true)
@@ -370,7 +372,7 @@ void train_hyperparameters_with_all_in_one_observations(const double				BLOCK_SI
 		bool fContinue = RUN_ALL_WITH_TRAINING_ONCE;
 		if(!fContinue)
 		{
-			std::cout << "Do you wish to train hyperparameters? (0/1)"; 
+			std::cout << "Do you wish to train hyperparameters? (0/1) "; 
 			std::cin  >> fContinue;
 			if(!fContinue) break;
 		}
@@ -480,7 +482,7 @@ void build_gpmaps_with_sampled_all_in_one_observations(const double				BLOCK_SIZ
 	bool fContinue = RUN_ALL_WITH_TRAINING_ONCE;
 	if(!fContinue)
 	{
-		std::cout << "Do you wish to build GPMaps with randomly sampled all-in-one observations? (0/1)";
+		std::cout << "Do you wish to build GPMaps with randomly sampled all-in-one observations? (0/1) ";
 		std::cin >> fContinue;
 		if(!fContinue) return;
 	}
@@ -492,6 +494,7 @@ void build_gpmaps_with_sampled_all_in_one_observations(const double				BLOCK_SIZ
 	// loading all-in-one data
 	PointNormalCloudPtr pAllInOneObs(new PointNormalCloud());
 	loadPointCloud<pcl::PointNormal>(pAllInOneObs, strAllInOneObsFileName, strAllInOneObsFileNamePrefix, strAllInOneObsFileNameSuffix);
+	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("All-in-one Observations for Prediction", pAllInOneObs, 0.005);
 
 	// GPMap - Sampled All-in-One Observations - Batch
 	strFileName = strOutputFileName + "(all_samples)_Batch";
@@ -540,8 +543,8 @@ void build_gpmaps_with_all_in_one_observations(const double				BLOCK_SIZE,						
 	bool fContinue = RUN_ALL_WITH_TRAINING_ONCE;
 	if(!fContinue)
 	{
-		if(FLAG_RAMDOMLY_SAMPLE_POINTS)	std::cout << "Do you wish to build GPMaps with randomly sampled all-in-one observations? (0/1)";
-		else										std::cout << "Do you wish to build GPMaps with all-in-one observations? (0/1)";
+		if(FLAG_RAMDOMLY_SAMPLE_POINTS)	std::cout << "Do you wish to build GPMaps with randomly sampled all-in-one observations? (0/1) ";
+		else										std::cout << "Do you wish to build GPMaps with all-in-one observations? (0/1) ";
 		std::cin >> fContinue;
 		if(!fContinue) return;
 	}
@@ -553,6 +556,7 @@ void build_gpmaps_with_all_in_one_observations(const double				BLOCK_SIZE,						
 	// loading all-in-one data
 	PointNormalCloudPtr pAllInOneObs(new PointNormalCloud());
 	loadPointCloud<pcl::PointNormal>(pAllInOneObs, strAllInOneObsFileName, strAllInOneObsFileNamePrefix, strAllInOneObsFileNameSuffix);
+	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("All-in-one Observations for Prediction", pAllInOneObs, 0.005);
 
 	// [1] GPMap - All-in-One Observations - Incremental Update (iBCM)
 	if(FLAG_RAMDOMLY_SAMPLE_POINTS)	strFileName = strOutputFileName + "(all_samples)_iBCM";
@@ -576,25 +580,25 @@ void build_gpmaps_with_all_in_one_observations(const double				BLOCK_SIZE,						
 										  strOutputFolder + strFileName);	// save file path
 
 	// [2] GPMap - All-in-One Observations - Incremental Update (BCM)
-	if(FLAG_RAMDOMLY_SAMPLE_POINTS)	strFileName = strOutputFileName + "(all_samples)_BCM";
-	else										strFileName = strOutputFileName + "(all)_BCM";
-	logFile.open(strLogFolder + strFileName + ".log");	
-	const bool FLAG_DEPENDENT_TEST_POSITIONS = false;
-	gpmap_incremental<BCM_Serializable,
-							MeanFunc, 
-							CovFunc, 
-							LikFunc, 
-							InfMethod>(BLOCK_SIZE,								// block size
-										  NUM_CELLS_PER_AXIS,					// number of cells per each axie
-										  MIN_NUM_POINTS_TO_PREDICT,			// min number of points to predict
-										  MAX_NUM_POINTS_TO_PREDICT,			// max number of points to predict
-										  FLAG_DEPENDENT_TEST_POSITIONS,		// predict means and covariances
-										  FLAG_RAMDOMLY_SAMPLE_POINTS,		// randomly sample points in each leaf node
-										  logHyp,									// hyperparameters
-										  pAllInOneObs,							// observations
-										  gap,										// gap for free points
-										  maxIterBeforeUpdate,					// number of iterations for training before update
-										  strOutputFolder + strFileName);	// save file path
+	//if(FLAG_RAMDOMLY_SAMPLE_POINTS)	strFileName = strOutputFileName + "(all_samples)_BCM";
+	//else										strFileName = strOutputFileName + "(all)_BCM";
+	//logFile.open(strLogFolder + strFileName + ".log");	
+	//const bool FLAG_DEPENDENT_TEST_POSITIONS = false;
+	//gpmap_incremental<BCM_Serializable,
+	//						MeanFunc, 
+	//						CovFunc, 
+	//						LikFunc, 
+	//						InfMethod>(BLOCK_SIZE,								// block size
+	//									  NUM_CELLS_PER_AXIS,					// number of cells per each axie
+	//									  MIN_NUM_POINTS_TO_PREDICT,			// min number of points to predict
+	//									  MAX_NUM_POINTS_TO_PREDICT,			// max number of points to predict
+	//									  FLAG_DEPENDENT_TEST_POSITIONS,		// predict means and covariances
+	//									  FLAG_RAMDOMLY_SAMPLE_POINTS,		// randomly sample points in each leaf node
+	//									  logHyp,									// hyperparameters
+	//									  pAllInOneObs,							// observations
+	//									  gap,										// gap for free points
+	//									  maxIterBeforeUpdate,					// number of iterations for training before update
+	//									  strOutputFolder + strFileName);	// save file path
 }
 
 /** @brief	Build GPMaps with Sequential [Function/Derivative/All] Observations */
@@ -625,8 +629,8 @@ void build_gpmaps_with_sequential_observations(const double				BLOCK_SIZE,						
 	bool fContinue = RUN_ALL_WITH_TRAINING_ONCE;
 	if(!fContinue)
 	{
-		if(FLAG_RAMDOMLY_SAMPLE_POINTS)	std::cout << "Do you wish to build GPMaps with randomly sampled sequential observations? (0/1)";
-		else										std::cout << "Do you wish to build GPMaps with sequential observations? (0/1)";
+		if(FLAG_RAMDOMLY_SAMPLE_POINTS)	std::cout << "Do you wish to build GPMaps with randomly sampled sequential observations? (0/1) ";
+		else										std::cout << "Do you wish to build GPMaps with sequential observations? (0/1) ";
 		std::cin >> fContinue;
 		if(!fContinue) return;
 	}
@@ -635,9 +639,10 @@ void build_gpmaps_with_sequential_observations(const double				BLOCK_SIZE,						
 	std::string strFileName;
 	LogFile logFile;
 
-	// loading all-in-one data
+	// loading sequential data
 	PointNormalCloudPtrList ObsCloudPtrList;
 	loadPointCloud<pcl::PointNormal>(ObsCloudPtrList, strSequentialObsFileNameList, strSequentialObsFileNamePrefix, strSequentialObsFileNameSuffix);
+	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("Sequential Observations for Prediction", ObsCloudPtrList, 0.005);
 
 	// [1] GPMap - Sequential Observations - Incremental Update (iBCM)
 	if(FLAG_RAMDOMLY_SAMPLE_POINTS)	strFileName = strOutputFileName + "(seq_samples)_iBCM";
@@ -752,24 +757,25 @@ void train_hyperparameters_and_build_gpmaps(const double				BLOCK_SIZE,									
 																							 strLogFolder);						// log folder
 		}
 
-		// [1-2] Sequential Observations
-		build_gpmaps_with_sequential_observations<MeanFunc,
-																CovFunc, 
-																LikFunc, 
-																InfMethod>(BLOCK_SIZE,							// block size
-																			  NUM_CELLS_PER_AXIS,				// number of cells per each axie
-																			  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-																			  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-																			  FLAG_RAMDOMLY_SAMPLE_POINTS,		// randomly sample points in each leaf node
-																			  logHyp,								// hyperparameters
-																			  strSequentialObsFileNameList,	// **sequential observation file names**
-																			  strObsFileNamePrefix,				// file name prefix
-																			  strObsFileNameSuffix,				// file name suffix
-																			  gap,									// gap
-																			  maxIterBeforeUpdate,				// number of iterations for training before update
-																			  strOutputFolder,					// output data folder
-																			  strOutputFileName,					// output file name prefix
-																			  strLogFolder);						// log folder	
+		//// [1-2] Sequential Observations
+		//build_gpmaps_with_sequential_observations<MeanFunc,
+		//														CovFunc, 
+		//														LikFunc, 
+		//														InfMethod>(BLOCK_SIZE,							// block size
+		//																	  NUM_CELLS_PER_AXIS,				// number of cells per each axie
+		//																	  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
+		//																	  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
+		//																	  FLAG_RAMDOMLY_SAMPLE_POINTS,		// randomly sample points in each leaf node
+		//																	  logHyp,								// hyperparameters
+		//																	  strSequentialObsFileNameList,	// **sequential observation file names**
+		//																	  strObsFileNamePrefix,				// file name prefix
+		//																	  strObsFileNameSuffix,				// file name suffix
+		//																	  gap,									// gap
+		//																	  maxIterBeforeUpdate,				// number of iterations for training before update
+		//																	  strOutputFolder,					// output data folder
+		//																	  strOutputFileName,					// output file name prefix
+		//																	  strLogFolder);						// log folder	
+
 		// [1-3] All-in-One Observations
 		build_gpmaps_with_all_in_one_observations<MeanFunc,
 																CovFunc, 
@@ -792,6 +798,125 @@ void train_hyperparameters_and_build_gpmaps(const double				BLOCK_SIZE,									
 		// next
 		//FLAG_RAMDOMLY_SAMPLE_POINTS = !FLAG_RAMDOMLY_SAMPLE_POINTS;
 	//}
+}
+
+/** @brief	Train hyperparameters with All-in-One [Function/Derivative/All] Observations and
+  *			Build GPMaps with
+  *				- Sampled All-in-One	[Function/Derivative/All] Observations
+  *				- All-in-One			[Function/Derivative/All] Observations
+  *				- Sequential			[Function/Derivative/All] Observations
+  */
+template<template<typename> class CovFunc, 
+			template<typename> class LikFunc,
+			template <typename, 
+						 template<typename> class,
+						 template<typename> class,
+						 template<typename> class> class InfMethod>
+void train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP(const double				BLOCK_SIZE,													// block size
+																					const size_t				NUM_CELLS_PER_AXIS,										// number of cells per each axie
+																					const size_t				MIN_NUM_POINTS_TO_PREDICT,								// min number of points to predict
+																					const size_t				MAX_NUM_POINTS_TO_PREDICT,								// max number of points to predict
+																					typename GP::MeanGlobalGP<float>::GlobalHyp	
+																																	&logGlobalHyp,							// global hyperparameters
+																					typename GP::GaussianProcess<float, GP::MeanGlobalGP, CovFunc, LikFunc, InfMethod>::Hyp	
+																																	&logLocalHyp,							// local hyperparameters
+																					const std::vector<std::string>		&strSequentialObsFileNameList,	// sequential observations input file name
+																					const std::string							&strAllInOneObsFileName,			// all-in-one observations input file name
+																					const std::string							&strObsFileNamePrefix,				// input file name prefix
+																					const std::string							&strGlobalObsFileNameSuffix,		// global input file name suffix
+																					const std::string							&strObsFileNameSuffix,				// input file name suffix
+																					const float									gap,										// gap
+																					const int									maxIterBeforeUpdate,					// number of iterations for training before update
+																					const std::string							&strOutputFolder,						// output data folder
+																					const std::string							&strOutputFileName,					// output data file prefix
+																					const std::string							&strLogFolder)							// log folder
+{
+	// [0] Training Global GP
+	// log file
+	const std::string strFileName = strOutputFileName + "_MeanGlobalGP";
+	LogFile logFile(strLogFolder + strFileName + ".log");	
+
+	// loading all-in-one data
+	PointNormalCloudPtr pGlobalAllInOneObs(new PointNormalCloud());
+	loadPointCloud<pcl::PointNormal>(pGlobalAllInOneObs, strAllInOneObsFileName, strObsFileNamePrefix, strGlobalObsFileNameSuffix);
+	if(!RUN_ALL_WITH_TRAINING_ONCE) show<pcl::PointNormal>("Global All-in-one Observations for Training and Prediction", pGlobalAllInOneObs, 0.005);
+
+	// indices
+	const int N = pGlobalAllInOneObs->points.size();
+	std::vector<int> indices(N);
+	std::generate(indices.begin(), indices.end(), UniqueNonZeroInteger());
+
+	// training data
+	MatrixPtr pX, pXd; VectorPtr pYYd;
+	generateTrainingData(pGlobalAllInOneObs, indices, gap, pX, pXd, pYYd);	
+	GP::DerivativeTrainingData<float> globalTrainingData;
+	globalTrainingData.set(pX, pXd, pYYd);
+	//GP::TrainingData<float> globalTrainingData;
+	//globalTrainingData.set(pX, pYYd);
+
+	// training and set
+	while(true)
+	{
+		// continue?
+		bool fTrainGlobalHyp = RUN_ALL_WITH_TRAINING_ONCE;
+		if(!fTrainGlobalHyp)
+		{
+			std::cout << "Would you like to train the global hyperparameters? (0/1) ";
+			std::cin >> fTrainGlobalHyp;
+		}
+
+		// max iterations
+		int maxIter = 0;
+		if(RUN_ALL_WITH_TRAINING_ONCE)
+		{
+			maxIter = 50;
+		}
+		else if(fTrainGlobalHyp)
+		{
+			std::cout << "\tMax iterations? (0 for no training): ";
+			std::cin >> maxIter;
+		}
+
+		// hyperparameters
+		bool fUsePredefinedHyperparameters;
+		if(RUN_ALL_WITH_TRAINING_ONCE)
+		{
+			fUsePredefinedHyperparameters = true;
+		}
+		else
+		{
+			logFile  << "\tUse Predefined Hyperparameters? (0/1) ";
+			std::cin >> fUsePredefinedHyperparameters;
+		}
+		if(!fUsePredefinedHyperparameters)
+		{
+			float hyp;
+			for(int i = 0; i < logLocalHyp.mean.size(); i++) { std::cout << "\t\thyp.mean(" << i << ") = "; std::cin >> hyp; logLocalHyp.mean(i) = log(hyp); }
+			for(int i = 0; i < logLocalHyp.cov.size();  i++) { std::cout << "\t\thyp.cov(" << i << ") = ";  std::cin >> hyp; logLocalHyp.cov(i)  = log(hyp); }
+			for(int i = 0; i < logLocalHyp.lik.size();  i++) { std::cout << "\t\thyp.lik(" << i << ") = ";  std::cin >> hyp; logLocalHyp.lik(i)  = log(hyp); }
+		}
+
+		// set
+		GP::MeanGlobalGP<float>::set(logGlobalHyp, globalTrainingData, fTrainGlobalHyp, maxIter);
+		if(!fTrainGlobalHyp || maxIter <= 0) break;
+	}
+
+	// do the same thing
+	train_hyperparameters_and_build_gpmaps<GP::MeanGlobalGP, CovFunc, LikFunc, InfMethod>(BLOCK_SIZE,							// block size
+																													  NUM_CELLS_PER_AXIS,				// number of cells per each axie
+																													  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
+																													  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
+																													  logLocalHyp,							// hyperparameters
+																													  strSequentialObsFileNameList,	// sequential observations input file name
+																													  strAllInOneObsFileName,			// all-in-one observations input file name
+																													  strObsFileNamePrefix,				// input file name prefix
+																													  strObsFileNameSuffix,				// input file name suffix
+																													  gap,									// gap
+																													  maxIterBeforeUpdate,				// number of iterations for training before update
+																													  strOutputFolder,					// output data folder
+																													  strOutputFileName,					// output data file prefix
+																													  strLogFolder);						// log folder
+
 }
 
 }

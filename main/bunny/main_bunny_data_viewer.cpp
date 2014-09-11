@@ -11,6 +11,9 @@
 #include <pcl/octree/octree.h>
 #include <pcl/octree/octree_impl.h>
 
+// OpenGP
+#include "gp.h"
+
 // GPMap
 #include "common/common.hpp"					// combinePointCloud
 #include "io/io.hpp"								// loadPointCloud, savePointCloud, loadSensorPositionList
@@ -20,14 +23,19 @@
 #include "octree/data_partitioning.hpp"	// randomSampling
 #include "octree/octree_viewer.hpp"			// OctreeViewer
 
+#include "octree/octree_gpmap.hpp"			// OctreeGPMap
+#include "octree/octree_container.hpp"		// OctreeGPMapContainer
+#include "bcm/gaussian.hpp"					// GaussianDistribution
+
 using namespace GPMap;
 
 int main(int argc, char** argv)
 {
 	// [0] setting - directory
-	const std::string strInputDataFolder			("../../data/bunny/input/");
-	const std::string strIntermediateDataFolder	("../../data/bunny/intermediate/");
-	const std::string strGPMapDataFolder0			("../../data/bunny/output/gpmap/");
+	const std::string strDataFolder				("E:/Documents/GitHub/Data/");
+	const std::string strDataName					("bunny");
+	const std::string strInputFolder				(strDataFolder + strDataName + "/input/");
+	const std::string strIntermediateFolder	(strDataFolder + strDataName + "/intermediate/");
 
 	// [0] setting - observations
 	const size_t NUM_OBSERVATIONS = 4; 
@@ -42,24 +50,23 @@ int main(int argc, char** argv)
 	std::cin >> fOctreeDownSampling;
 
 	float param;
-	std::string strDownSampleIntermediateDataFolder;
-	std::string strGPMapDataFolder1;
-	if(fOctreeDownSampling > 0)
+	std::string strIntermediateSampleFolder;
+	// no sampling
+	if(fOctreeDownSampling < 0)
+	{
+		strIntermediateSampleFolder	= strIntermediateFolder;
+	}
+	// octree-based down sampling
+	else if(fOctreeDownSampling > 0)
 	{
 		// leaf size
 		std::cout << "Down sampling leaf size: ";
 		std::cin >> param; // 0.001(50%), 0.002(20%), 0.003(10%)
 
-		// sub folder
+		// sub-folder
 		std::stringstream ss;
-		ss << "down_sampling_" << param << "/";
-		strDownSampleIntermediateDataFolder	= strIntermediateDataFolder	+ ss.str();
-		strGPMapDataFolder1	= strGPMapDataFolder0	+ ss.str();
-	}
-	else if(fOctreeDownSampling < 0)
-	{
-		strDownSampleIntermediateDataFolder	= strIntermediateDataFolder	+ "original/";
-		strGPMapDataFolder1	= strGPMapDataFolder0	+ "original/";
+		ss << strIntermediateFolder << "down_sampling_" << param << "/";
+		strIntermediateSampleFolder = ss.str();
 	}
 	else
 	{
@@ -67,23 +74,34 @@ int main(int argc, char** argv)
 		std::cout << "Random sampling ratio: ";
 		std::cin >> param;	// 0.5, 0.3, 0.2, 0.1
 
-		// sub folder
+		// sub-folder
 		std::stringstream ss;
-		ss << "random_sampling_" << param << "/";
-		strDownSampleIntermediateDataFolder	= strIntermediateDataFolder	+ ss.str();
-		strGPMapDataFolder1	= strGPMapDataFolder0	+ ss.str();
+		ss << strIntermediateFolder << "random_sampling_" << param << "/";
+		strIntermediateSampleFolder = ss.str();
 	}
 
 	// [1-1] Hit Points - Sequential - Down Sampling
 	PointXYZCloudPtrList sampledHitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strDownSampleIntermediateDataFolder, ".pcd");
+	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strIntermediateSampleFolder, ".pcd");
 	//show<pcl::PointXYZ>("Sequential Down Sampled Hit Points", sampledHitPointCloudPtrList);
 
 
 	// [1-2] Hit Points - All - Down Sampling
 	PointXYZCloudPtr pAllSampledHitPointCloud(new PointXYZCloud());
-	loadPointCloud<pcl::PointXYZ>(pAllSampledHitPointCloud, strFileNameAll, strDownSampleIntermediateDataFolder, ".pcd");
-	show<pcl::PointXYZ>("All Down Sampled Hit Points", pAllSampledHitPointCloud);
+	loadPointCloud<pcl::PointXYZ>(pAllSampledHitPointCloud, strFileNameAll, strIntermediateSampleFolder, ".pcd");
+	//show<pcl::PointXYZ>("All Down Sampled Hit Points", pAllSampledHitPointCloud);
+
+	// GPMap
+	const double BLOCK_SIZE = 0.2;
+	const double NUM_CELLS_PER_AXIS
+	typedef OctreeGPMapContainer<GaussianDistribution>	LeafT;
+	typedef OctreeGPMap<GP::MeanZero, GP::CovSEiso, GP::LikGauss, GP::InfExactGeneral, LeafT> OctreeGPMapT;
+	OctreeGPMapT gpmap(BLOCK_SIZE, 
+							 NUM_CELLS_PER_AXIS, 
+							 MIN_NUM_POINTS_TO_PREDICT, 
+							 MAX_NUM_POINTS_TO_PREDICT, 
+							 FLAG_INDEPENDENT_TEST_POSITIONS,
+							 FLAG_RAMDOMLY_SAMPLE_POINTS);
 
 	// octree
 	//pcl::octree::OctreePointCloud<pcl::PointXYZ> octreePointCloud(0.02);

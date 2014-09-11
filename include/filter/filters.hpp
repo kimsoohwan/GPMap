@@ -159,33 +159,34 @@ rangeRemoval(typename pcl::PointCloud<PointT>::ConstPtr cloud,
 	}
 }
 
-template <typename PointT>
-typename pcl::PointCloud<PointT>::Ptr
-rangeRemoval(typename pcl::PointCloud<PointT>::ConstPtr cloud,
-				const PointT &origin,
-				const float range,
-				const bool bRemoveClose = true)
+/** @brief Remove points in/outside of a sphere */
+template <typename PointT1, typename PointT2>
+typename pcl::PointCloud<PointT1>::Ptr
+rangeRemoval(const typename pcl::PointCloud<PointT1>::ConstPtr		cloud,
+				 const PointT2														&origin,
+				 const float														range,
+				 const bool															bRemoveClose = true)
 {
 	// build the condition which a given point must satisfy for it to remain in the point cloud
 	// (p - q)'(p - q) > r^2
 	// => p'p - 2q'p + q'q - r^2 > 0
 	// => p'Ap + 2v'p + c [OP] 0
 	//    : A = eye(3), v = -q, c = q'q - r^2, OP = >
-	pcl::ConditionAnd<PointT>::Ptr quad_cond(new pcl::ConditionAnd<PointT> ());
-	quad_cond->addComparison(pcl::TfQuadraticXYZComparison<PointT>::ConstPtr(
-								new pcl::TfQuadraticXYZComparison<PointT>(bRemoveClose ? pcl::ComparisonOps::GT : pcl::ComparisonOps::LT,
-																			Eigen::Matrix3f::Identity(), 
-																			Eigen::Vector3f(-origin.x, -origin.y, -origin.z), 
-																			(origin.x)*(origin.x) + (origin.y)*(origin.y) + (origin.z)*(origin.z) - range*range)));
+	pcl::ConditionAnd<PointT1>::Ptr quad_cond(new pcl::ConditionAnd<PointT1> ());
+	quad_cond->addComparison(pcl::TfQuadraticXYZComparison<PointT1>::ConstPtr(
+										new pcl::TfQuadraticXYZComparison<PointT1>(bRemoveClose ? pcl::ComparisonOps::GT : pcl::ComparisonOps::LT,
+																								 Eigen::Matrix3f::Identity(), 
+																								 Eigen::Vector3f(-origin.x, -origin.y, -origin.z), 
+																								 (origin.x)*(origin.x) + (origin.y)*(origin.y) + (origin.z)*(origin.z) - range*range)));
 		
 	// build the filter
-	pcl::ConditionalRemoval<PointT> condrem (quad_cond);
-	condrem.setInputCloud (cloud);
+	pcl::ConditionalRemoval<PointT1> condrem(quad_cond);
+	condrem.setInputCloud(cloud);
 	//condrem.setKeepOrganized(true);
 		
 	// apply filter
-	pcl::PointCloud<PointT>::Ptr cloud_filtered(new pcl::PointCloud<PointT>());
-	condrem.filter (*cloud_filtered);
+	pcl::PointCloud<PointT1>::Ptr cloud_filtered(new pcl::PointCloud<PointT1>());
+	condrem.filter(*cloud_filtered);
 
 	return cloud_filtered;
 }

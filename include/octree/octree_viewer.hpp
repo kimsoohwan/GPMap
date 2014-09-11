@@ -8,13 +8,10 @@
 #include <pcl/visualization/pcl_visualizer.h>
 #include <pcl/visualization/point_cloud_handlers.h>
 #include <pcl/visualization/common/common.h>
-#include <pcl/octree/octree.h>
-#include <pcl/octree/octree_impl.h>
-#include <pcl/octree/octree_key.h>
+//#include <pcl/octree/octree.h>
+//#include <pcl/octree/octree_impl.h>
+//#include <pcl/octree/octree_key.h>
 #include <pcl/filters/filter.h>
-
-// GPMap
-#include "octree/octree_gpmap.hpp" // OctreeGPMap
 
 namespace GPMap {
 
@@ -39,8 +36,9 @@ public:
 		  m_pVoxelCenterPointCloud(new pcl::PointCloud<pcl::PointXYZ>()),
 		  m_fDrawWithCubesOrCenterPoints(false),
 		  m_fDisplayOriginalPointsWithCubes(true),
-		  m_fWireframe(true),
-		  m_occupancyThreshold(0.9f)
+		  m_fWireframe(true)
+		  //,		  m_occupancyThreshold(0.9f)
+		  , x(0.045f), y(-0.015f), z(0.082f), r(0.035f)
 	{		
 		//register keyboard callbacks
 		viz.registerKeyboardCallback(&OctreeViewer::keyboardEventOccurred, *this, 0);
@@ -50,7 +48,7 @@ public:
 		viz.addText("c -> Toggle Point/Cube representation",			10, 155, 0.0, 1.0, 0.0, "key_d_t");
 		viz.addText("p -> Show/Hide original cloud",						10, 140, 0.0, 1.0, 0.0, "key_x_t");
 		viz.addText("s/w -> Surface/Wireframe representation",		10, 125, 0.0, 1.0, 0.0, "key_sw_t");
-		viz.addText("i/k -> Increase/decrease occupancy threshold", 10, 110, 0.0, 1.0, 0.0, "key_th_t");
+		//viz.addText("i/k -> Increase/decrease occupancy threshold", 10, 110, 0.0, 1.0, 0.0, "key_th_t");
 		
 		//show m_octree at default depth
 		extractCenterPoints();
@@ -75,8 +73,16 @@ public:
 		else if	(event.getKeySym() == "p" && event.keyDown())	{ m_fDisplayOriginalPointsWithCubes = !m_fDisplayOriginalPointsWithCubes; update(); }
 		else if	(event.getKeySym() == "w" && event.keyDown())	{ if(!m_fWireframe)	m_fWireframe = true;		update(); }
 		else if	(event.getKeySym() == "s" && event.keyDown())	{ if(m_fWireframe)	m_fWireframe = false;	update(); }
-		else if	(event.getKeySym() == "l" && event.keyDown())	{ m_occupancyThreshold += 0.02;	extractCenterPoints(); }
-		else if	(event.getKeySym() == "k" && event.keyDown())	{ m_occupancyThreshold -= 0.02;	extractCenterPoints(); }
+		//else if	(event.getKeySym() == "l" && event.keyDown())	{ m_occupancyThreshold += 0.02;	extractCenterPoints(); }
+		//else if	(event.getKeySym() == "k" && event.keyDown())	{ m_occupancyThreshold -= 0.02;	extractCenterPoints(); }
+		else if	(event.getKeySym() == "x" && event.keyDown() &&  event.isAltPressed())	{ x -= 0.001f;	std::cout << "x = " << setprecision(5) << x << std::endl; update(); }
+		else if	(event.getKeySym() == "x" && event.keyDown() && !event.isAltPressed())	{ x += 0.001f;	std::cout << "x = " << setprecision(5) << x << std::endl; update(); }
+		else if	(event.getKeySym() == "y" && event.keyDown() &&  event.isAltPressed())	{ y -= 0.001f;	std::cout << "y = " << setprecision(5) << y << std::endl; update(); }
+		else if	(event.getKeySym() == "y" && event.keyDown() && !event.isAltPressed())	{ y += 0.001f;	std::cout << "y = " << setprecision(5) << y << std::endl; update(); }
+		else if	(event.getKeySym() == "z" && event.keyDown() &&  event.isAltPressed())	{ z -= 0.001f;	std::cout << "z = " << setprecision(5) << z << std::endl; update(); }
+		else if	(event.getKeySym() == "z" && event.keyDown() && !event.isAltPressed())	{ z += 0.001f;	std::cout << "z = " << setprecision(5) << z << std::endl; update(); }
+		else if	(event.getKeySym() == "d" && event.keyDown() &&  event.isAltPressed())	{ r -= 0.001f;	std::cout << "r = " << setprecision(5) << r << std::endl; update(); }
+		else if	(event.getKeySym() == "d" && event.keyDown() && !event.isAltPressed())	{ r += 0.001f;	std::cout << "r = " << setprecision(5) << r << std::endl; update(); }
 	}
 	
 	
@@ -111,9 +117,9 @@ public:
 		if (m_fDisplayOriginalPointsWithCubes) viz.addText("Displaying original cloud", 0, 30, 1.0, 0.0, 0.0, "org_t");
 
 		// threshold
-		viz.removeShape("thld_t");
-		sprintf(size, "Threshold: %.2f", m_occupancyThreshold);
-		viz.addText(size, 0, 15, 1.0, 0.0, 0.0, "thld_t");
+		//viz.removeShape("thld_t");
+		//sprintf(size, "Threshold: %.2f", m_occupancyThreshold);
+		//viz.addText(size, 0, 15, 1.0, 0.0, 0.0, "thld_t");
 	}
 
 	/* @brief Visual update. Create visualizations and add them to the viewer */
@@ -150,6 +156,10 @@ public:
 			pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZ> hColor(m_pVoxelCenterPointCloud,"z");
 			viz.addPointCloud<pcl::PointXYZ>(m_pVoxelCenterPointCloud, hColor, "cloud");
 		}
+
+		// sphere
+		viz.removeShape("sphere");
+		viz.addSphere(pcl::PointXYZ(x, y, z), r, 1, 0, 0, "sphere");
 	}
 	
 	/* @brief remove dynamic objects from the viewer */
@@ -239,9 +249,9 @@ public:
 	{
 #if 1
 		// voxel centers
-		m_octree.getOccupiedVoxelCenters(m_pVoxelCenterPointCloud->points);
+		//m_octree.getOccupiedVoxelCenters(m_pVoxelCenterPointCloud->points);
 		//m_octree.getOccupiedVoxelCenters(m_pVoxelCenterPointCloud->points, true);
-		//m_octree.getOccupiedVoxelCenters(m_pVoxelCenterPointCloud->points, false);
+		m_octree.getOccupiedVoxelCenters(m_pVoxelCenterPointCloud->points, false);
 		//m_octree.getOccupiedCellCenters(m_pVoxelCenterPointCloud->points, m_occupancyThreshold, true);
 #else
 		// clear
@@ -292,7 +302,8 @@ protected:
 	bool m_fDrawWithCubesOrCenterPoints, m_fDisplayOriginalPointsWithCubes, m_fWireframe;
 
 	// threshold
-	float m_occupancyThreshold;
+	//float m_occupancyThreshold;
+	float x, y, z, r;
 };
 
 }

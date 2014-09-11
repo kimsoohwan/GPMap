@@ -74,9 +74,10 @@ public:
 	/** @brief Reset the prior inverse covariance matrix */
 	static void resetPrior()
 	{
-		assert(m_fInvCov0);
-		m_fInvCov0 = 0;
+		//assert(m_fInvCov0);
+		if(!m_fInvCov0) return;
 		m_pInvCov0.reset();
+		m_fInvCov0 = false;
 	}
 
 	/** @brief Set the prior inverse covariance matrix */
@@ -277,8 +278,8 @@ public:
 
 			// set zero
 			m_pSumOfWeightedMeans->setZero();
-			//m_pSumOfInvCovs->setZero();
-			(*m_pSumOfInvCovs) = (*m_pInvCov0);
+			if(m_fInvCov0)		(*m_pSumOfInvCovs) = (*m_pInvCov0);
+			else					m_pSumOfInvCovs->setZero();
 		}
 		else
 		{

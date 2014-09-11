@@ -15,12 +15,18 @@ using namespace GPMap;
 int main(int argc, char** argv)
 {
 	// [0] setting - directory
-	const std::string strInputDataFolder						("../../data/bunny/input/");
-	const std::string strOriginalIntermediateDataFolder	("../../data/bunny/intermediate/original/");
-	const std::string strGPMapDataFolder						("../../data/bunny/output/gpmap/random_sampling_0.1/meta_data/");
-	const std::string strOutputDataFolder0						("../../data/bunny/output/gpmap/random_sampling_0.1/octree/");
-	const std::string strOutputLogFolder						(strOutputDataFolder0			 + "log/");
-	create_directory(strOutputDataFolder0);
+	const std::string strDataFolder						("E:/Documents/GitHub/Data/");
+	const std::string strDataName							("bunny");
+	const std::string strInputFolder						(strDataFolder + strDataName + "/input/");
+	const std::string strIntermediateFolder			(strDataFolder + strDataName + "/intermediate/");
+	const std::string strGPMapFolder						(strDataFolder + strDataName + "/output/gpmap/");
+	const std::string strGPMapMetaDataFolder			(strGPMapFolder + "meta_data/");
+	const std::string strGPMapMetaDataSampleFolder	(strGPMapMetaDataFolder + "/random_sampling_0.1/");
+	const std::string strGPMapOctreeFolder				(strGPMapFolder + "octree/");
+	const std::string strGPMapOctreeSampleFolder		(strGPMapOctreeFolder + "random_sampling_0.1/");
+	const std::string strOutputLogFolder				(strGPMapOctreeSampleFolder + "log/");
+	create_directory(strGPMapOctreeFolder);
+	create_directory(strGPMapOctreeSampleFolder);
 	create_directory(strOutputLogFolder);
 
 	// [0] setting - observations
@@ -29,34 +35,37 @@ int main(int argc, char** argv)
 	StringList strObsFileNames(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
 
 	// [0] setting - GPMaps
-	const size_t NUM_GPMAPS = 10; 
+	//const size_t NUM_GPMAPS = 10; 
+	const size_t NUM_GPMAPS = 2; 
 	const std::string strGPMapFileNames_[]	= {
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(all)_iBCM",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_0",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_1",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_2",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_3",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(all)_BCM",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_0",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_1",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_2",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_3",
-															};
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(all)_iBCM",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_0",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_1",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_2",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_3",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(all)_BCM",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_0",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_1",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_2",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_3",
+															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_glocal(all)_iBCM",
+															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_local(all)_iBCM",
+																};
 	StringList strGPMapFileNames(strGPMapFileNames_, strGPMapFileNames_ + NUM_GPMAPS); 
 
 	// [1] load/save hit points
 	PointXYZCloudPtrList hitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNames, strOriginalIntermediateDataFolder, ".pcd");		// original pcd files which are transformed in global coordinates
+	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNames, strIntermediateFolder, ".pcd");		// original pcd files which are transformed in global coordinates
 
 	// [2] load sensor positions
 	PointXYZVList sensorPositionList;
-	loadSensorPositionList(sensorPositionList, strObsFileNames, strInputDataFolder, "_camera_position.txt");
+	loadSensorPositionList(sensorPositionList, strObsFileNames, strInputFolder, "_camera_position.txt");
 	assert(NUM_OBSERVATIONS == hitPointCloudPtrList.size() && NUM_OBSERVATIONS == sensorPositionList.size());
 
 	// [3] Setting
 	double	RESOLUTION = 0.002;
-	std::cout << "Resolution: ";
-	std::cin >> RESOLUTION;
+	//std::cout << "Resolution: ";
+	//std::cin >> RESOLUTION;
 
 	// log file
 	LogFile logFile;
@@ -117,7 +126,7 @@ int main(int argc, char** argv)
 
 		// GPMap
 		pcl::PointCloud<pcl::PointNormal>::Ptr pPointCloudGPMap;
-		loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapDataFolder + strGPMapFileNames[0] + ".pcd");
+		loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataSampleFolder + strGPMapFileNames[0] + ".pcd");
 
 		// convert GPMap to OctoMap
 		OctoMap<NO_COLOR> octomap_train(RESOLUTION, *pPointCloudGPMap);
@@ -167,7 +176,7 @@ int main(int argc, char** argv)
 	if(fConvertGPMap)
 	{
 		std::stringstream ss;
-		ss << strOutputDataFolder0 << "PLSC_alpha_" << PLSC::alpha << "_PLSC_beta_" << PLSC::beta << "/";
+		ss << strGPMapOctreeSampleFolder << "PLSC_alpha_" << PLSC::alpha << "_PLSC_beta_" << PLSC::beta << "/";
 		const std::string strOutputDataFolder			(ss.str());
 		const std::string strColorOutputDataFolder	(ss.str() + "color/");
 		create_directory(strOutputDataFolder);
@@ -184,7 +193,7 @@ int main(int argc, char** argv)
 
 			// [4-1] GPMap
 			pcl::PointCloud<pcl::PointNormal>::Ptr pPointCloudGPMap;
-			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapDataFolder + strGPMapFileNames[i] + ".pcd");
+			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataSampleFolder + strGPMapFileNames[i] + ".pcd");
 
 			// [4-2] convert GPMap to Octree
 			OctoMap<NO_COLOR> octree(RESOLUTION, *pPointCloudGPMap);
@@ -227,7 +236,7 @@ int main(int argc, char** argv)
 		float minVarRange; std::cout << "min var color range: ";		std::cin >> minVarRange;
 
 		std::stringstream ss;
-		ss << strOutputDataFolder0 << "PLSC_alpha_" << PLSC::alpha << "_PLSC_beta_" << PLSC::beta << "/";
+		ss << strGPMapOctreeSampleFolder << "PLSC_alpha_" << PLSC::alpha << "_PLSC_beta_" << PLSC::beta << "/";
 		const std::string strOutputDataFolder1			(ss.str());
 		ss << "min_var_" << minVarRange << "_max_var_" << maxVarThld << "/";
 		const std::string strOutputDataFolder			(ss.str());
@@ -247,7 +256,7 @@ int main(int argc, char** argv)
 
 			// [5-1] loading GPMap
 			pcl::PointCloud<pcl::PointNormal>::Ptr pPointCloudGPMap;
-			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapDataFolder + strGPMapFileNames[i] + ".pcd");
+			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataSampleFolder + strGPMapFileNames[i] + ".pcd");
 
 			// [5-2] convert GPMap to Octree
 			OctoMap<NO_COLOR> octree(RESOLUTION, *pPointCloudGPMap, maxVarThld);

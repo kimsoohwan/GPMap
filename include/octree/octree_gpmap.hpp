@@ -79,8 +79,10 @@ public:
 					const size_t			MIN_NUM_POINTS_TO_PREDICT,
 					const size_t			MAX_NUM_POINTS_TO_PREDICT,
 					const bool				FLAG_INDEPENDENT_TEST_POSITIONS,
-					const float				FLAG_RAMDOMLY_SAMPLE_POINTS = false,
-					const bool				FLAG_DUPLICATE_POINTS = true) // false
+//					const bool				FLAG_USE_MEAN_GLOBAL_GP,
+					const float				FLAG_RAMDOMLY_SAMPLE_POINTS	= false,
+					const float				FLAG_DUPLICATE_POINTS			= true,	// false
+					const bool				FLAG_USE_ALL_TRAINING_DATA		= true)	// true
 		: pcl::octree::OctreePointCloud<MyPoinT, LeafT, BranchT, OctreeT>(BLOCK_SIZE),
 		  BLOCK_SIZE_								(resolution_),
 		  NUM_CELLS_PER_AXIS_					(max<size_t>(1, NUM_CELLS_PER_AXIS)),
@@ -89,8 +91,10 @@ public:
 		  MIN_NUM_POINTS_TO_PREDICT_			(max<size_t>(1, MIN_NUM_POINTS_TO_PREDICT)),
 		  MAX_NUM_POINTS_TO_PREDICT_			(static_cast<int>(MAX_NUM_POINTS_TO_PREDICT)),
 		  FLAG_INDEPENDENT_TEST_POSITIONS_	(FLAG_INDEPENDENT_TEST_POSITIONS),
-		  FLAG_RAMDOMLY_SAMPLE_POINTS_					(FLAG_RAMDOMLY_SAMPLE_POINTS),
+//		  FLAG_USE_MEAN_GLOBAL_GP_				(FLAG_USE_MEAN_GLOBAL_GP),
+		  FLAG_RAMDOMLY_SAMPLE_POINTS_		(FLAG_RAMDOMLY_SAMPLE_POINTS),
 		  FLAG_DUPLICATE_POINTS_				(FLAG_DUPLICATE_POINTS),
+		  FLAG_USE_ALL_TRAINING_DATA_			(FLAG_USE_ALL_TRAINING_DATA),
 		  m_pXs(new Matrix(NUM_CELLS_PER_BLOCK_, 3))
    {
 #ifdef _TEST_OCTREE_GPMAP
@@ -512,10 +516,10 @@ public:
 
 		// initialize leaf node
 		// Sigma_0^{-1}
-		GP::TestData<float> testData;
-		testData.set(m_pXs);
-		MatrixPtr pKss = CovFunc<float>::Kss(logHyp.cov, testData, FLAG_INDEPENDENT_TEST_POSITIONS_);
-		BCM::setPrior(pKss);
+		//GP::TestData<float> testData;
+		//testData.set(m_pXs);
+		//MatrixPtr pKss = CovFunc<float>::Kss(logHyp.cov, testData, FLAG_INDEPENDENT_TEST_POSITIONS_);
+		//BCM::setPrior(pKss);
 
 		// if a point index is duplicated to 
 		if(FLAG_DUPLICATE_POINTS_)
@@ -527,8 +531,15 @@ public:
 			Eigen::Vector3f min_pt;
 			const size_t totalNumLeafs = getLeafCount();
 			size_t blockCount(0);
-			int nextProgress(5); // 5%
+			const int pregressStep(5);	// 5%
+			int nextProgress(pregressStep);
 			size_t totalNumPoints(0);
+			Indices allIndices;
+			if(FLAG_USE_ALL_TRAINING_DATA_) 
+			{
+				allIndices.resize(input_->size());
+				std::generate(allIndices.begin(), allIndices.end(), UniqueNonZeroInteger());
+			}
 			CPU_Timer timer;
 			while(*++iter)
 			{
@@ -543,7 +554,7 @@ public:
 					if(t_elapsed_sec > 3600.f)			logFile << "during " << t_elapsed_sec/3600.f	<< " hr" << std::endl;
 					else if(t_elapsed_sec > 60.f)		logFile << "during " << t_elapsed_sec/60.f		<< " min" << std::endl;
 					else										logFile << "during " << t_elapsed_sec				<< " sec" << std::endl;
-					nextProgress += nextProgress;
+					nextProgress += pregressStep;
 				}
 
 				// key
@@ -553,7 +564,7 @@ public:
 				genVoxelMinPoint(key, min_pt);
 
 				// collect indices
-				const Indices &indexList  = static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
+				const Indices &indexList  = FLAG_USE_ALL_TRAINING_DATA_ ? allIndices : static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
 				totalNumPoints += indexList.size();
 
 #ifdef _TEST_OCTREE_GPMAP
@@ -696,7 +707,7 @@ public:
 	  *				which only accept a vector of PointT points, not pcl::PointXYZ.
 	  *				Thus, even if the octree has pcl::PointNormals, the center point should also be pcl::PointXYZ.
 	  */
-	size_t getOccupiedVoxelCenters(PointXYZVList	&voxelCenterPointXYZVector,
+	size_t getOccupiedVoxelCenters(PointXYZVList		&voxelCenterPointXYZVector,
 											 const bool			fWithoutIsolatedVoxels) const
 	{
 		// clear the vector
@@ -1044,8 +1055,8 @@ public:
      */
    double getResolution() const
    {
-		//return Parent::getResolution();
-		return CELL_SIZE_;
+		return Parent::getResolution();
+		//return CELL_SIZE_;
    }
 
 	double getCellSize() const
@@ -1549,6 +1560,12 @@ protected:
 	/** @brief		Independent Test positions: mean vector and variance vector,
 	  *				Dependent Test positions: mean vector and covariance matrix */
 	const bool		FLAG_INDEPENDENT_TEST_POSITIONS_;
+
+	/** @brief		Use global GP as a mean function: spreading predictions to neighbors */
+	//const bool		FLAG_USE_MEAN_GLOBAL_GP_;
+
+	/** @brief		Use all training data rather than overlapping local training data */
+	const bool		FLAG_USE_ALL_TRAINING_DATA_;
 
 	/** @brief		Random sampling rate in a leaf nodes */
 	const bool		FLAG_RAMDOMLY_SAMPLE_POINTS_;

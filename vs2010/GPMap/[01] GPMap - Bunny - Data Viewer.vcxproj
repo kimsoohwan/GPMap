@@ -16,7 +16,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{880568F4-F2DE-4CB7-8C5E-9DCECAD7772C}</ProjectGuid>
     <RootNamespace>GPMap</RootNamespace>
-    <ProjectName>[00] GPMap - Bunny - Data Viewer</ProjectName>
+    <ProjectName>[01] GPMap - Bunny - Data Viewer</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

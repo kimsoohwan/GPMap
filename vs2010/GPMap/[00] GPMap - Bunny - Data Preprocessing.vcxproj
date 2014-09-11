@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89D365F9-E7BA-4018-8B49-4E975AA366A2}</ProjectGuid>
     <RootNamespace>GPMap</RootNamespace>
-    <ProjectName>[01] GPMap - Bunny - Data Preprocessing</ProjectName>
+    <ProjectName>[00] GPMap - Bunny - Data Preprocessing</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

@@ -46,13 +46,13 @@
       <Filter>src\octomap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\octree\octree_container.hpp">
-      <Filter>src\octree</Filter>
+      <Filter>src\gpmap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\octree\octree_gpmap.hpp">
-      <Filter>src\octree</Filter>
+      <Filter>src\gpmap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\octree\octree_viewer.hpp">
-      <Filter>src\octree</Filter>
+      <Filter>src\gpmap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\plsc\plsc.hpp">
       <Filter>src\plsc</Filter>
@@ -88,10 +88,10 @@
       <Filter>src\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\octree\macro_gpmap.hpp">
-      <Filter>src\octree</Filter>
+      <Filter>src\gpmap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\octree\data_partitioning.hpp">
-      <Filter>src\octree</Filter>
+      <Filter>src\gpmap</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +128,6 @@
     <Filter Include="test">
       <UniqueIdentifier>{8412f08f-6a1c-4b38-9898-d9e45bb296f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\octree">
-      <UniqueIdentifier>{8d3df2dc-c62f-4022-abbe-cc00d9ca233d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\octomap">
       <UniqueIdentifier>{4f704d9f-e78b-40a7-8633-51d81ab59d89}</UniqueIdentifier>
     </Filter>
@@ -145,6 +142,9 @@
     </Filter>
     <Filter Include="src\iso_surface">
       <UniqueIdentifier>{4fab5750-3228-4fdc-a202-15f6620c9407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gpmap">
+      <UniqueIdentifier>{8d3df2dc-c62f-4022-abbe-cc00d9ca233d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
