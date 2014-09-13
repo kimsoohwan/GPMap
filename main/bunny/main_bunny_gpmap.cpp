@@ -244,13 +244,27 @@ int main(int argc, char** argv)
 			//																			  strObsFileName,						// output file name prefix
 			//																			  strLogFolder);						// log folder
 
+			// filenames
+			std::stringstream ss;
+			//ss << strIntermediateSampleFolder << strFileNameAll << "_func_obs_downsampled_" << param << ".pcd";
+			//ss << "_func_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
+			ss << "_der_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
+			const std::string strObsFileNameSuffix	= ss.str();
+
 			//// CovSEiso
 			////const float ell		= 0.113708f;
 			////const float sigma_f	= 1.02425f;
 			////const float sigma_n	= 0.0112541f;			
-			//float ell		= 0.5f;		std::cout << "ell = ";		std::cin >> ell;
-			//float sigma_f	= 1.f;		std::cout << "sigma_f = "; std::cin >> sigma_f;
-			//float sigma_n	= 0.01f;		std::cout << "sigma_n = "; std::cin >> sigma_n;		
+			//float ell		= 0.5f;		//std::cout << "ell = ";		std::cin >> ell;
+			//float sigma_f	= 1.f;		//std::cout << "sigma_f = "; std::cin >> sigma_f;
+			//float sigma_n	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
+			//float sigma_nd	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
+
+			// der obs, downsampled = 0.02, nlZ = -329.325
+			//const float ell		= 0.205611f;
+			//const float sigma_f	= 7.60221f;
+			//const float sigma_n	= 0.0162811f;
+			//const float sigma_nd	= 0.264807f;
 
 			//typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSEisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
 			//LocalHyp logLocalHyp;
@@ -260,7 +274,6 @@ int main(int argc, char** argv)
 			//logLocalHyp.lik(1) = log(sigma_nd);
 
 			//// run
-			//const std::string strObsFileNameSuffix	= "_func_obs_removed_downsampled_0.01.pcd";
 			//const float GAP = 0.01;
 			//train_hyperparameters_and_build_gpmaps<GP::MeanZeroDerObs,
 			//													GP::CovSEisoDerObs, 
@@ -280,17 +293,15 @@ int main(int argc, char** argv)
 			//																			  strObsFileName,						// output file name prefix
 			//																			  strLogFolder);						// log folder
 
-			// filenames
-			std::stringstream ss;
-			//ss << strIntermediateSampleFolder << strFileNameAll << "_func_obs_downsampled_" << param << ".pcd";
-			ss << "_func_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
-			const std::string strObsFileNameSuffix	= ss.str();
 
 			// CovRQiso
+
+			// func obs, downsample = 0.02
 			float ell		= 0.016659f;		//std::cout << "ell = ";		std::cin >> ell;
 			float alpha		= 7.55446f;			//std::cout << "alpha = ";	std::cin >> alpha;
 			float sigma_f	= 0.0117284f;		//std::cout << "sigma_f = "; std::cin >> sigma_f;
 			float sigma_n	= 0.00186632f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
+			float sigma_nd	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
 
 			//const float ell		= 4.11029f;
 			//const float alpha		= 1.22971f;
@@ -309,7 +320,7 @@ int main(int argc, char** argv)
 			logLocalHyp.cov(1) = log(alpha);
 			logLocalHyp.cov(2) = log(sigma_f);
 			logLocalHyp.lik(0) = log(sigma_n);
-			logLocalHyp.lik(1) = log(1.f);
+			logLocalHyp.lik(1) = log(sigma_nd);
 
 			// run
 			//const float GAP = 0.01;

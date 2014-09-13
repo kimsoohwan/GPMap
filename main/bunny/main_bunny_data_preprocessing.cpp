@@ -276,7 +276,7 @@ int main(int argc, char** argv)
 
 	// downsampling
 	std::stringstream ss2;
-	ss2 << "_dev_obs_removed_downsampled_" << param << ".pcd";
+	ss2 << "_der_obs_removed_downsampled_" << param << ".pcd";
 	PointNormalCloudPtr pAllSampledDerObsRemovedDownSampled = downSampling<pcl::PointNormal>(pAllSampledDerObsRemoved, param);
 	std::cout << "Sampling rate: " << pAllSampledDerObsRemovedDownSampled->points.size() << " / "
 											 << pAllSampledDerObsRemoved->points.size() << " = " 
