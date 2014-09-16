@@ -17,7 +17,7 @@
     <ClInclude Include="..\..\test\bcm\test_bcm.hpp" />
     <ClInclude Include="..\..\test\bcm\test_bcm_serializable.hpp" />
     <ClInclude Include="..\..\test\data\test_test_data.hpp" />
-    <ClInclude Include="..\..\test\octree\test_data_partitioning.hpp" />
+    <ClInclude Include="..\..\test\gpmap\test_data_partitioning.hpp" />
     <ClInclude Include="..\..\test\plsc\test_plsc.hpp" />
     <ClInclude Include="..\..\test\serialization\test_eigen_serialization.hpp" />
   </ItemGroup>

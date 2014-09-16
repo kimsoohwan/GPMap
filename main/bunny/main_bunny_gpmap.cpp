@@ -7,33 +7,30 @@
 //		- #include <Eigen/Core>
 
 // combinations
-// ---------------------------------------------------------------------------------------------
-// |                   Observations                   |         GPMap Building Process         |
-// |===========================================================================================|
-// |   (FuncObs)  |    (DerObs)         |  (AllObs)   |                   | Incremental Update |
-// | hit points,  | virtual hit points, |  FuncObs,   | Single Prediction |--------------------|
-// | empty points | surface normals     |  DerObs     |      (Batch)      |          |         |
-// ---------------------------------------------------|                   |   iBCM   |   BCM   |
-// |  Sequential  |  All-in-One  | Sampled *          |                   |          |         |
-// ---------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------------------------------------|
+// | Coverage |                   Update                       |                             Observations                              |
+// |===================================================================================================================================|
+// |  Local   | Gaussian Distribution (No Update, Batch)       | All        Obs | Function   Obs (hit/empty points)                    |
+// |  Global  | Independent Bayesian Committee Machines (iBCM) | Sequential Obs | Derivative Obs (virtual hit points, surface normals) |
+// |  Glocal  |   Dependent Bayeisian Committee Machines (BCM) |                |                                                      |
+// ------------------------------------------------------------------------------------------------------------------------------------|
 
-// All-in-One	Sampled	[Function/Derivative/All] Observations + Batch
-// Sequential	Sampled	[Function/Derivative/All] Observations + Incremental Update (iBCM/BCM)
-// Sequential 	Origianl	[Function/Derivative/All] Observations + Incremental Update (iBCM/BCM)
-// All-in-One	Sampled	[Function/Derivative/All] Observations + Incremental Update (iBCM/BCM)
-// All-in-One	Origianl	[Function/Derivative/All] Observations + Incremental Update (iBCM/BCM)
-
+// FSR  2013:   Local  + Gaussian Distribution + All Function Observations
+// ACRA 2014:   Local  + iBCM                  + Sequential Function Observations
+// (comparison)           BCM
+// ICRA 2015:   Global + Gaussian Distribution + All Derivative Observations
+//              Local  + Gaussian Distribution + All Function Observations
+// (comparison) Global + Gaussian Distribution + All Derivative Observations
+// TRO  2015:   Global + iBCM						  + Sequential Derivative Observations
+//              Local  + iBCM						  + Sequential Function Observations
 
 // GPMap
-#include "io/io.hpp"								// loadPointCloud, savePointCloud, loadSensorPositionList
-#include "octree/macro_gpmap.hpp"			// macro_gpmap
-#include "octree/octree_viewer.hpp"			// OctreeViewer
-#include "common/common.hpp"					// getMinMaxPointXYZ
+#include "gpmap/macro_gpmap.hpp"			// macro_gpmap
 using namespace GPMap;
 
 int main(int argc, char** argv)
 {
-	// [0] setting - GPMap constants
+	// [0] Setting - GPMap constants
 	// CELL_SIZE = 0.001
 	//const double	BLOCK_SIZE	= 0.003;		const size_t	NUM_CELLS_PER_AXIS	= 3;		// NUM_CELLS_PER_BLOCK = 3*3*3 = 27						BCM/iBCM (too small BLOCK_SIZE to produce non-smooth signed distance function)
 	//const double	BLOCK_SIZE	= 0.01;		const size_t	NUM_CELLS_PER_AXIS	= 10;		// NUM_CELLS_PER_BLOCK = 10*10*10 = 1,000				BCM/iBCM
@@ -51,454 +48,257 @@ int main(int argc, char** argv)
 	const float		GAP										= 0.001f;
 	const int		MAX_ITER_BEFORE_UPDATE				= 0;
 
-	// [0] setting - directory
-	const std::string strDataFolder				("E:/Documents/GitHub/Data/");
-	const std::string strDataName					("bunny");
-	const std::string strInputFolder				(strDataFolder + strDataName + "/input/");
-	const std::string strIntermediateFolder	(strDataFolder + strDataName + "/intermediate/");
-	const std::string strGPMapFolder				(strDataFolder + strDataName + "/output/gpmap/");
-	const std::string strGPMapMetaDataFolder	(strGPMapFolder + "meta_data/");
+	// [0] Setting - Directory
+	const std::string strDataFolder						("E:/Documents/GitHub/Data/");
+	const std::string strDataName							("bunny");
+	const std::string strInputFolder						(strDataFolder + strDataName + "/input/");
+	const std::string strIntermediateFolder			(strDataFolder + strDataName + "/intermediate/");
+	const std::string strSampledIntermediateFolder	(strIntermediateFolder + "random_sampling_0.1/");
+	const std::string strGPMapFolder						(strDataFolder + strDataName + "/output/gpmap/");
+	const std::string strGPMapMetaDataFolder			(strGPMapFolder + "meta_data/");
+	const std::string strLogFolder						(strGPMapMetaDataFolder + "log/");
 	create_directory(strGPMapFolder);
 	create_directory(strGPMapMetaDataFolder);
+	create_directory(strLogFolder);
 
-	// [0] setting - observations
+	// [0] Setting - Observations
 	const size_t NUM_OBSERVATIONS = 4; 
 	const std::string strObsFileNames_[]		= {"bun000", "bun090", "bun180", "bun270"};
 	const std::string strFileNameAll				=  "bunny_all";
-	StringList strObsFileNames(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
+	StringList strObsFileNameList(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
 
-	// [0] setting - input data folder
-	std::cout << "[Input Data]" << std::endl;
-	int fOctreeDownSampling;
-	std::cout << "No sampling(-1), Random sampling(0) or octree-based down sampling(1)? ";
-	std::cin >> fOctreeDownSampling;
+	// [1] Setting - Combinations
+	int combination = 3;
+	std::cout << "[Combination] FSR 2013 (1) / ACRA 2014 (2) / ICRA 2015 (3) / TRO 2015 (4)? " << std::endl;
+	std::cin >> combination;
 
-	float param;
-	std::string strIntermediateSampleFolder;
-	std::string strGPMapMetaDataSampleFolder;
-	// no sampling
-	if(fOctreeDownSampling < 0)
+	switch(combination)
 	{
-		strIntermediateSampleFolder	= strIntermediateFolder;
-		strGPMapMetaDataSampleFolder	= strGPMapMetaDataFolder;
-	}
-	else if(fOctreeDownSampling > 0)
-	{
-		// leaf size
-		std::cout << "Down sampling leaf size: ";
-		std::cin >> param; // 0.001(50%), 0.002(20%), 0.003(10%)
-
-		// sub-folder
-		std::stringstream ss;
-		ss << "down_sampling_" << param << "/";
-		strIntermediateSampleFolder	= strIntermediateFolder		+ ss.str();
-		strGPMapMetaDataSampleFolder	= strGPMapMetaDataFolder	+ ss.str();
-	}
-	else
-	{
-		// sampling ratio
-		std::cout << "Random sampling ratio: ";
-		std::cin >> param;	// 0.5, 0.3, 0.2, 0.1
-
-		// sub-folder
-		std::stringstream ss;
-		ss << "random_sampling_" << param << "/";
-		strIntermediateSampleFolder	= strIntermediateFolder		+ ss.str();
-		strGPMapMetaDataSampleFolder	= strGPMapMetaDataFolder	+ ss.str();
-	}
-	const std::string strLogFolder						(strGPMapMetaDataSampleFolder + "log/");
-	create_directory(strGPMapMetaDataSampleFolder);
-	create_directory(strLogFolder);
-
-	// removed some parts
-	bool fRemoved;
-	std::cout << "Use data whose part are removed? (0/1) ";
-	std::cin >> fRemoved;
-
-	// [0] Show
-	bool fShow = true;
-	std::cout << "Would you like to see the octree? (0/1) "; std::cin >> fShow;
-	if(fShow)
-	{
-		// downsampling
-		std::cout << "Down sampling leaf size: ";
-		std::cin >> param; // 0.001(50%), 0.002(20%), 0.003(10%)
-
-		// file name
-		std::stringstream ss;
-		if(fRemoved)	ss << "_func_obs_removed_downsampled_" << param << ".pcd";
-		else				ss << "_func_obs_downsampled_" << param << ".pcd";
-
-		// Function Observations (Hit Points + Unit Ray Back Vectors) - All - Down Sampling
-		PointNormalCloudPtr pAllSampledFuncObs(new PointNormalCloud());
-		loadPointCloud<pcl::PointNormal>(pAllSampledFuncObs, strFileNameAll, strIntermediateSampleFolder, ss.str());
-
-		// get bounding box
-		pcl::PointXYZ min_pt, max_pt;
-		getMinMaxPointXYZ<pcl::PointNormal>(*pAllSampledFuncObs, min_pt, max_pt);
-
-		// GPMap
-		typedef OctreeGPMapContainer<GaussianDistribution>	LeafT;
-		typedef OctreeGPMap<GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs, LeafT> OctreeGPMapT;
-		OctreeGPMapT gpmap(BLOCK_SIZE, 
-								 NUM_CELLS_PER_AXIS, 
-								 MIN_NUM_POINTS_TO_PREDICT, 
-								 MAX_NUM_POINTS_TO_PREDICT, 
-								 FLAG_INDEPENDENT_TEST_POSITIONS);
-
-		// set bounding box
-		gpmap.defineBoundingBox(min_pt, max_pt);
-
-		// set input cloud
-		gpmap.setInputCloud(pAllSampledFuncObs, GAP);
-
-		// add points from the input cloud
-		gpmap.addPointsFromInputCloud();
-
-		// Octree Viewer
-		OctreeViewer<pcl::PointNormal, OctreeGPMapT> octreeViewer(gpmap);
-	}
-
-	// [0] setting - Local GP or Glocal G
-	bool fLocalGP;
-	std::cout << "[Glocal GP (0) or Local GP (1)] ";
-	std::cin >> fLocalGP;
-	//if(!fLocalGP)
-	//{
-		// downsampling
-		std::cout << "Down sampling leaf size: ";
-		std::cin >> param; // 0.001(50%), 0.002(20%), 0.003(10%)
-	//}
-
-	// [1] Function Observations
-	bool fRunFuncObs = true;
-	std::cout << "[Function Observations] - Do you wish to run? (0/1) "; std::cin >> fRunFuncObs;
-	if(fRunFuncObs)
-	{
-		//double			BLOCK_SIZE;						std::cout << "Block Size? ";															std::cin >> BLOCK_SIZE;
-		//size_t			NUM_CELLS_PER_AXIS;			std::cout << "Number of cells per axis? ";										std::cin >> NUM_CELLS_PER_AXIS;
-		//size_t			MAX_NUM_POINTS_TO_PREDICT;	std::cout << "Max Number of points for Gaussian process prediction? ";	std::cin >> MAX_NUM_POINTS_TO_PREDICT;
-
-		std::stringstream ss;
-		ss << "block_" << BLOCK_SIZE 
-			<< "_cell_" << static_cast<float>(BLOCK_SIZE)/static_cast<float>(NUM_CELLS_PER_AXIS)
-			<< "_m_" << MIN_NUM_POINTS_TO_PREDICT
-			<< "_n_" << MAX_NUM_POINTS_TO_PREDICT
-			<< "_gap_" << GAP;
-		if(fRemoved)	ss << "_func_obs_removed";
-		else				ss << "_func_obs";
-
-		// filenames
-		const std::string strObsFileName						= ss.str() + (fLocalGP ? "_local" : "_glocal");
-		const std::string strObsFileNameSuffix				= fRemoved ? "_func_obs_removed.pcd" : "_func_obs.pcd";
-
-		// train hyperparameters and build gpmaps
-		if(fLocalGP)
+	// [1] FSR 2013
+	case 1:
 		{
-			// local hyperparameters
-			// set default hyperparameters
-			//const float sparse_ell	= 0.005f;	//0.141362;
-			//const float matern_ell	= 0.005f;	//0.12342f;
-			//const float sigma_f		= 1.f;		//0.235194f;
-			//const float sigma_n		= 0.1f;		//0.00033809f;
-			//const float sigma_nd		= 1.00000f;		// will not be used here
+			// input data
+			bool fUseRemovedData;
+			std::cout << "\tUse removed data? " << std::endl;
+			std::cin >> fUseRemovedData;
+			const std::string strInputLocalFileNameSuffix = fUseRemovedData ? "_func_obs_removed.pcd" : "_func_obs.pcd";
+			bool fShow = true; std::cout << "Would you like to see local observations in the octree? (0/1) "; std::cin >> fShow;
+			if(fShow) show(BLOCK_SIZE, strFileNameAll, strSampledIntermediateFolder, strInputLocalFileNameSuffix);
 
-			// NO_RANDOM_SAMPLING, BLOCK_SIZE = 0.15, MAX_NUM_POINTS_TO_PREDICT = 200, ACRA 2014
-			//const float sparse_ell	= 0.0539592f;
-			//const float matern_ell	= 0.0326716f;
-			//const float sigma_f		= 0.308823f;
-			//const float sigma_n		= 0.00493079f;
-			//const float sigma_nd		= 0.977637f;		// will not be used here
+			// output data
+			const std::string strOutputFileName = fUseRemovedData ? "ICRA_2015_Local_GP" : "FSR_2013";
 
-			// RANDOM_SAMPLING = 0.1, BLOCK_SIZE = 0.02, MAX_NUM_POINTS_TO_PREDICT = 100
-			//const float sparse_ell	= 0.0990733f;
-			//const float matern_ell	= 0.0779094f;
-			//const float sigma_f		= 0.140968f;
-			//const float sigma_n		= 0.000265014f;
-			//const float sigma_nd		= 0.900084f;			// will not be used here
+			// local hyperparameters: -2.91161e6
+			//const float l_sparse_ell	= 0.0539592f;
+			//const float l_matern_ell	= 0.0326716f;
+			//const float l_sigma_f		= 0.308823f;
+			//const float l_sigma_n		= 0.00493079f;
+			//const float l_sigma_nd		= 0.977637f;		// will not be used here
+
+			// local hyperparameters: removed, -4.56377e6
+			const float l_sparse_ell	= 0.0880937f;
+			const float l_matern_ell	= 0.0649332f;
+			const float l_sigma_f		= 0.185594f;
+			const float l_sigma_n		= 0.00023501f;
+			const float l_sigma_nd		= 0.977637f;		// will not be used here
 		
-			//typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
-			//LocalHyp logLocalHyp;
-			//logLocalHyp.cov(0) = log(sparse_ell);
-			//logLocalHyp.cov(1) = log(matern_ell);
-			//logLocalHyp.cov(2) = log(sigma_f);
-			//logLocalHyp.lik(0) = log(sigma_n);
-			//logLocalHyp.lik(1) = log(sigma_nd);
-
-			// run
-			//train_hyperparameters_and_build_gpmaps<GP::MeanZeroDerObs,
-			//													GP::CovSparseMaternisoDerObs, 
-			//													GP::LikGaussDerObs, 
-			//													GP::InfExactDerObs>(BLOCK_SIZE,							// block size
-			//																			  NUM_CELLS_PER_AXIS,				// number of cells per each axie
-			//																			  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-			//																			  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-			//																			  logLocalHyp,								// hyperparameters
-			//																			  strObsFileNames,					// sequential observations input file name
-			//																			  strFileNameAll,						// all-in-one observations input file name
-			//																			  strIntermediateSampleFolder,	// input file name prefix
-			//																			  strObsFileNameSuffix,				// input file name suffix
-			//																			  GAP,									// gap
-			//																			  MAX_ITER_BEFORE_UPDATE,			// number of iterations for training before update
-			//																			  strGPMapMetaDataSampleFolder,	// output data folder
-			//																			  strObsFileName,						// output file name prefix
-			//																			  strLogFolder);						// log folder
-
-			// filenames
-			std::stringstream ss;
-			//ss << strIntermediateSampleFolder << strFileNameAll << "_func_obs_downsampled_" << param << ".pcd";
-			//ss << "_func_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
-			ss << "_der_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
-			const std::string strObsFileNameSuffix	= ss.str();
-
-			//// CovSEiso
-			////const float ell		= 0.113708f;
-			////const float sigma_f	= 1.02425f;
-			////const float sigma_n	= 0.0112541f;			
-			//float ell		= 0.5f;		//std::cout << "ell = ";		std::cin >> ell;
-			//float sigma_f	= 1.f;		//std::cout << "sigma_f = "; std::cin >> sigma_f;
-			//float sigma_n	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
-			//float sigma_nd	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
-
-			// der obs, downsampled = 0.02, nlZ = -329.325
-			//const float ell		= 0.205611f;
-			//const float sigma_f	= 7.60221f;
-			//const float sigma_n	= 0.0162811f;
-			//const float sigma_nd	= 0.264807f;
-
-			//typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSEisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
-			//LocalHyp logLocalHyp;
-			//logLocalHyp.cov(0) = log(ell);
-			//logLocalHyp.cov(1) = log(sigma_f);
-			//logLocalHyp.lik(0) = log(sigma_n);
-			//logLocalHyp.lik(1) = log(sigma_nd);
-
-			//// run
-			//const float GAP = 0.01;
-			//train_hyperparameters_and_build_gpmaps<GP::MeanZeroDerObs,
-			//													GP::CovSEisoDerObs, 
-			//													GP::LikGaussDerObs, 
-			//													GP::InfExactDerObs>(BLOCK_SIZE,							// block size
-			//																			  NUM_CELLS_PER_AXIS,				// number of cells per each axie
-			//																			  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-			//																			  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-			//																			  logLocalHyp,								// hyperparameters
-			//																			  strObsFileNames,					// sequential observations input file name
-			//																			  strFileNameAll,						// all-in-one observations input file name
-			//																			  strIntermediateSampleFolder,	// input file name prefix
-			//																			  strObsFileNameSuffix,				// input file name suffix
-			//																			  GAP,									// gap
-			//																			  MAX_ITER_BEFORE_UPDATE,			// number of iterations for training before update
-			//																			  strGPMapMetaDataSampleFolder,	// output data folder
-			//																			  strObsFileName,						// output file name prefix
-			//																			  strLogFolder);						// log folder
-
-
-			// CovRQiso
-
-			// func obs, downsample = 0.02
-			float ell		= 0.016659f;		//std::cout << "ell = ";		std::cin >> ell;
-			float alpha		= 7.55446f;			//std::cout << "alpha = ";	std::cin >> alpha;
-			float sigma_f	= 0.0117284f;		//std::cout << "sigma_f = "; std::cin >> sigma_f;
-			float sigma_n	= 0.00186632f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
-			float sigma_nd	= 0.01f;		//std::cout << "sigma_n = "; std::cin >> sigma_n;		
-
-			//const float ell		= 4.11029f;
-			//const float alpha		= 1.22971f;
-			//const float sigma_f	= 0.981831f;
-			//const float sigma_n	= 0.00289925f;	
-
-			// downsample = 0.02, nlZ = -1729.77
-			//const float ell		= 4.72242f;
-			//const float alpha		= 1.24014f;
-			//const float sigma_f	= 0.282454f;
-			//const float sigma_n	= 0.00289635f;	
-
-			typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovRQisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
-			LocalHyp logLocalHyp;
-			logLocalHyp.cov(0) = log(ell);
-			logLocalHyp.cov(1) = log(alpha);
-			logLocalHyp.cov(2) = log(sigma_f);
-			logLocalHyp.lik(0) = log(sigma_n);
-			logLocalHyp.lik(1) = log(sigma_nd);
-
-			// run
-			//const float GAP = 0.01;
-			train_hyperparameters_and_build_gpmaps<GP::MeanZeroDerObs,
-																GP::CovRQisoDerObs, 
-																GP::LikGaussDerObs, 
-																GP::InfExactDerObs>(BLOCK_SIZE,							// block size
-																						  NUM_CELLS_PER_AXIS,				// number of cells per each axie
-																						  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-																						  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-																						  logLocalHyp,								// hyperparameters
-																						  strObsFileNames,					// sequential observations input file name
-																						  strFileNameAll,						// all-in-one observations input file name
-																						  strIntermediateSampleFolder,	// input file name prefix
-																						  strObsFileNameSuffix,				// input file name suffix
-																						  GAP,									// gap
-																						  MAX_ITER_BEFORE_UPDATE,			// number of iterations for training before update
-																						  strGPMapMetaDataSampleFolder,	// output data folder
-																						  strObsFileName,						// output file name prefix
-																						  strLogFolder);						// log folder
-		}
-		else
-		{
-			// filenames
-			std::stringstream ss;
-			//ss << strIntermediateSampleFolder << strFileNameAll << "_func_obs_downsampled_" << param << ".pcd";
-			ss << "_func_obs" << (fRemoved ? "_removed" : "") << "_downsampled_" << param << ".pcd";
-			const std::string strGlobalObsFileNameSuffix	= ss.str();
-
-			// global hyperparameters - local training data
-			//const float ell		= 0.016659f;
-			//const float alpha		= 7.55446f;
-			//const float sigma_f	= 0.0117284f;
-			//const float sigma_n	= 0.00186632f;		
-
-			// global hyperparameters - global training data
-			//const float ell		= 11.7067f;
-			//const float alpha		= 7.89965f;
-			//const float sigma_f	= 0.000911995f;
-			//const float sigma_n	= 0.000502061f;	
-
-			// global hyperparameters: global downsample = 0.01, nlZ = -4692.91
-			//const float g_ell			= 3.51052f;
-			//const float g_alpha		= 1.14496f;
-			//const float g_sigma_f	= 0.993788f;
-			//const float g_sigma_n	= 0.00999004f;	
-
-			// global hyperparameters: global downsample = 0.02, nlZ = -1742.08
-			const float g_ell			= 4.11029f;
-			const float g_alpha		= 1.22971f;
-			const float g_sigma_f	= 0.981831f;
-			const float g_sigma_n	= 0.00289925f;	
-
-			GP::MeanGlobalGP<float>::GlobalHyp logGlobalHyp;
-			logGlobalHyp.cov(0) = log(g_ell);
-			logGlobalHyp.cov(1) = log(g_alpha);
-			logGlobalHyp.cov(2) = log(g_sigma_f);
-			logGlobalHyp.lik(0) = log(g_sigma_n);
-			logGlobalHyp.lik(1) = log(1.f);
-
-			// local hyperparameters: global downsample = 0.01, -158166
-			//const float l_sparse_ell	= 0.185507f;
-			//const float l_matern_ell	= 0.258412f;
-			//const float l_sigma_f		= 0.16042f;
-			//const float l_sigma_n		= 0.00056761f;
-			//const float l_sigma_nd		= 0.947003f;		// will not be used here
-
-			// local hyperparameters: global downsample = 0.02, -165499
-			const float l_sparse_ell	= 0.0310558f;
-			const float l_matern_ell	= 0.0325278f;
-			const float l_sigma_f		= 0.0614561f;
-			const float l_sigma_n		= 0.000278377f;
-			const float l_sigma_nd		= 0.00101494f;		// will not be used here
-
-			typedef	GP::InfExactDerObs<float, GP::MeanGlobalGP, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
-			LocalHyp logLocalHyp;
+			GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs>::Hyp logLocalHyp;
 			logLocalHyp.cov(0) = log(l_sparse_ell);
 			logLocalHyp.cov(1) = log(l_matern_ell);
 			logLocalHyp.cov(2) = log(l_sigma_f);
 			logLocalHyp.lik(0) = log(l_sigma_n);
 			logLocalHyp.lik(1) = log(l_sigma_nd);
 
-			// run
-			train_hyperparameters_and_build_gpmaps_using_MeanGlobalGP<GP::CovSparseMaternisoDerObs, 
-																						 GP::LikGaussDerObs, 
-																						 GP::InfExactDerObs>(BLOCK_SIZE,							// block size
-																													NUM_CELLS_PER_AXIS,				// number of cells per each axie
-																													MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-																													MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-																													logGlobalHyp,						// global hyperparameters
-																													logLocalHyp,						// hyperparameters
-																													strObsFileNames,					// sequential observations input file name
-																													strFileNameAll,					// all-in-one observations input file name
-																													strIntermediateSampleFolder,	// input file name prefix
-																													strGlobalObsFileNameSuffix,	// global input file name suffix
-																													strObsFileNameSuffix,			// input file name suffix
-																													GAP,									// gap
-																													MAX_ITER_BEFORE_UPDATE,			// number of iterations for training before update
-																													strGPMapMetaDataSampleFolder,	// output data folder
-																													strObsFileName,						// output file name prefix
-																													strLogFolder);						// log folder
+			const size_t MAX_NUM_POINTS_TO_PREDICT = 0;
+			train_hyperparameters_and_build_gpmaps_batch_with_all_in_one_observations<GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>
+				(LOCAL_GP,
+				 BLOCK_SIZE,
+				 NUM_CELLS_PER_AXIS,
+				 MIN_NUM_POINTS_TO_PREDICT,
+				 MAX_NUM_POINTS_TO_PREDICT,
+				 logLocalHyp,
+				 strFileNameAll,
+				 strSampledIntermediateFolder,
+				 strInputLocalFileNameSuffix,
+				 GAP,
+				 MAX_ITER_BEFORE_UPDATE,
+				 strGPMapMetaDataFolder,
+				 strOutputFileName,
+				 strLogFolder);
+			break;
+		}
+		
+	// [2] ACRA 2014
+	case 2:
+		{
+			// input data
+			std::string strInputLocalFileNameSuffix	= "_func_obs.pcd";
+			bool fShow = true; std::cout << "Would you like to see local observations in the octree? (0/1) "; std::cin >> fShow;
+			if(fShow) show(BLOCK_SIZE, strFileNameAll, strSampledIntermediateFolder, strInputLocalFileNameSuffix);
+
+			// output data
+			std::string strOutputFileName					= "ACRA_2014";
+
+			// local hyperparameters
+			const float l_sparse_ell	= 0.0539592f;
+			const float l_matern_ell	= 0.0326716f;
+			const float l_sigma_f		= 0.308823f;
+			const float l_sigma_n		= 0.00493079f;
+			const float l_sigma_nd		= 0.977637f;		// will not be used here
+		
+			GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs>::Hyp logLocalHyp;
+			logLocalHyp.cov(0) = log(l_sparse_ell);
+			logLocalHyp.cov(1) = log(l_matern_ell);
+			logLocalHyp.cov(2) = log(l_sigma_f);
+			logLocalHyp.lik(0) = log(l_sigma_n);
+			logLocalHyp.lik(1) = log(l_sigma_nd);
+
+			train_hyperparameters_and_build_local_gpmaps_incrementally_with_sequential_observations<GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>
+				(BLOCK_SIZE,
+				 NUM_CELLS_PER_AXIS,
+				 MIN_NUM_POINTS_TO_PREDICT,
+				 MAX_NUM_POINTS_TO_PREDICT,
+				 logLocalHyp,
+				 strFileNameAll,
+				 strObsFileNameList,
+				 strSampledIntermediateFolder,
+				 strInputLocalFileNameSuffix,
+				 GAP,
+				 MAX_ITER_BEFORE_UPDATE,
+				 strGPMapMetaDataFolder,
+				 strOutputFileName,
+				 strLogFolder);
+			break;
+		}
+		
+	// [3] ICRA 2015
+	case 3:
+		{
+			// input data
+			std::string strInputLocalFileNameSuffix	= "_func_obs_removed.pcd";
+			std::string strInputGlobalFileNameSuffix = "_der_obs_removed_downsampled_0.02.pcd";
+			bool fShow = true; std::cout << "Would you like to see global observations in the octree? (0/1) "; std::cin >> fShow;
+			if(fShow) show(BLOCK_SIZE, strFileNameAll, strSampledIntermediateFolder, strInputGlobalFileNameSuffix);
+
+			// output data
+			std::string strOutputFileName					= "ICRA_2015";
+
+			// global hyperparameters
+			//const float g_ell			= 0.016659f;
+			//const float g_alpha		= 7.55446f;
+			//const float g_sigma_f		= 0.0117284f;
+			//const float g_sigma_n		= 0.00186632f;
+			//const float g_sigma_nd	= 0.01f;
+			const float g_ell			= 0.0782042f;
+			const float g_alpha		= 0.110977f;
+			const float g_sigma_f	= 0.0351056f;
+			const float g_sigma_n	= 0.000869302f;
+			const float g_sigma_nd	= 0.0765257f;
+
+			GP::MeanGlobalGP<float>::GlobalHyp logGlocalHyp;
+			logGlocalHyp.cov(0) = log(g_ell);
+			logGlocalHyp.cov(1) = log(g_alpha);
+			logGlocalHyp.cov(2) = log(g_sigma_f);
+			logGlocalHyp.lik(0) = log(g_sigma_n);
+			logGlocalHyp.lik(1) = log(g_sigma_nd);
+
+			// local hyperparameters
+			//const float l_sparse_ell	= 0.0539592f;
+			//const float l_matern_ell	= 0.0326716f;
+			//const float l_sigma_f		= 0.308823f;
+			//const float l_sigma_n		= 0.00493079f;
+			//const float l_sigma_nd	= 0.977637f;		// will not be used here
+			const float l_sparse_ell	= 0.0708181f;
+			const float l_matern_ell	= 0.0326748f;
+			const float l_sigma_f		= 0.087249f;
+			const float l_sigma_n		= 0.000511312f;
+			const float l_sigma_nd		= 0.977035f;		// will not be used here
+		
+			GP::GaussianProcess<float, GP::MeanGlobalGP, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>::Hyp logLocalHyp;
+			logLocalHyp.cov(0) = log(l_sparse_ell);
+			logLocalHyp.cov(1) = log(l_matern_ell);
+			logLocalHyp.cov(2) = log(l_sigma_f);
+			logLocalHyp.lik(0) = log(l_sigma_n);
+			logLocalHyp.lik(1) = log(l_sigma_nd);
+
+			train_hyperparameters_and_build_global_local_gpmaps_batch_with_all_in_one_observations<GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>
+				(BLOCK_SIZE,
+				 NUM_CELLS_PER_AXIS,
+				 MIN_NUM_POINTS_TO_PREDICT,
+				 logGlocalHyp,
+				 logLocalHyp,
+				 strFileNameAll,
+				 strSampledIntermediateFolder,
+				 strInputGlobalFileNameSuffix,
+				 strInputLocalFileNameSuffix,
+				 GAP,
+				 MAX_ITER_BEFORE_UPDATE,
+				 strGPMapMetaDataFolder,
+				 strOutputFileName,
+				 strLogFolder);
+			break;
+		}
+
+	// [4] TRO 2015
+	case 4:
+		{
+			// input data
+			std::string strInputLocalFileNameSuffix	= "_func_obs_removed.pcd";
+			std::string strInputGlobalFileNameSuffix = "_der_obs_removed_downsampled_0.02.pcd";
+			bool fShow = true; std::cout << "Would you like to see global observations in the octree? (0/1) "; std::cin >> fShow;
+			if(fShow) show(BLOCK_SIZE, strFileNameAll, strSampledIntermediateFolder, strInputGlobalFileNameSuffix);
+
+			// output data
+			std::string strOutputFileName					= "TRO_2015";
+
+			// global hyperparameters
+			const float g_ell			= 0.016659f;
+			const float g_alpha		= 7.55446f;
+			const float g_sigma_f	= 0.0117284f;
+			const float g_sigma_n	= 0.00186632f;
+			const float g_sigma_nd	= 0.01f;
+
+			GP::MeanGlobalGP<float>::GlobalHyp logGlocalHyp;
+			logGlocalHyp.cov(0) = log(g_ell);
+			logGlocalHyp.cov(1) = log(g_alpha);
+			logGlocalHyp.cov(2) = log(g_sigma_f);
+			logGlocalHyp.lik(0) = log(g_sigma_n);
+			logGlocalHyp.lik(1) = log(g_sigma_nd);
+
+			// local hyperparameters
+			const float l_sparse_ell	= 0.0539592f;
+			const float l_matern_ell	= 0.0326716f;
+			const float l_sigma_f		= 0.308823f;
+			const float l_sigma_n		= 0.00493079f;
+			const float l_sigma_nd		= 0.977637f;		// will not be used here
+		
+			GP::GaussianProcess<float, GP::MeanGlobalGP, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>::Hyp logLocalHyp;
+			logLocalHyp.cov(0) = log(l_sparse_ell);
+			logLocalHyp.cov(1) = log(l_matern_ell);
+			logLocalHyp.cov(2) = log(l_sigma_f);
+			logLocalHyp.lik(0) = log(l_sigma_n);
+			logLocalHyp.lik(1) = log(l_sigma_nd);
+
+			train_hyperparameters_and_build_global_local_gpmaps_incrementally_with_sequential_observations<GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs, GP::InfExactDerObs>
+				(BLOCK_SIZE,
+				 NUM_CELLS_PER_AXIS,
+				 MIN_NUM_POINTS_TO_PREDICT,
+				 MAX_NUM_POINTS_TO_PREDICT,
+				 logGlocalHyp,
+				 logLocalHyp,
+				 strFileNameAll,
+				 strObsFileNameList,
+				 strSampledIntermediateFolder,
+				 strInputGlobalFileNameSuffix,
+				 strInputLocalFileNameSuffix,
+				 GAP,
+				 MAX_ITER_BEFORE_UPDATE,
+				 strGPMapMetaDataFolder,
+				 strOutputFileName,
+				 strLogFolder);
+			break;
 		}
 	}
-
-	// [2] Derivative Observations
-	bool fRunDerObs = true;
-	std::cout << "[Derivative Observations] - Do you wish to run? (0/1) "; std::cin >> fRunDerObs;
-	if(fRunDerObs)
-	{
-		//double			BLOCK_SIZE;						std::cout << "Block Size? ";															std::cin >> BLOCK_SIZE;
-		//size_t			NUM_CELLS_PER_AXIS;			std::cout << "Number of cells per axis? ";										std::cin >> NUM_CELLS_PER_AXIS;
-		//size_t			MAX_NUM_POINTS_TO_PREDICT;	std::cout << "Max Number of points for Gaussian process prediction? ";	std::cin >> MAX_NUM_POINTS_TO_PREDICT;
-
-		std::stringstream ss;
-		ss << "block_" << BLOCK_SIZE 
-			<< "_cell_" << static_cast<float>(BLOCK_SIZE)/static_cast<float>(NUM_CELLS_PER_AXIS)
-			<< "_m_" << MIN_NUM_POINTS_TO_PREDICT
-			<< "_n_" << MAX_NUM_POINTS_TO_PREDICT
-			<< "_gap_" << GAP;
-		if(fRemoved)	ss << "_der_obs_removed";
-		else				ss << "_der_obs";
-
-		// filenames
-		const std::string strObsFileName						= ss.str() + (fLocalGP ? "_local" : "_glocal");
-		const std::string strObsFileNameSuffix				= ss.str() + ".pcd";
-
-		//// set default hyperparameters
-		const float sparse_ell	= 0.0268108f;	
-		const float matern_ell	= 0.0907317f;	
-		const float sigma_f		= 0.0144318f;	
-		const float sigma_n		= 4.31269e-007f;	// will not be used
-		const float sigma_nd		= 0.017184f;	
-
-		// BLOCK_SIZE = 0.009, MAX_NUM_POINTS_TO_PREDICT = 100
-		//const float sparse_ell	= 0.0200197f;	
-		//const float matern_ell	= 0.0311088f;	
-		//const float sigma_f		= 0.00380452f;	
-		//const float sigma_n		= 1.55892e-008f;	// will not be used
-		//const float sigma_nd		= 0.0959042f;	
-
-		// BLOCK_SIZE = 0.015, MAX_NUM_POINTS_TO_PREDICT = 100
-		//// set default hyperparameters
-		//const float sparse_ell	= 0.005f;	//0.0200197f;	
-		//const float matern_ell	= 0.005f;	//0.028985f;	
-		//const float sigma_f		= 1.f;		//0.00380452f;	
-		//const float sigma_n		= 0.1f;		//5.34342e-009f;	// will not be used
-		//const float sigma_nd		= 0.1f;		//0.0959042f;	
-
-		// local hyperparameters
-		typedef	GP::InfExactDerObs<float, GP::MeanZeroDerObs, GP::CovSparseMaternisoDerObs, GP::LikGaussDerObs>::Hyp		LocalHyp;
-		LocalHyp logLocalHyp;
-		logLocalHyp.cov(0) = log(sparse_ell);
-		logLocalHyp.cov(1) = log(matern_ell);
-		logLocalHyp.cov(2) = log(sigma_f);
-		logLocalHyp.lik(0) = log(sigma_n);
-		logLocalHyp.lik(1) = log(sigma_nd);
-
-		// train hyperparameters and build gpmaps
-		train_hyperparameters_and_build_gpmaps<GP::MeanZeroDerObs,
-															GP::CovSparseMaternisoDerObs, 
-															GP::LikGaussDerObs, 
-															GP::InfExactDerObs>(BLOCK_SIZE,							// block size
-																					  NUM_CELLS_PER_AXIS,				// number of cells per each axie
-																					  MIN_NUM_POINTS_TO_PREDICT,		// min number of points to predict
-																					  MAX_NUM_POINTS_TO_PREDICT,		// max number of points to predict
-																					  logLocalHyp,							// hyperparameters
-																					  strObsFileNames,					// sequential observations input file name
-																					  strFileNameAll,						// all-in-one observations input file name
-																					  strIntermediateSampleFolder,	// input file name prefix
-																					  strObsFileNameSuffix,				// input file name suffix
-																					  GAP,									// gap
-																					  MAX_ITER_BEFORE_UPDATE,			// number of iterations for training before update
-																					  strGPMapMetaDataSampleFolder,	// output data folder
-																					  strObsFileName,						// output file name prefix
-																					  strLogFolder);						// log folder
-	}
-
-	// [3] Derivative Observations
 
 	system("pause");
 }

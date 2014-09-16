@@ -11,8 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{21678A1B-7E06-43D1-BFF7-B814EAA1B037}</ProjectGuid>
+    <ProjectGuid>{89D365F9-E7BA-4018-8B49-4E975AA366A2}</ProjectGuid>
     <RootNamespace>GPMap</RootNamespace>
+    <ProjectName>[01] GPMap - Bunny - Data Preprocessing</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -85,41 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\main\bunny\main_bunny_gpmap.cpp" />
-    <ClCompile Include="..\..\main\bunny\main_bunny_octomap.cpp" />
-    <ClCompile Include="..\..\main\bunny\main_bunny_surface.cpp" />
-    <ClCompile Include="..\..\test\octree\test_octree_gpmap.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\include\bcm\bcm.hpp" />
-    <ClInclude Include="..\..\include\bcm\bcm_serializable.hpp" />
-    <ClInclude Include="..\..\include\bcm\bcm_w_prior.hpp" />
-    <ClInclude Include="..\..\include\bcm\gaussian.hpp" />
-    <ClInclude Include="..\..\include\bcm\gaussian_serializable.hpp" />
-    <ClInclude Include="..\..\include\common\common.hpp" />
-    <ClInclude Include="..\..\include\data\test_data.hpp" />
-    <ClInclude Include="..\..\include\data\training_data.hpp" />
-    <ClInclude Include="..\..\include\features\remove_NAN.hpp" />
-    <ClInclude Include="..\..\include\features\surface_normal.hpp" />
-    <ClInclude Include="..\..\include\filter\filters.hpp" />
-    <ClInclude Include="..\..\include\gpmap\data_partitioning.hpp" />
-    <ClInclude Include="..\..\include\gpmap\macro_gpmap.hpp" />
-    <ClInclude Include="..\..\include\gpmap\macro_gpmap_basics.hpp" />
-    <ClInclude Include="..\..\include\gpmap\octree_container.hpp" />
-    <ClInclude Include="..\..\include\gpmap\octree_gpmap.hpp" />
-    <ClInclude Include="..\..\include\gpmap\octree_viewer.hpp" />
-    <ClInclude Include="..\..\include\io\io.hpp" />
-    <ClInclude Include="..\..\include\iso_surface\iso_surface.hpp" />
-    <ClInclude Include="..\..\include\octomap\octomap.hpp" />
-    <ClInclude Include="..\..\include\plsc\plsc.hpp" />
-    <ClInclude Include="..\..\include\serialization\eigen_dense_base_addons.hpp" />
-    <ClInclude Include="..\..\include\serialization\eigen_serialization.hpp" />
-    <ClInclude Include="..\..\include\util\color_map.hpp" />
-    <ClInclude Include="..\..\include\util\data_types.hpp" />
-    <ClInclude Include="..\..\include\util\filesystem.hpp" />
-    <ClInclude Include="..\..\include\util\random.hpp" />
-    <ClInclude Include="..\..\include\util\timer.hpp" />
-    <ClInclude Include="..\..\include\visualization\cloud_viewer.hpp" />
+    <ClCompile Include="..\..\main\bunny\main_bunny_data_preprocessing.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

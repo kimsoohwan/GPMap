@@ -17,15 +17,12 @@ int main(int argc, char** argv)
 	const std::string strDataName							("bunny");
 	const std::string strGPMapFolder						(strDataFolder + strDataName + "/output/gpmap/");
 	const std::string strGPMapMetaDataFolder			(strGPMapFolder + "meta_data/");
-	const std::string strGPMapMetaDataSampleFolder	(strGPMapMetaDataFolder + "/random_sampling_0.1/");
 	const std::string strGPMapSurfaceFolder			(strGPMapFolder + "surface/");
-	const std::string strGPMapSurfaceSampleFolder	(strGPMapSurfaceFolder + "random_sampling_0.1/");
 	create_directory(strGPMapSurfaceFolder);
-	create_directory(strGPMapSurfaceSampleFolder);
 
 	// [0] setting - GPMaps
 	//const size_t NUM_GPMAPS = 10; 
-	const size_t NUM_GPMAPS = 2; 
+	const size_t NUM_GPMAPS = 3; 
 	const std::string strGPMapFileNames_[]	= {
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(all)_iBCM",
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_iBCM_upto_0",
@@ -37,8 +34,11 @@ int main(int argc, char** argv)
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_1",
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_2",
 															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs(seq)_BCM_upto_3",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_local(all)_iBCM",
-															"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_glocal(all)_iBCM",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_local(all)_iBCM",
+															//"block_0.02_cell_0.002_m_2_n_100_gap_0.001_func_obs_removed_glocal(all)_iBCM",
+															"ICRA_2015_Local_GP(all)_Batch",
+															"ICRA_2015_Global_GP(all)_Batch",
+															"ICRA_2015_Global_Local_GP(all)_Batch",
 															};
 	StringList strGPMapFileNames(strGPMapFileNames_, strGPMapFileNames_ + NUM_GPMAPS); 
 
@@ -63,7 +63,7 @@ int main(int argc, char** argv)
 	if(!fRunCustom)
 	{
 		std::stringstream ss;
-		ss << strGPMapSurfaceSampleFolder << "default/";
+		ss << strGPMapSurfaceFolder << "default/";
 		const std::string strOutputDataFolder			(ss.str());
 		const std::string strLogFolder					(strOutputDataFolder + "log/");
 		create_directory(strOutputDataFolder);
@@ -80,7 +80,7 @@ int main(int argc, char** argv)
 
 			// load GPMap
 			pcl::PointCloud<pcl::PointNormal>::Ptr pPointCloudGPMap;
-			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataSampleFolder + strGPMapFileNames[i] + ".pcd");
+			loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataFolder + strGPMapFileNames[i] + ".pcd");
 
 			// iso-surface
 			IsoSurfaceExtraction isoSurface(RESOLUTION);
@@ -143,7 +143,7 @@ int main(int argc, char** argv)
 			// color map
 			float maxVarThld; std::cout << "max var thld: ";				std::cin >> maxVarThld;
 			std::stringstream ss;
-			ss << strGPMapSurfaceSampleFolder << "max_var_" << maxVarThld << "/";
+			ss << strGPMapSurfaceFolder << "max_var_" << maxVarThld << "/";
 			const std::string strOutputDataFolder			(ss.str());
 			const std::string strLogFolder					(strOutputDataFolder + "log/");
 			create_directory(strOutputDataFolder);
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
 
 				// load GPMap
 				pcl::PointCloud<pcl::PointNormal>::Ptr pPointCloudGPMap;
-				loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataSampleFolder + strGPMapFileNames[i] + ".pcd");
+				loadPointCloud<pcl::PointNormal>(pPointCloudGPMap, strGPMapMetaDataFolder + strGPMapFileNames[i] + ".pcd");
 
 				// iso-surface
 				IsoSurfaceExtraction isoSurface(RESOLUTION);

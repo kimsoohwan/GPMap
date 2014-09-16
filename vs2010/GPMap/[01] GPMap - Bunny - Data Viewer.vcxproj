@@ -10,9 +10,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\main\bunny\main_bunny_data_viewer.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{880568F4-F2DE-4CB7-8C5E-9DCECAD7772C}</ProjectGuid>
     <RootNamespace>GPMap</RootNamespace>

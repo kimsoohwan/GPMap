@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 	// [0] setting - observations
 	const size_t NUM_OBSERVATIONS = 4; 
 	const std::string strObsFileNames_[]	= {"bun000", "bun090", "bun180", "bun270"};
-	StringList strObsFileNames(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
+	StringList strObsFileNameList(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
 
 	// [0] octomap Scene Graph
 
@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 
 	// hit points
 	PointXYZCloudPtrList originalHitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(originalHitPointCloudPtrList, strObsFileNames, strOriginalInputDataFolder, ".ply");
+	loadPointCloud<pcl::PointXYZ>(originalHitPointCloudPtrList, strObsFileNameList, strOriginalInputDataFolder, ".ply");
 
 	// scene graph
 	octomap::ScanGraph scanGraph;
@@ -100,14 +100,14 @@ int main(int argc, char** argv)
 	// [1-1] load original/down-sampled hit points
 	const std::string strOriginalIntermediateDataFolder = strIntermediateDataFolder + "original/";
 	PointXYZCloudPtrList hitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNames, strOriginalIntermediateDataFolder, ".pcd");
+	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNameList, strOriginalIntermediateDataFolder, ".pcd");
 
 	PointXYZCloudPtrList sampledHitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strDownSampledIntermediateDataFolder, ".pcd");
+	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNameList, strDownSampledIntermediateDataFolder, ".pcd");
 
 	// [1-2] load sensor positions
 	PointXYZVList sensorPositionList;
-	loadSensorPositionList(sensorPositionList, strObsFileNames, strInputDataFolder, "_camera_position.txt");
+	loadSensorPositionList(sensorPositionList, strObsFileNameList, strInputDataFolder, "_camera_position.txt");
 	assert(NUM_OBSERVATIONS == hitPointCloudPtrList.size() && NUM_OBSERVATIONS == sensorPositionList.size());
 
 	// [2] Octomaps

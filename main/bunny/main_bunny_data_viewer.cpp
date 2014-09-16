@@ -20,11 +20,11 @@
 #include "visualization/cloud_viewer.hpp"	// show
 #include "features/surface_normal.hpp"		// estimateSurfaceNormals
 #include "filter/filters.hpp"					// downSampling
-#include "octree/data_partitioning.hpp"	// randomSampling
-#include "octree/octree_viewer.hpp"			// OctreeViewer
+#include "gpmap/data_partitioning.hpp"	// randomSampling
+#include "gpmap/octree_viewer.hpp"			// OctreeViewer
 
-#include "octree/octree_gpmap.hpp"			// OctreeGPMap
-#include "octree/octree_container.hpp"		// OctreeGPMapContainer
+#include "gpmap/octree_gpmap.hpp"			// OctreeGPMap
+#include "gpmap/octree_container.hpp"		// OctreeGPMapContainer
 #include "bcm/gaussian.hpp"					// GaussianDistribution
 
 using namespace GPMap;
@@ -41,7 +41,7 @@ int main(int argc, char** argv)
 	const size_t NUM_OBSERVATIONS = 4; 
 	const std::string strObsFileNames_[]		= {"bun000", "bun090", "bun180", "bun270"};
 	const std::string strFileNameAll				=  "bunny_all";
-	StringList strObsFileNames(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
+	StringList strObsFileNameList(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
 
 	// [0] setting - input data folder
 	std::cout << "[Input Data]" << std::endl;
@@ -82,7 +82,7 @@ int main(int argc, char** argv)
 
 	// [1-1] Hit Points - Sequential - Down Sampling
 	PointXYZCloudPtrList sampledHitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNames, strIntermediateSampleFolder, ".pcd");
+	loadPointCloud<pcl::PointXYZ>(sampledHitPointCloudPtrList, strObsFileNameList, strIntermediateSampleFolder, ".pcd");
 	//show<pcl::PointXYZ>("Sequential Down Sampled Hit Points", sampledHitPointCloudPtrList);
 
 

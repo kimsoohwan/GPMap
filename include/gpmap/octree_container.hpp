@@ -32,6 +32,9 @@ public:
 
 		// add to the int vector
 		pcl::octree::OctreeContainerDataTVector<int>::setData(data);
+
+		// reset the updated flag to update in the future
+		resetUpdated();
 	}
 };
 

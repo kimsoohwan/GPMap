@@ -45,15 +45,6 @@
     <ClInclude Include="..\..\include\octomap\octomap.hpp">
       <Filter>src\octomap</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\octree\octree_container.hpp">
-      <Filter>src\gpmap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\octree\octree_gpmap.hpp">
-      <Filter>src\gpmap</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\octree\octree_viewer.hpp">
-      <Filter>src\gpmap</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\plsc\plsc.hpp">
       <Filter>src\plsc</Filter>
     </ClInclude>
@@ -87,11 +78,29 @@
     <ClInclude Include="..\..\include\util\random.hpp">
       <Filter>src\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\octree\macro_gpmap.hpp">
+    <ClInclude Include="..\..\include\bcm\bcm_w_prior.hpp">
+      <Filter>src\bcm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gpmap\data_partitioning.hpp">
       <Filter>src\gpmap</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\octree\data_partitioning.hpp">
+    <ClInclude Include="..\..\include\gpmap\macro_gpmap.hpp">
       <Filter>src\gpmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gpmap\macro_gpmap_basics.hpp">
+      <Filter>src\gpmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gpmap\octree_container.hpp">
+      <Filter>src\gpmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gpmap\octree_gpmap.hpp">
+      <Filter>src\gpmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\gpmap\octree_viewer.hpp">
+      <Filter>src\gpmap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\bcm\gaussian_serializable.hpp">
+      <Filter>src\bcm</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

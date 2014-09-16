@@ -10,10 +10,13 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\main\bunny\main_gauss_data_preprocessing.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{89D365F9-E7BA-4018-8B49-4E975AA366A2}</ProjectGuid>
+    <ProjectGuid>{AD4AA8FF-9E28-49C6-8F1E-5A48946B7A40}</ProjectGuid>
     <RootNamespace>GPMap</RootNamespace>
-    <ProjectName>[00] GPMap - Bunny - Data Preprocessing</ProjectName>
+    <ProjectName>[01] Data Preprocessing</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -85,9 +88,6 @@
       <AdditionalDependencies>octomap.lib;octomath.lib;opengl32.lib;pcl_common_release.lib;pcl_features_debug.lib;pcl_filters_release.lib;pcl_io_release.lib;pcl_io_ply_release.lib;pcl_kdtree_release.lib;pcl_octree_release.lib;pcl_search_release.lib;pcl_surface_release.lib;pcl_visualization_release.lib;libboost_thread-vc100-mt-1_49.lib;libboost_date_time-vc100-mt-1_49.lib;libboost_filesystem-vc100-mt-1_49.lib;vtkalglib.lib;vtkCharts.lib;vtkCommon.lib;vtkDICOMParser.lib;vtkexoIIc.lib;vtkexpat.lib;vtkFiltering.lib;vtkfreetype.lib;vtkftgl.lib;vtkGenericFiltering.lib;vtkGeovis.lib;vtkGraphics.lib;vtkhdf5.lib;vtkHybrid.lib;vtkImaging.lib;vtkInfovis.lib;vtkIO.lib;vtkjpeg.lib;vtklibxml2.lib;vtkmetaio.lib;vtkNetCDF_cxx.lib;vtkNetCDF.lib;vtkpng.lib;vtkproj4.lib;vtkRendering.lib;vtksqlite.lib;vtksys.lib;vtktiff.lib;vtkverdict.lib;vtkViews.lib;vtkVolumeRendering.lib;vtkWidgets.lib;vtkzlib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\main\bunny\main_bunny_data_preprocessing.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

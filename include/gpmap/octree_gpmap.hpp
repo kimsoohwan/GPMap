@@ -4,6 +4,7 @@
 // STL
 #include <cmath>			// floor, ceil
 #include <vector>
+#include <stack>
 #include <limits>			// std::numeric_limits<T>::min(), max()
 #include <algorithm>		// std::min(), max()
 
@@ -29,6 +30,16 @@ using GP::LogFile;
 #include "data_partitioning.hpp"				// random_data_partition
 #include "octomap/octomap.hpp"				// OctoMap
 namespace GPMap {
+
+/** @brief Gaussian process coverage
+  * @todo Template arguement
+  */
+enum GP_Coverage{
+	GLOBAL_GP,			// Considers all training data for predicting test positions in each block and training hyperparameters
+	LOCAL_GP,			// Considers local training data only in each extended block
+	GLOBAL_LOCAL_GP	// Considers local training data only in each exteneded block and move on neighboring blocks,
+							//	Note that global training data are considered alreadly in the MeanGlobalGP
+};
 
 //typedef OctreeGPMapContainer<BCM>						LeafT;
 //typedef OctreeGPMapContainer<BCM_Serializable>	LeafT;
@@ -66,35 +77,42 @@ protected:
 	typedef float Scalar;
 	typedef GP::GaussianProcess<Scalar, MeanFunc, CovFunc, LikFunc, InfMethod>	GPType;
 
+	struct LeafNodeWithKey
+	{
+		LeafNodeWithKey(const pcl::octree::OctreeKey &key_, LeafNode *pLeafNode_)
+			: key(key_),
+			  pLeafNode(pLeafNode_) {}
+
+		const pcl::octree::OctreeKey	key;
+		LeafNode * const					pLeafNode;
+	};
+
 public:
 	typedef typename GPType::Hyp Hyp;
 
 public:
-	public:
 	/** @brief Constructor
 	*  @param resolution: octree resolution at lowest octree level
     */
-   OctreeGPMap(const double			BLOCK_SIZE, 
+   OctreeGPMap(const GP_Coverage		GP_COVERAGE,
+					const double			BLOCK_SIZE, 
 					const size_t			NUM_CELLS_PER_AXIS, 
 					const size_t			MIN_NUM_POINTS_TO_PREDICT,
 					const size_t			MAX_NUM_POINTS_TO_PREDICT,
 					const bool				FLAG_INDEPENDENT_TEST_POSITIONS,
-//					const bool				FLAG_USE_MEAN_GLOBAL_GP,
-					const float				FLAG_RAMDOMLY_SAMPLE_POINTS	= false,
-					const float				FLAG_DUPLICATE_POINTS			= true,	// false
-					const bool				FLAG_USE_ALL_TRAINING_DATA		= true)	// true
+					//const float				FLAG_RAMDOMLY_SAMPLE_POINTS	= false,
+					const float				FLAG_DUPLICATE_POINTS			= true)	// false
 		: pcl::octree::OctreePointCloud<MyPoinT, LeafT, BranchT, OctreeT>(BLOCK_SIZE),
+		  GP_COVERAGE_								(GP_COVERAGE),
 		  BLOCK_SIZE_								(resolution_),
 		  NUM_CELLS_PER_AXIS_					(max<size_t>(1, NUM_CELLS_PER_AXIS)),
 		  NUM_CELLS_PER_BLOCK_					(NUM_CELLS_PER_AXIS*NUM_CELLS_PER_AXIS*NUM_CELLS_PER_AXIS),
-		  CELL_SIZE_								(BLOCK_SIZE/static_cast<double>(NUM_CELLS_PER_AXIS)),
+		  CELL_SIZE_								(BLOCK_SIZE/static_cast<double>(max<size_t>(1, NUM_CELLS_PER_AXIS))),
 		  MIN_NUM_POINTS_TO_PREDICT_			(max<size_t>(1, MIN_NUM_POINTS_TO_PREDICT)),
 		  MAX_NUM_POINTS_TO_PREDICT_			(static_cast<int>(MAX_NUM_POINTS_TO_PREDICT)),
 		  FLAG_INDEPENDENT_TEST_POSITIONS_	(FLAG_INDEPENDENT_TEST_POSITIONS),
-//		  FLAG_USE_MEAN_GLOBAL_GP_				(FLAG_USE_MEAN_GLOBAL_GP),
-		  FLAG_RAMDOMLY_SAMPLE_POINTS_		(FLAG_RAMDOMLY_SAMPLE_POINTS),
+		  //FLAG_RAMDOMLY_SAMPLE_POINTS_		(FLAG_RAMDOMLY_SAMPLE_POINTS),
 		  FLAG_DUPLICATE_POINTS_				(FLAG_DUPLICATE_POINTS),
-		  FLAG_USE_ALL_TRAINING_DATA_			(FLAG_USE_ALL_TRAINING_DATA),
 		  m_pXs(new Matrix(NUM_CELLS_PER_BLOCK_, 3))
    {
 #ifdef _TEST_OCTREE_GPMAP
@@ -336,7 +354,7 @@ public:
 	GP::DlibScalar train(Hyp &logHyp, 
 								const int maxIter, 
 								const size_t numRandomBlocks = 0, 
-								const GP::DlibScalar minValue = 1e-7) // 1e-15
+								const GP::DlibScalar minValue = 1e-10) // 1e-15
 	{
 		// select random blocks
 #ifndef CONST_LEAF_NODE_ITERATOR_
@@ -395,7 +413,8 @@ public:
 		for(int i = 0; i < logHyp.lik.size(); i++)  { logFile  << exp(logHyp.lik(i))  << (i < logHyp.lik.size()-1 ? ", " : ""); }
 		logFile << "): ";
 
-		if(FLAG_USE_ALL_TRAINING_DATA_)
+		// Global GP: Considers all training data for training hypereparameters
+		if(GP_COVERAGE_ == GLOBAL_GP)
 		{
 			Indices allIndices(input_->size());
 			std::generate(allIndices.begin(), allIndices.end(), UniqueNonZeroInteger());
@@ -410,6 +429,8 @@ public:
 				sumNlZ = std::numeric_limits<Scalar>::infinity();
 			}
 		}
+
+		// Local GP or Glocal GP: Considers those training data in each block for training hypereparameters
 		else
 		{
 			// for each leaf node
@@ -542,6 +563,17 @@ public:
 		// if a point index is duplicated to 
 		if(FLAG_DUPLICATE_POINTS_)
 		{
+			// Global GP: Considers all training data for prediction
+			Indices allIndices;
+			if(GP_COVERAGE_ == GLOBAL_GP) 
+			{
+				allIndices.resize(input_->size());
+				std::generate(allIndices.begin(), allIndices.end(), UniqueNonZeroInteger());
+			}
+
+			// Glocal GP: spread to neighboring blocks
+			m_neighboringBlockStack = std::stack<LeafNodeWithKey>(); // clear
+
 			// leaf node iterator
 			LeafNodeIterator iter(*this);
 
@@ -549,15 +581,9 @@ public:
 			Eigen::Vector3f min_pt;
 			const size_t totalNumLeafs = getLeafCount();
 			size_t blockCount(0);
-			const int pregressStep(5);	// 5%
+			const int pregressStep(5);	// per 5%
 			int nextProgress(pregressStep);
 			size_t totalNumPoints(0);
-			Indices allIndices;
-			if(FLAG_USE_ALL_TRAINING_DATA_) 
-			{
-				allIndices.resize(input_->size());
-				std::generate(allIndices.begin(), allIndices.end(), UniqueNonZeroInteger());
-			}
 			CPU_Timer timer;
 			while(*++iter)
 			{
@@ -582,7 +608,7 @@ public:
 				genVoxelMinPoint(key, min_pt);
 
 				// collect indices
-				const Indices &indexList  = FLAG_USE_ALL_TRAINING_DATA_ ? allIndices : static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
+				const Indices &indexList  = GP_COVERAGE_ == GLOBAL_GP ? allIndices : static_cast<LeafNode*>(iter.getCurrentOctreeNode())->getDataTVector();
 				totalNumPoints += indexList.size();
 
 #ifdef _TEST_OCTREE_GPMAP
@@ -597,7 +623,8 @@ public:
 				LeafNode *pLeafNode = static_cast<LeafNode *>(iter.getCurrentOctreeNode());
 
 				// predict
-				predict(logHyp, indexList, min_pt, pLeafNode, maxIter, t_training, t_predict, t_combine);
+				// inside of prediction, we consider the spread to six directions and add it to the neighboring block keys stack
+				predict(key, logHyp, indexList, min_pt, pLeafNode, maxIter, t_training, t_predict, t_combine);
 				t_training_total	+= t_training;
 				t_predict_total	+= t_predict;
 				t_combine_total	+= t_combine;
@@ -609,7 +636,66 @@ public:
 			// log
 			const float avgNumPoints = static_cast<float>(totalNumPoints) / static_cast<float>(blockCount);
 			logFile << "done: with avg " << avgNumPoints << " points in a 3x3x3 block "
-						<< "during " << timer.elapsed().wall_clock_time() << " sec" << std::endl;
+					  << "during " << timer.elapsed().wall_clock_time() << " sec" << std::endl;
+
+			// Glocal GP: move on to the neighboring blocks it it is not updated
+			if(GP_COVERAGE_ == GLOBAL_GP || GP_COVERAGE_ == GLOBAL_LOCAL_GP)
+			{
+				logFile << std::endl << "Glocal GP: diffusion" << std::endl;
+
+				// times
+				CPU_Times		t_training_total_Glocal_GP;
+				CPU_Times		t_predict_total_Glocal_GP;
+				CPU_Times		t_combine_total_Glocal_GP;
+				t_training_total_Glocal_GP.clear();
+				t_predict_total_Glocal_GP.clear();
+				t_combine_total_Glocal_GP.clear();
+
+				const size_t pregressStep(100);	// per 100 blocks
+				size_t nextProgress(pregressStep);
+				blockCount = 0;
+				CPU_Timer timer;
+				while(m_neighboringBlockStack.empty())
+				{
+					// progress
+					if(blockCount >= nextProgress)
+					{
+						const float t_elapsed_sec = timer.elapsed().wall_clock_time();
+						logFile << "progress: " << nextProgress << "blocks ";
+						if(t_elapsed_sec > 3600.f)			logFile << "during " << t_elapsed_sec/3600.f	<< " hr" << std::endl;
+						else if(t_elapsed_sec > 60.f)		logFile << "during " << t_elapsed_sec/60.f		<< " min" << std::endl;
+						else										logFile << "during " << t_elapsed_sec				<< " sec" << std::endl;
+						nextProgress += pregressStep;
+					}
+
+					// current block
+					LeafNodeWithKey leafNodeWithKey = m_neighboringBlockStack.top();
+					m_neighboringBlockStack.pop();
+
+					// if it is updated, ignore it
+					assert(leafNodeWithKey.pLeafNode && leafNodeWithKey.pLeafNode->getSize() == 0);
+					if(leafNodeWithKey.pLeafNode->isUpdated()) continue; // it may be duplicated
+
+					// predict with global training data
+					predict_w_Global_GP(leafNodeWithKey.key, logHyp, min_pt, leafNodeWithKey.pLeafNode, t_training, t_predict, t_combine);
+					t_training_total_Glocal_GP	+= t_training;
+					t_predict_total_Glocal_GP	+= t_predict;
+					t_combine_total_Glocal_GP	+= t_combine;
+
+					// next
+					blockCount++;
+				}
+
+				// log
+				logFile << "done: " << blockCount << " blocks " << std::endl
+						  << "[Global GP training]: " << std::endl << t_training_total_Glocal_GP << std::endl
+						  << "[Global GP predict]: "  << std::endl << t_predict_total_Glocal_GP << std::endl
+						  << "[Global GP combine]: "  << std::endl << t_combine_total_Glocal_GP << std::endl;
+
+				t_training_total	+= t_training_total_Glocal_GP;
+				t_predict_total	+= t_predict_total_Glocal_GP;
+				t_combine_total	+= t_combine_total_Glocal_GP;
+			}
 		}
 		else
 		{
@@ -656,29 +742,30 @@ public:
 
 				// collect point indices in neighboring blocks
 				indexList.clear();
-				int nextKeyX, nextKeyY, nextKeyZ;
+				pcl::octree::OctreeKey nextKey;
 				for(int deltaX = -1; deltaX <= 1; deltaX++)
 				{
+					// if the neighboring block is out of range, ignore it
+					const int nextKeyX = static_cast<int>(key.x) + deltaX;
+					if(nextKeyX < 0 || nextKeyX > static_cast<int>(maxKey_.x)) continue;
+					nextKey.x = static_cast<unsigned int>(nextKeyX);
+
 					for(int deltaY = -1; deltaY <= 1; deltaY++)
 					{
+						// if the neighboring block is out of range, ignore it
+						const int nextKeyY = static_cast<int>(key.y) + deltaY;
+						if(nextKeyY < 0 || nextKeyY > static_cast<int>(maxKey_.y)) continue;
+						nextKey.y = static_cast<unsigned int>(nextKeyY);
+
 						for(int deltaZ = -1; deltaZ <= 1; deltaZ++)
 						{
-							// neighboring block key
-							nextKeyX = static_cast<int>(key.x) + deltaX;
-							nextKeyY = static_cast<int>(key.y) + deltaY;
-							nextKeyZ = static_cast<int>(key.z) + deltaZ;
-
 							// if the neighboring block is out of range, ignore it
-							if(nextKeyX < 0 || nextKeyY < 0 || nextKeyZ < 0 || 
-								nextKeyX > static_cast<int>(maxKey_.x) ||
-								nextKeyY > static_cast<int>(maxKey_.y) ||
-								nextKeyZ > static_cast<int>(maxKey_.z)) continue;
+							const int nextKeyZ = static_cast<int>(key.z) + deltaZ;
+							if(nextKeyZ < 0 || nextKeyZ > static_cast<int>(maxKey_.z)) continue;
+							nextKey.z = static_cast<unsigned int>(nextKeyZ);
 
 							// get data
-							getData(pcl::octree::OctreeKey(static_cast<unsigned int>(nextKeyX), 
-																	 static_cast<unsigned int>(nextKeyY), 
-																	 static_cast<unsigned int>(nextKeyZ)),
-																	 indexList);
+							getData(nextKey, indexList);
 						}
 					}
 				}
@@ -697,7 +784,7 @@ public:
 				LeafNode *pLeafNode = static_cast<LeafNode *>(iter.getCurrentOctreeNode());
 
 				// predict
-				predict(logHyp, indexList, min_pt, pLeafNode, maxIter, t_training, t_predict, t_combine);
+				predict(key, logHyp, indexList, min_pt, pLeafNode, maxIter, t_training, t_predict, t_combine);
 				t_training_total	+= t_training;
 				t_predict_total	+= t_predict;
 				t_combine_total	+= t_combine;
@@ -714,7 +801,7 @@ public:
 
 
 		// reset prior
-		BCM::resetPrior();
+		//BCM::resetPrior();
 
 		//logFile << "min: (" << minX_ << ", " << minY_ << ", " << minZ_ << "), "
 		//		  << "max: (" << maxX_ << ", " << maxY_ << ", " << maxZ_ << ")" << std::endl;
@@ -1136,24 +1223,40 @@ protected:
 		// add point to octree at key
 		if(FLAG_DUPLICATE_POINTS_)
 		{
+			int nextKeyX, nextKeyY, nextKeyZ;
+			pcl::octree::OctreeKey nextKey;
 			for(int deltaX = -1; deltaX <= 1; deltaX++)
 			{
+				// if the neighboring block is out of range, ignore it
+				nextKeyX = static_cast<int>(key.x) + deltaX;
+#ifdef _TEST_OCTREE_GPMAP
+				assert(nextKeyX >= 0 && nextKeyX <= static_cast<int>(maxKey_.x));
+#endif
+				if(nextKeyX < 0 || nextKeyX > static_cast<int>(maxKey_.x)) continue;
+				nextKey.x = static_cast<unsigned int>(nextKeyX);
+
 				for(int deltaY = -1; deltaY <= 1; deltaY++)
 				{
+					// if the neighboring block is out of range, ignore it
+					nextKeyY = static_cast<int>(key.y) + deltaY;
+#ifdef _TEST_OCTREE_GPMAP
+					assert(nextKeyY >= 0 && nextKeyY <= static_cast<int>(maxKey_.y));
+#endif
+					if(nextKeyY < 0 || nextKeyY > static_cast<int>(maxKey_.y)) continue;
+					nextKey.y = static_cast<unsigned int>(nextKeyY);
+
 					for(int deltaZ = -1; deltaZ <= 1; deltaZ++)
 					{
+						// if the neighboring block is out of range, ignore it
+						nextKeyZ = static_cast<int>(key.z) + deltaZ;
 #ifdef _TEST_OCTREE_GPMAP
-						assert(static_cast<int>(key.x) + deltaX >= 0);
-						assert(static_cast<int>(key.y) + deltaY >= 0);
-						assert(static_cast<int>(key.z) + deltaZ >= 0);
-						assert(static_cast<int>(key.x) + deltaX <= static_cast<int>(maxKey_.x));
-						assert(static_cast<int>(key.y) + deltaY >= static_cast<int>(maxKey_.y));
-						assert(static_cast<int>(key.z) + deltaZ >= static_cast<int>(maxKey_.z));
+						assert(nextKeyZ >= 0 && nextKeyZ <= static_cast<int>(maxKey_.z));
 #endif
-						this->addData(pcl::octree::OctreeKey(static_cast<unsigned int>(key.x+deltaX), 
-																		 static_cast<unsigned int>(key.y+deltaY),
-																		 static_cast<unsigned int>(key.z+deltaZ)),
-																		 pointIdx);
+						if(nextKeyZ < 0 || nextKeyZ > static_cast<int>(maxKey_.z)) continue;
+						nextKey.z = static_cast<unsigned int>(nextKeyZ);
+
+						// add the point
+						this->addData(nextKey, pointIdx);
 					}
 				}
 			}
@@ -1436,14 +1539,15 @@ protected:
 	  *				Thus, prediction is done in OctreeGPMap not in LeafT.
 	  *				But the result will be dangled to LeafT for further BCM update.
 	  */
-	void predict(const Hyp						&logHyp,
-					 const Indices					&indexList, 
-					 Eigen::Vector3f				&min_pt,
-					 LeafNode *						pLeafNode,
-					 const int						maxIter,
-					 CPU_Times						&t_training,
-					 CPU_Times						&t_predict,
-					 CPU_Times						&t_combine)
+	void predict(const pcl::octree::OctreeKey		&key,
+					 const Hyp								&logHyp,
+					 const Indices							&indexList, 
+					 Eigen::Vector3f						&min_pt,
+					 LeafNode *								pLeafNode,
+					 const int								maxIter,
+					 CPU_Times								&t_training,
+					 CPU_Times								&t_predict,
+					 CPU_Times								&t_combine)
 	{
 		// times
 		t_training.clear();
@@ -1453,7 +1557,8 @@ protected:
 		// if the data is too big, divide and conquer
 		// assume that subset training data are independent
 		std::vector<std::vector<int> > partitionedIndices;
-		if(!FLAG_RAMDOMLY_SAMPLE_POINTS_ && random_data_partition(indexList, MAX_NUM_POINTS_TO_PREDICT_, partitionedIndices))
+		//if(!FLAG_RAMDOMLY_SAMPLE_POINTS_ && random_data_partition(indexList, MAX_NUM_POINTS_TO_PREDICT_, partitionedIndices))
+		if(random_data_partition(indexList, MAX_NUM_POINTS_TO_PREDICT_, partitionedIndices))
 		{
 			// log file
 			//LogFile logFile;
@@ -1469,7 +1574,7 @@ protected:
 				CPU_Times	t_combine_sub;
 
 				// predict recursively
-				predict(logHyp, partitionedIndices[i], min_pt, pLeafNode, maxIter, 
+				predict(key, logHyp, partitionedIndices[i], min_pt, pLeafNode, maxIter, 
 						  t_training_sub, t_predict_sub, t_combine_sub);
 
 				// sum up times
@@ -1486,15 +1591,15 @@ protected:
 
 			// training data
 			MatrixPtr pX, pXd; VectorPtr pYYd;
-			std::vector<int> randomSampleIndices;	// randomly sample points
-			if(FLAG_RAMDOMLY_SAMPLE_POINTS_ && random_sampling(indexList, MAX_NUM_POINTS_TO_PREDICT_, randomSampleIndices))
-			{
-				generateTrainingData(input_, randomSampleIndices, m_gap, pX, pXd, pYYd);	
-			}
-			else
-			{
+			//std::vector<int> randomSampleIndices;	// randomly sample points
+			//if(FLAG_RAMDOMLY_SAMPLE_POINTS_ && random_sampling(indexList, MAX_NUM_POINTS_TO_PREDICT_, randomSampleIndices))
+			//{
+			//	generateTrainingData(input_, randomSampleIndices, m_gap, pX, pXd, pYYd);	
+			//}
+			//else
+			//{
 				generateTrainingData(input_, indexList, m_gap, pX, pXd, pYYd);	
-			}
+			//}
 			GP::DerivativeTrainingData<float> derivativeTrainingData;
 			derivativeTrainingData.set(pX, pXd, pYYd);
 
@@ -1551,13 +1656,13 @@ protected:
 				// update
 				{
 					// timer - start
-					CPU_Timer timer;
+					//CPU_Timer timer;
 
 					// update
-					pLeafNode->update(testData.pMu(), testData.pSigma());
+					t_combine = pLeafNode->update(testData.pMu(), testData.pSigma());
 
 					// timer - end
-					t_combine = timer.elapsed();
+					//t_combine = timer.elapsed();
 				}
 			}
 			catch(GP::Exception &e)
@@ -1566,10 +1671,254 @@ protected:
 				LogFile logFile;
 				logFile << e.what() << std::endl;
 			}
+
+			// Glocal GP: spread to neighboring blocks in six directions
+			if(GP_COVERAGE_ == GLOBAL_GP || GP_COVERAGE_ == GLOBAL_LOCAL_GP) pushNeighboringBlockToStack(testData.pMu(), key);
 		}
 	}
 
+	/** @brief	Predict with Global GP */
+	void predict_w_Global_GP(const pcl::octree::OctreeKey		&key,
+									 const Hyp								&logHyp,
+									 Eigen::Vector3f						&min_pt,
+									 LeafNode *	const						pLeafNode,
+									 CPU_Times								&t_training,
+									 CPU_Times								&t_predict,
+									 CPU_Times								&t_combine)
+	{
+		// times
+		t_training.clear();
+		t_predict.clear();
+		t_combine.clear();
+
+		// test data
+		GP::TestData<float> testData;
+		MatrixPtr pXs(new Matrix(NUM_CELLS_PER_BLOCK_, 3));
+		Matrix minValue(1, 3); 
+		minValue << min_pt.x(), min_pt.y(), min_pt.z();
+		pXs->noalias() = (*m_pXs) + minValue.replicate(NUM_CELLS_PER_BLOCK_, 1);
+		testData.set(pXs);
+
+		// predict and update
+		try
+		{
+			// predict
+			{
+				// timer - start
+				CPU_Timer timer;
+
+				// predict
+				//GP::DerivativeTrainingData<float> derivativeTrainingData;
+				//derivativeTrainingData.set(pXs, MatrixPtr(), VectorPtr());
+				//testData.pMu() = Meanfunc<float>::m(logHyp.mean, derivativeTrainingData);
+				testData.pMu() = MeanFunc<float>::ms(logHyp.mean, testData);
+				testData.pSigma() = CovFunc<float>::Kss(logHyp.cov, testData, FLAG_INDEPENDENT_TEST_POSITIONS_);
+				//GP::MeanGlobalGP<float>::predict(testData, FLAG_INDEPENDENT_TEST_POSITIONS_);		// perBatch = 1000
+				//MeanFunc<float>::predict(testData, FLAG_INDEPENDENT_TEST_POSITIONS_);		// perBatch = 1000
+				//MeanFunc<float>::predict(testData, FLAG_INDEPENDENT_TEST_POSITIONS_, 0);	// perBatch = all
+
+				// timer - end
+				t_predict = timer.elapsed();
+			}
+			
+			// update
+			{
+				// timer - start
+				//CPU_Timer timer;
+
+				// update
+				t_combine = pLeafNode->update(testData.pMu(), testData.pSigma());
+
+				// timer - end
+				//t_combine = timer.elapsed();
+			}
+		}
+		catch(GP::Exception &e)
+		{
+			// log file
+			LogFile logFile;
+			logFile << e.what() << std::endl;
+		}
+
+		// Glocal GP: spread to neighboring blocks in six directions
+		pushNeighboringBlockToStack(testData.pMu(), key);
+	}
+
+	/** @brief Push neighboring blocks to the stack in six directions */
+	void pushNeighboringBlockToStack(const VectorConstPtr &pMu, const pcl::octree::OctreeKey &key)
+	{
+		// Glocal GP: spread to neighboring blocks in six directions
+		pushNeighboringBlockToStack(pMu, key, -1,  0,  0);
+		pushNeighboringBlockToStack(pMu, key,  1,  0,  0);
+		pushNeighboringBlockToStack(pMu, key,  0, -1,  0);
+		pushNeighboringBlockToStack(pMu, key,  0,  1,  0);
+		pushNeighboringBlockToStack(pMu, key,  0,  0, -1);
+		pushNeighboringBlockToStack(pMu, key,  0,  0,  1);
+	}
+
+	/** @brief Push neighboring blocks to the stack if conditions are satisfied */
+	void pushNeighboringBlockToStack(const VectorConstPtr					&pMu, 
+												const pcl::octree::OctreeKey		&key,
+												const int deltaX, const int deltaY, const int deltaZ)
+	{
+		// next key
+		pcl::octree::OctreeKey nextKey;
+
+		// if the neighboring block is out of range X, ignore it
+		const int nextKeyX = static_cast<int>(key.x) + deltaX;
+		if(nextKeyX < 0 || nextKeyX > static_cast<int>(maxKey_.x)) return;
+		nextKey.x = static_cast<unsigned int>(nextKeyX);
+
+		// if the neighboring block is out of range Y, ignore it
+		const int nextKeyY = static_cast<int>(key.y) + deltaY;
+		if(nextKeyY < 0 || nextKeyY > static_cast<int>(maxKey_.y)) return;
+		nextKey.y = static_cast<unsigned int>(nextKeyY);
+					
+		// if the neighboring block is out of range Z, ignore it
+		const int nextKeyZ = static_cast<int>(key.z) + deltaZ;
+		if(nextKeyZ < 0 || nextKeyZ > static_cast<int>(maxKey_.z)) return;
+		nextKey.z = static_cast<unsigned int>(nextKeyZ);
+		
+		// check whether the face has zero-valued iso-surface
+		if(!hasSurfaceIntersectionOnCubeFace(pMu, deltaX, deltaY, deltaZ)) return;
+
+		// if there exists no neighboring block, create one and diffuse to it
+		LeafNode *pLeafNode = findLeaf(nextKey);
+		if(pLeafNode == NULL)
+		{
+			// create a neighboring block
+			this->addData(nextKey, -1);
+
+			// add it 
+			pLeafNode = findLeaf(nextKey);
+			assert(pLeafNode);
+		}
+		// if it has new points, that means it will be updated soon, so ignore it
+		// if it is updated at least once, ignore it
+		else if(pLeafNode->getSize() > 0 || pLeafNode->isUpdated()) return;
+
+		// add it
+		m_neighboringBlockStack.push(LeafNodeWithKey(nextKey, pLeafNode)); // ignore duplication
+	}
+
+	/** @brief Check whether there exits surface intersection on the face or not */
+	bool hasSurfaceIntersectionOnCubeFace(const VectorConstPtr &pMu, const int deltaX, const int deltaY, const int deltaZ)
+	{
+		size_t currRow, nextRow;
+
+		// +-x direction
+		if(deltaX < 0 || deltaX > 0)
+		{
+			// x direction: fixed
+			const size_t ix = deltaX < 0 ? 0 : NUM_CELLS_PER_AXIS_ - 1;
+
+			// y direction
+			for(size_t iy = 0; iy < NUM_CELLS_PER_AXIS_ - 1; iy++)
+			{
+				for(size_t iz = 0; iz < NUM_CELLS_PER_AXIS_; iz++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy,   iz);
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy+1, iz);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+
+			// z direction
+			for(size_t iy = 0; iy < NUM_CELLS_PER_AXIS_; iy++)
+			{
+				for(size_t iz = 0; iz < NUM_CELLS_PER_AXIS_ - 1; iz++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy, iz  );
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy, iz+1);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+		}
+
+		// +-y direction
+		else if(deltaY < 0 || deltaY > 0)
+		{
+			// y direction: fixed
+			const size_t iy = deltaY < 0 ? 0 : NUM_CELLS_PER_AXIS_ - 1;
+
+			// x direction
+			for(size_t ix = 0; ix < NUM_CELLS_PER_AXIS_ - 1; ix++)
+			{
+				for(size_t iz = 0; iz < NUM_CELLS_PER_AXIS_; iz++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix,   iy, iz);
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix+1, iy, iz);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+
+			// z direction
+			for(size_t ix = 0; ix < NUM_CELLS_PER_AXIS_; ix++)
+			{
+				for(size_t iz = 0; iz < NUM_CELLS_PER_AXIS_ - 1; iz++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy, iz  );
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy, iz+1);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+		}
+
+		// +-z direction
+		else if(deltaZ < 0 || deltaZ > 0)
+		{
+			// z direction: fixed
+			const size_t iz = deltaZ < 0 ? 0 : NUM_CELLS_PER_AXIS_ - 1;
+
+			// x direction
+			for(size_t ix = 0; ix < NUM_CELLS_PER_AXIS_ - 1; ix++)
+			{
+				for(size_t iy = 0; iy < NUM_CELLS_PER_AXIS_; iy++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix,   iy, iz);
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix+1, iy, iz);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+
+			// y direction
+			for(size_t ix = 0; ix < NUM_CELLS_PER_AXIS_; ix++)
+			{
+				for(size_t iy = 0; iy < NUM_CELLS_PER_AXIS_ - 1; iy++)
+				{
+					currRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy,   iz);
+					nextRow = xyz2row(NUM_CELLS_PER_AXIS_, ix, iy+1, iz);
+
+					// different sign
+					if((*pMu)(currRow) * (*pMu)(nextRow) <= 0) return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 protected:
+	/** @brief		Gaussian process type
+	  * @details	GLOBAL_GP		: Considers all training data for predicting test positions in each block and training hyperparameters
+	  *				LOCAL_GP			: Considers local training data only in each extended block
+	  *				GLOBAL_LOCAL_GP: Considers local training data only in each exteneded block and move on neighboring blocks,
+	  *									  Note that global training data are considered alreadly in the MeanGlobalGP */
+	const GP_Coverage		GP_COVERAGE_;
+
+	/** @brief		Glocal GP: spread to neighboring blocks */
+	std::stack<LeafNodeWithKey>	m_neighboringBlockStack;
+
 	/** @brief		Flag for duplicating a point index to neighboring voxels 
 	  * @details	If it is duplicated, prediction will be easy without considering neighboring voxels,
 	  *				but the total memory size for indices will be 27 times bigger. */
@@ -1579,14 +1928,8 @@ protected:
 	  *				Dependent Test positions: mean vector and covariance matrix */
 	const bool		FLAG_INDEPENDENT_TEST_POSITIONS_;
 
-	/** @brief		Use global GP as a mean function: spreading predictions to neighbors */
-	//const bool		FLAG_USE_MEAN_GLOBAL_GP_;
-
-	/** @brief		Use all training data rather than overlapping local training data */
-	const bool		FLAG_USE_ALL_TRAINING_DATA_;
-
 	/** @brief		Random sampling rate in a leaf nodes */
-	const bool		FLAG_RAMDOMLY_SAMPLE_POINTS_;
+	//const bool		FLAG_RAMDOMLY_SAMPLE_POINTS_;
 
 	/** @brief Size of each block (voxel) */
 	double			&BLOCK_SIZE_;

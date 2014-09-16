@@ -1,5 +1,5 @@
-#ifndef _BAYESIAN_COMMITTEE_MACHINE_SERIALIZABLE_HPP_
-#define _BAYESIAN_COMMITTEE_MACHINE_SERIALIZABLE_HPP_
+#ifndef _GAUSSIAN_DISTRIBUTION_SERIALIZABLE_HPP_
+#define _GAUSSIAN_DISTRIBUTION_SERIALIZABLE_HPP_
 
 // STL
 #include <string>
@@ -11,22 +11,22 @@
 #include <boost/filesystem.hpp>	// oost::filesystem::exists, remove
 
 // GPMap
-#include "bcm.hpp"
+#include "gaussian.hpp"
 #include "serialization/eigen_serialization.hpp"	// serialize, deserialize
 
 namespace GPMap {
 
-class BCM_Serializable : public BCM
+class GaussianDistribution_Serializable : public GaussianDistribution
 {
 public:
 	/** @brief Default Constructor */
-	BCM_Serializable()
+	GaussianDistribution_Serializable()
 		: m_fDumped(false)
 	{
 	}
 
 	/** @brief Default Destructor */
-	virtual ~BCM_Serializable()
+	virtual ~GaussianDistribution_Serializable()
 	{
 		// remove temporary file
 		if(m_fDumped)
@@ -43,7 +43,7 @@ public:
 		load();
 
 		// get
-		const bool ret = BCM::get(pMean, pVar);
+		const bool ret = GaussianDistribution::get(pMean, pVar);
 
 		// dump
 		dump();
@@ -58,7 +58,7 @@ public:
 		load();
 
 		// update
-		CPU_Times t_update = BCM::update(pMean, pCov);
+		CPU_Times t_update = GaussianDistribution::update(pMean, pCov);
 
 		// dump
 		dump();
@@ -67,14 +67,14 @@ public:
 	}
 
 	///** @brief Comparison Operator */
-	//inline bool operator==(BCM_Serializable &other)
+	//inline bool operator==(GaussianDistribution_Serializable &other)
 	//{
 	//	// load the data
 	//	load();
 	//	other.load();
 
 	//	// compare
-	//	const bool comparison = static_cast<BCM>(*this) == static_cast<BCM>(other);
+	//	const bool comparison = static_cast<GaussianDistribution>(*this) == static_cast<GaussianDistribution>(other);
 
 	//	// dump
 	//	dump();
@@ -84,7 +84,7 @@ public:
 	//}
 
 	///** @brief Comparison Operator */
-	//inline bool operator!=(const BCM_Serializable &other)
+	//inline bool operator!=(const GaussianDistribution_Serializable &other)
 	//{
 	//	return !((*this) == other);
 	//}
@@ -109,8 +109,8 @@ protected:
 		if(!GPMap::serialize(*this, mem2str())) return false;
 
 		// deallocate memories
-		m_pSumOfWeightedMeans.reset();
-		m_pSumOfInvCovs.reset();
+		m_pMean.reset();
+		m_pCov.reset();
 
 		// turn the flag on
 		m_fDumped = true;
@@ -157,10 +157,10 @@ protected:
 			ar & fIndependent;
 
 			// mean
-			ar & (*m_pSumOfWeightedMeans);
+			ar & (*m_pMean);
 
 			// cov
-			ar & (*m_pSumOfInvCovs);
+			ar & (*m_pCov);
 		}
 	}
 
@@ -184,26 +184,26 @@ protected:
 			ar & fIndependent;
 
 			// memory allocation
-			if(!m_pSumOfWeightedMeans || m_pSumOfWeightedMeans->size() != dim)
+			if(!m_pMean || m_pMean->size() != dim)
 			{
-				m_pSumOfWeightedMeans.reset(new Vector(dim));
+				m_pMean.reset(new Vector(dim));
 			}
 			if(fIndependent)
 			{
-				if(!m_pSumOfInvCovs || m_pSumOfInvCovs->rows() != dim || m_pSumOfInvCovs->cols() != 1)
-					m_pSumOfInvCovs.reset(new Matrix(dim, 1));
+				if(!m_pCov || m_pCov->rows() != dim || m_pCov->cols() != 1)
+					m_pCov.reset(new Matrix(dim, 1));
 			}
 			else
 			{
-				if(!m_pSumOfInvCovs || m_pSumOfInvCovs->rows() != dim || m_pSumOfInvCovs->cols() != dim)
-					m_pSumOfInvCovs.reset(new Matrix(dim, dim));
+				if(!m_pCov || m_pCov->rows() != dim || m_pCov->cols() != dim)
+					m_pCov.reset(new Matrix(dim, dim));
 			}
 
 			// mean
-			ar & (*m_pSumOfWeightedMeans);
+			ar & (*m_pMean);
 
 			// cov
-			ar & (*m_pSumOfInvCovs);
+			ar & (*m_pCov);
 		}
 	}
 

@@ -34,7 +34,7 @@ public:
 		  m_pOriginalPointCloud(octree.getInputCloud()),
 		  m_octree(octree),
 		  m_pVoxelCenterPointCloud(new pcl::PointCloud<pcl::PointXYZ>()),
-		  m_fDrawWithCubesOrCenterPoints(false),
+		  m_fDrawWithCubesOrCenterPoints(true),
 		  m_fDisplayOriginalPointsWithCubes(true),
 		  m_fWireframe(true)
 		  //,		  m_occupancyThreshold(0.9f)

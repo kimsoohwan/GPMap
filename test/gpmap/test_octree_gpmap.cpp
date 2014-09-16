@@ -9,8 +9,8 @@
 #include "data/training_data.hpp"			// genEmptyPointList
 #include "features/surface_normal.hpp"		// estimateSurfaceNormals
 #include "common/common.hpp"					// getMinMaxPointXYZ
-#include "octree/octree_gpmap.hpp"			// OctreeGPMap
-#include "octree/octree_viewer.hpp"			// OctreeViewer
+#include "gpmap/octree_gpmap.hpp"			// OctreeGPMap
+#include "gpmap/octree_viewer.hpp"			// OctreeViewer
 #include "octomap/octomap.hpp"				// OctoMap
 using namespace GPMap;
 

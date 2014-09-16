@@ -6,9 +6,9 @@
 #include "bcm/test_bcm.hpp"
 #include "bcm/test_bcm_serializable.hpp"
 #include "plsc/test_plsc.hpp"
-#include "octree/test_data_partitioning.hpp"
+#include "gpmap/test_data_partitioning.hpp"
 
-//#include "octree/test_octree_gpmap.hpp"
+//#include "gpmap/test_octree_gpmap.hpp"
 
 int main(int argc, char** argv) 
 { 

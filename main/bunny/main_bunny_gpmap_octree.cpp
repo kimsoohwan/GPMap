@@ -32,7 +32,7 @@ int main(int argc, char** argv)
 	// [0] setting - observations
 	const size_t NUM_OBSERVATIONS = 4; 
 	const std::string strObsFileNames_[]	= {"bun000", "bun090", "bun180", "bun270"};
-	StringList strObsFileNames(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
+	StringList strObsFileNameList(strObsFileNames_, strObsFileNames_ + NUM_OBSERVATIONS); 
 
 	// [0] setting - GPMaps
 	//const size_t NUM_GPMAPS = 10; 
@@ -55,11 +55,11 @@ int main(int argc, char** argv)
 
 	// [1] load/save hit points
 	PointXYZCloudPtrList hitPointCloudPtrList;
-	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNames, strIntermediateFolder, ".pcd");		// original pcd files which are transformed in global coordinates
+	loadPointCloud<pcl::PointXYZ>(hitPointCloudPtrList, strObsFileNameList, strIntermediateFolder, ".pcd");		// original pcd files which are transformed in global coordinates
 
 	// [2] load sensor positions
 	PointXYZVList sensorPositionList;
-	loadSensorPositionList(sensorPositionList, strObsFileNames, strInputFolder, "_camera_position.txt");
+	loadSensorPositionList(sensorPositionList, strObsFileNameList, strInputFolder, "_camera_position.txt");
 	assert(NUM_OBSERVATIONS == hitPointCloudPtrList.size() && NUM_OBSERVATIONS == sensorPositionList.size());
 
 	// [3] Setting

@@ -18,6 +18,9 @@ namespace GPMap {
 class GaussianDistribution
 {
 public:
+	/** @brief Constructor */
+	GaussianDistribution() : m_fUpdated(false) {}
+
 	/** @brief Comparison Operator */
 	inline bool operator==(const GaussianDistribution &other) const
 	{
@@ -37,6 +40,19 @@ public:
 	inline bool operator!=(const GaussianDistribution &other) const
 	{
 		return !((*this) == other);
+	}
+
+	/** @brief		Set the updated flag off
+	  * @details	If new observations fall in this block, reset the flag to update in the future */
+	inline void resetUpdated()
+	{
+		m_fUpdated = false;
+	}
+
+	/** @brief		Check whether this block is updated or not */
+	inline bool isUpdated() const
+	{
+		return m_fUpdated;
 	}
 
 	/** @brief Initialization check */
@@ -95,7 +111,7 @@ public:
 	}
 
 	/** @brief Update the mean and [co]variance */
-	void update(const VectorConstPtr &pMean, const MatrixConstPtr &pCov)
+	CPU_Times update(const VectorConstPtr &pMean, const MatrixConstPtr &pCov)
 	{
 		// memory check
 		assert(pMean && pMean->size() > 0 && 
@@ -115,12 +131,35 @@ public:
 			m_pCov.reset(new Matrix(pCov->rows(), pCov->cols()));
 		}
 
+		// timer - start
+		CPU_Timer timer;
+
 		// just copy
 		*m_pMean	= *pMean;
 		*m_pCov	= *pCov;
+
+		// timer - end
+		CPU_Times t_update = timer.elapsed();
+
+		// set the update flag on
+		setUpdated();
+
+		return t_update;
 	}
 
 protected:
+	/** @brief		Set the updated flag on
+	  * @details	Set the flag on after update
+	  * @note		Note that this method is protected so that only member function can set the flag on */
+	inline void setUpdated()
+	{
+		m_fUpdated = true;
+	}
+
+protected:
+	/** @brief	Check if updated or not */
+	bool	m_fUpdated;
+
 	/** @brief	Mean vector */
 	VectorPtr m_pMean;
 

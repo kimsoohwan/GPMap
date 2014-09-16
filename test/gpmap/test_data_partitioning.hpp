@@ -5,7 +5,7 @@
 #include "gtest/gtest.h"
 
 // GPMap
-#include "octree/data_partitioning.hpp"
+#include "gpmap/data_partitioning.hpp"
 using namespace GPMap;
 
 TEST(Octree, DataPartitioning)
